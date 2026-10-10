@@ -820,18 +820,25 @@
   const error = document.getElementById("introError");
   const button = document.getElementById("retryBtn");
 
+ 
   lines.forEach((line, index) => {
+    line.style.opacity = "0";
+    line.style.transition = "opacity .45s ease";
+
     setTimeout(() => {
-      line.style.transition = "opacity .5s ease";
       line.style.opacity = "1";
-    }, 500 + index * 700);
+
+      if (line === error) {
+        error.classList.add("system-glitch");
+      }
+    }, 800 + index * 1000);
   });
 
   setTimeout(() => {
-    error.style.transition = "opacity .6s ease";
-    error.style.opacity = "1";
-    error.classList.add("system-glitch");
-  }, 2800);
+    button.style.transition = "opacity .5s ease";
+    button.style.opacity = "1";
+  }, 6000);
+
 
   setTimeout(() => {
     button.style.transition = "opacity .5s ease";

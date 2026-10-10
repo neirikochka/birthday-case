@@ -1915,6 +1915,16 @@ function renderRudyYanDone() {
 }
 
 
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, character => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  }[character]));
+}
+
   
 function renderFinalCode() {
   setFooter("ФИНАЛЬНЫЙ КОД // ПРОВЕРКА");

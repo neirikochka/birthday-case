@@ -705,7 +705,14 @@
         case "case01_puzzle": renderPuzzle(); break;
         case "case01_fragment": renderFragment(); break;
         case "case01_done": renderDone(); break;
-        case "case02_locked": renderLocked(); break;
+        case "case02_locked": renderAaronIntro(); break;
+case "case02_intro": renderAaronIntro(); break;
+case "case02_dialogue": renderAaronDialogue(); break;
+case "case02_puzzle": renderAaronPuzzle(); break;
+case "case02_fragment": renderAaronFragment(); break;
+case "case02_done": renderAaronDone(); break;
+case "case03_locked": renderLocked(); break;
+default:
         default:
           state.stage = "intro";
           saveState();
@@ -1147,22 +1154,204 @@
       document.getElementById("nextTrace").onclick = () => setStage("case02_locked");
     }
 
-    function renderLocked() {
-      setFooter("СЛЕДУЮЩИЙ ЭТАП ЕЩЁ НЕ ДОБАВЛЕН");
-      main.innerHTML = `
-        <section class="screen">
-          <div class="eyebrow">СЛЕД 02 // АРХИВИРУЕТСЯ</div>
-          <h1>Источник найден.</h1>
-          <div class="console">
-            <p>Данные следующего следа пока не восстановлены.</p>
-            <p class="muted">Это временная остановка. След 02 будет добавлен на следующем этапе.</p>
-          </div>
-          <div class="actions">
-            <button class="primary" id="backToTrace">[ ВЕРНУТЬСЯ К СЛЕДУ 01 ]</button>
-          </div>
-        </section>`;
-      document.getElementById("backToTrace").onclick = () => setStage("case01_done");
+    
+function renderAaronIntro() {
+  setFooter("СЛЕД 02 // ААРОН УОРНЕР");
+  main.innerHTML = `
+    <section class="screen">
+      <div class="eyebrow">СЛЕД 02 // ВОССТАНОВЛЕНИЕ СВЯЗИ</div>
+      <div class="console">
+        <p class="muted">СИГНАЛ ОБНАРУЖЕН...</p>
+        <p>Помехи устранены.</p>
+        <p>Источник идентифицирован.</p>
+      </div>
+      <h1>Готовься, любовь моя.</h1>
+      <p>Аарон Уорнер смотрит на тебя так, словно твоё появление его ничуть не удивило.</p>
+      <div class="actions">
+        <button class="primary" id="startAaron">[ ПОДОЙТИ ]</button>
+      </div>
+    </section>`;
+  document.getElementById("startAaron").onclick = () => {
+    state.trace02Branch = "";
+    state.trace02DialogueIndex = 0;
+    setStage("case02_dialogue");
+  };
+}
+
+function renderAaronDialogue() {
+  setFooter("СЛЕД 02 // ДИАЛОГ");
+
+  if (!state.trace02Branch) {
+    main.innerHTML = `
+      <section class="screen">
+        <div class="eyebrow">АРХИВ // ДИАЛОГ</div>
+        <h1>Аарон Уорнер</h1>
+        <p>— Я знал, что ты придёшь. Не могла не прийти.</p>
+        <p>Что ты ответишь?</p>
+        <div class="actions">
+          <button id="branchWorld">[ ОТКУДА ТЫ МЕНЯ ЖДАЛ? ]</button>
+          <button id="branchEvent">[ ТЫ ЗНАЕШЬ, ЧТО ПРОИЗОШЛО? ]</button>
+          <button id="branchExplain">[ МОЖЕТ, ОБЪЯСНИШЬ, ЧТО ЗДЕСЬ ПРОИСХОДИТ? ]</button>
+        </div>
+      </section>`;
+
+    document.getElementById("branchWorld").onclick = () => chooseAaronBranch("world");
+    document.getElementById("branchEvent").onclick = () => chooseAaronBranch("event");
+    document.getElementById("branchExplain").onclick = () => chooseAaronBranch("explain");
+    return;
+  }
+
+  const dialogues = {
+    world: [
+      "Из твоего мира.",
+      "Тогда ты знаешь, зачем я здесь.",
+      "Знаю.",
+      "Но если ты пришла сюда сама, значит, должна понять это сама.",
+      "Хорошо. С чего мне начать?",
+      "С того, что здесь не должно быть.",
+      "Ищи то, что оказалось не на своём месте."
+    ],
+    event: [
+      "Зависит от того, что именно ты считаешь произошедшим.",
+      "Ты ведь не просто так здесь.",
+      "Нет.",
+      "Тогда, возможно, ты уже знаешь больше, чем думаешь.",
+      "Начни с того, что здесь не должно находиться.",
+      "Иногда именно лишняя деталь говорит больше всего."
+    ],
+    explain: [
+      "Могу.",
+      "Но тогда тебе станет слишком легко.",
+      "А я почему-то думаю, что ты не ради лёгкого пути сюда пришла.",
+      "Поэтому попробуй сама.",
+      "Посмотри вокруг. Здесь есть одна вещь, которой быть не должно."
+    ]
+  };
+
+  const lines = dialogues[state.trace02Branch];
+  const index = state.trace02DialogueIndex || 0;
+
+  if (!lines || index >= lines.length) {
+    setStage("case02_puzzle");
+    return;
+  }
+
+  main.innerHTML = `
+    <section class="screen">
+      <div class="eyebrow">АРХИВ // ДИАЛОГ</div>
+      <h1>Аарон Уорнер</h1>
+      <div class="console">
+        <p>${lines[index]}</p>
+      </div>
+      <div class="actions">
+        <button class="primary" id="nextAaron">
+          ${index === lines.length - 1 ? "[ ОСМОТРЕТЬСЯ ]" : "[ ДАЛЬШЕ ]"}
+        </button>
+      </div>
+    </section>`;
+
+  document.getElementById("nextAaron").onclick = () => {
+    if (index === lines.length - 1) {
+      setStage("case02_puzzle");
+    } else {
+      state.trace02DialogueIndex = index + 1;
+      saveState();
+      render();
     }
+  };
+}
+
+function chooseAaronBranch(branch) {
+  state.trace02Branch = branch;
+  state.trace02DialogueIndex = 0;
+  saveState();
+  render();
+}
+
+function renderAaronPuzzle() {
+  setFooter("СЛЕД 02 // ПОИСК");
+
+  main.innerHTML = `
+    <section class="screen">
+      <div class="eyebrow">АРХИВ // НЕСООТВЕТСТВИЕ</div>
+      <h1>Что здесь лишнее?</h1>
+      <p>Аарон кивает на стол.</p>
+      <p>Среди бумаг и аккуратно разложенных вещей лежит обычная шоколадка.</p>
+      <p class="muted">— Иногда ответ оказывается прямо перед глазами.</p>
+      <div class="actions">
+        <button class="primary" id="takeChocolate">[ ВЗЯТЬ ШОКОЛАДКУ ]</button>
+      </div>
+    </section>`;
+
+  document.getElementById("takeChocolate").onclick = () => {
+    state.fragment02 = ["I", "L", "T", "E"];
+    setStage("case02_fragment");
+  };
+}
+
+function renderAaronFragment() {
+  setFooter("СЛЕД 02 // ФРАГМЕНТ ПОЛУЧЕН");
+
+  main.innerHTML = `
+    <section class="screen">
+      <div class="eyebrow">ДАННЫЕ ВОССТАНОВЛЕНЫ</div>
+      <h1>Фрагмент найден.</h1>
+      <div class="console">
+        <p class="fragment">I · L · T · E</p>
+        <p class="muted">Порядок букв не определён.</p>
+      </div>
+      <p>Аарон едва заметно улыбается.</p>
+      <p>— Всё для тебя.</p>
+      <div class="actions">
+        <button class="primary" id="collectAaronFragment">[ СОХРАНИТЬ ФРАГМЕНТ ]</button>
+      </div>
+    </section>`;
+
+  document.getElementById("collectAaronFragment").onclick = () => {
+    state.trace02Done = true;
+    setStage("case02_done");
+  };
+}
+
+function renderAaronDone() {
+  setFooter("СЛЕД 02 // ПРОЙДЕН");
+
+  main.innerHTML = `
+    <section class="screen">
+      <div class="eyebrow">СЛЕД 02 [ПРОЙДЕН ✓]</div>
+      <h1>Связь восстановлена.</h1>
+      <div class="console">
+        <p>Фрагмент получен: I · L · T · E</p>
+        <p>Доступ к следу 03 разрешён.</p>
+      </div>
+      <p>— Не заставляй себя ждать, — произносит Аарон.</p>
+      <div class="actions">
+        <button class="primary" id="goTrace03">[ СЛЕД 03 ]</button>
+      </div>
+    </section>`;
+
+  document.getElementById("goTrace03").onclick = () => setStage("case03_locked");
+}
+
+function renderLocked() {
+  setFooter("СЛЕДУЮЩИЙ ЭТАП ЕЩЁ НЕ ДОБАВЛЕН");
+
+  main.innerHTML = `
+    <section class="screen">
+      <div class="eyebrow">СЛЕД 03 // АРХИВИРУЕТСЯ</div>
+      <h1>Источник найден.</h1>
+      <div class="console">
+        <p>Данные следующего следа пока не восстановлены.</p>
+        <p class="muted">Это временная остановка. След 03 будет добавлен на следующем этапе.</p>
+      </div>
+      <div class="actions">
+        <button class="primary" id="backToAaron">[ ВЕРНУТЬСЯ К ААРОНУ ]</button>
+      </div>
+    </section>`;
+
+  document.getElementById("backToAaron").onclick = () => setStage("case02_done");
+}
+
 
     // Возвращаемся к сохранённому этапу, а не начинаем всё сначала.
     render();

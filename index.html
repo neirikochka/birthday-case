@@ -710,8 +710,13 @@
         case "case02_dialogue": renderAaronDialogue(); break;
         case "case02_puzzle": renderAaronPuzzle(); break;
         case "case02_fragment": renderAaronFragment(); break;
-        case "case02_done": renderAaronDone(); break;
+                case "case02_done": renderAaronDone(); break;
         case "case03_locked": renderLocked(); break;
+        case "case03_dialogue": renderJamesDialogue(); break;
+        case "case03_puzzle": renderJamesPuzzle(); break;
+        case "case03_fragment": renderJamesFragment(); break;
+        case "case03_reveal": renderJamesReveal(); break;
+        case "case03_done": renderJamesDone(); break;
         default:
           state.stage = "intro";
           saveState();
@@ -1426,15 +1431,309 @@ function renderAaronDone() {
 }
 
 function renderLocked() {
-  setFooter("СЛЕДУЮЩИЙ ЭТАП ЕЩЁ НЕ ДОБАВЛЕН");
+  renderJamesIntro();
+}
+
+function renderJamesIntro() {
+  setFooter("СЛЕД 03 // ДЖЕЙМС АНДЕРСОН");
 
   main.innerHTML = `
     <section class="screen">
-      <div class="eyebrow">СЛЕД 03 // АРХИВИРУЕТСЯ</div>
-      <h1>Источник найден.</h1>
+      <div class="eyebrow">СЛЕД 03 // ИСТОЧНИК ОБНАРУЖЕН</div>
+      <h1>Джеймс Андерсон</h1>
       <div class="console">
-        <p>Данные следующего следа пока не восстановлены.</p>
-        <p class="muted">Это временная остановка. След 03 будет добавлен на следующем этапе.</p>
+        <p class="speaker">ДЖЕЙМС</p>
+        <p class="line">Ну наконец-то.</p>
+        <p>А я уже начал думать, что ты решила заставить меня ждать.</p>
+      </div>
+      <p>Что ты ответишь?</p>
+      <div class="actions">
+        <button id="jamesBranchWait">[ ТЫ МЕНЯ ЖДАЛ? ]</button>
+        <button id="jamesBranchGirls">[ И ДАВНО ТЫ ТАК ВСТРЕЧАЕШЬ ВСЕХ НЕЗНАКОМЫХ ДЕВУШЕК? ]</button>
+      </div>
+    </section>`;
+
+  document.getElementById("jamesBranchWait").onclick =
+    () => chooseJamesBranch("wait");
+  document.getElementById("jamesBranchGirls").onclick =
+    () => chooseJamesBranch("girls");
+}
+
+function chooseJamesBranch(branch) {
+  state.trace03Branch = branch;
+  state.trace03DialogueIndex = 0;
+  saveState();
+  setStage("case03_dialogue");
+}
+
+function renderJamesDialogue() {
+  setFooter("СЛЕД 03 // ДИАЛОГ");
+
+  const dialogues = {
+    wait: [
+      { who: "Ты", text: "Ты меня ждал?" },
+      { who: "Джеймс", text: "А ты разочарована?" },
+      { note: "Он улыбается, явно наслаждаясь её реакцией." },
+      { who: "Джеймс", text: "Потому что я могу сделать вид, что это совершенно случайная встреча." },
+      { who: "Джеймс", text: "Но будет немного жаль портить такой момент." },
+      {
+        type: "choice",
+        question: "Что ты ответишь?",
+        options: [{ text: "Значит, всё-таки ждал.", next: 6 }]
+      },
+      { who: "Ты", text: "Значит, всё-таки ждал." },
+      { who: "Джеймс", text: "Возможно." },
+      { who: "Джеймс", text: "Хотя теперь мне интересно другое: почему ты решила, что я ждал именно тебя?" },
+      {
+        type: "choice",
+        question: "Что ты ответишь?",
+        options: [{ text: "Потому что ты сам это сказал.", next: 10 }]
+      },
+      { who: "Ты", text: "Потому что ты сам это сказал." },
+      { who: "Джеймс", text: "Хороший ответ." },
+      { who: "Джеймс", text: "Ладно. Один балл тебе уже есть." },
+      { who: "Джеймс", text: "Раз уж мы оба понимаем, что ты пришла сюда не просто поболтать..." },
+      { who: "Джеймс", text: "Давай посмотрим, насколько хорошо ты умеешь замечать детали." }
+    ],
+
+    girls: [
+      { who: "Ты", text: "И давно ты так встречаешь всех незнакомых девушек?" },
+      { who: "Джеймс", text: "Только тех, которых действительно интересно ждать." },
+      { note: "Он улыбается, явно довольный собой." },
+      { who: "Джеймс", text: "Но можешь не переживать. Тебе досталась особая версия встречи." },
+      {
+        type: "choice",
+        question: "Что ты ответишь?",
+        options: [{ text: "Особая версия?", next: 5 }]
+      },
+      { who: "Ты", text: "Особая версия?" },
+      { who: "Джеймс", text: "Ага." },
+      { note: "Он откидывается на спинку кресла и совершенно невозмутимо смотрит на неё." },
+      { who: "Джеймс", text: "Обычно я заставляю людей ждать дольше." },
+      {
+        type: "choice",
+        question: "Что ты ответишь?",
+        options: [{ text: "И это должно меня впечатлить?", next: 10 }]
+      },
+      { who: "Ты", text: "И это должно меня впечатлить?" },
+      { who: "Джеймс", text: "Не знаю." },
+      { note: "Джеймс пожимает плечами с таким видом, будто вопрос действительно требует серьёзного размышления." },
+      { who: "Джеймс", text: "Я рассчитывал хотя бы на лёгкое восхищение." },
+      { note: "Он выдерживает паузу и усмехается." },
+      { who: "Джеймс", text: "Но, кажется, придётся постараться." },
+      {
+        type: "choice",
+        question: "Что ты ответишь?",
+        options: [{ text: "И что же ты собираешься делать?", next: 17 }]
+      },
+      { who: "Ты", text: "И что же ты собираешься делать?" },
+      { who: "Джеймс", text: "Вот это уже правильный вопрос." },
+      { note: "Джеймс улыбается и встаёт из-за стола." },
+      { who: "Джеймс", text: "Но я решил, что сначала дам тебе шанс самой догадаться." },
+      { who: "Джеймс", text: "Подсказка у тебя прямо перед глазами." },
+      {
+        type: "choice",
+        question: "Что ты ответишь?",
+        options: [{ text: "Это и есть твоя загадка?", next: 23 }]
+      },
+      { who: "Ты", text: "Это и есть твоя загадка?" },
+      { who: "Джеймс", text: "Возможно." },
+      { note: "Джеймс бросает короткий взгляд на предмет, затем снова смотрит на неё." },
+      { who: "Джеймс", text: "А может, я просто проверяю, насколько ты внимательная." },
+      { who: "Джеймс", text: "Хотя можешь считать это первым испытанием. Совсем простым." },
+      {
+        type: "choice",
+        question: "Что ты ответишь?",
+        options: [{ text: "И что мне нужно сделать?", next: 29 }]
+      },
+      { who: "Ты", text: "И что мне нужно сделать?" },
+      { who: "Джеймс", text: "Для начала — посмотреть внимательнее." },
+      { note: "Джеймс кивает на стол, но сам к вещи не прикасается. Наоборот, отходит на полшага, словно намеренно оставляя ей возможность разобраться самой." },
+      { who: "Джеймс", text: "Я ведь сказал, что проверяю твою внимательность." }
+    ]
+  };
+
+  const lines = dialogues[state.trace03Branch];
+  const index = state.trace03DialogueIndex || 0;
+
+  if (!lines || index >= lines.length) {
+    setStage("case03_puzzle");
+    return;
+  }
+
+  const item = lines[index];
+
+  if (item.type === "choice") {
+    main.innerHTML = `
+      <section class="screen">
+        <div class="eyebrow">СЛЕД 03 // ДИАЛОГ</div>
+        <h1>Джеймс Андерсон</h1>
+        <p>${item.question}</p>
+        <div class="actions" id="jamesChoices"></div>
+      </section>`;
+
+    const choices = document.getElementById("jamesChoices");
+
+    item.options.forEach(option => {
+      const button = document.createElement("button");
+      button.textContent = `[ ${option.text} ]`;
+      button.onclick = () => {
+        state.trace03DialogueIndex = option.next;
+        saveState();
+        render();
+      };
+      choices.appendChild(button);
+    });
+
+    return;
+  }
+
+  main.innerHTML = `
+    <section class="screen">
+      <div class="eyebrow">СЛЕД 03 // ДИАЛОГ</div>
+      <h1>Джеймс Андерсон</h1>
+      <div class="console">
+        ${item.who ? `<p class="speaker">${item.who.toUpperCase()}</p>` : ""}
+        ${item.note ? `<p class="muted"><em>${item.note}</em></p>` : ""}
+        ${item.text ? `<p class="line">${item.text}</p>` : ""}
+      </div>
+      <div class="actions">
+        <button class="primary" id="nextJames">
+          ${index === lines.length - 1 ? "[ К ЗАГАДКЕ ]" : "[ ДАЛЬШЕ ]"}
+        </button>
+      </div>
+    </section>`;
+
+  document.getElementById("nextJames").onclick = () => {
+    if (index === lines.length - 1) {
+      setStage("case03_puzzle");
+    } else {
+      state.trace03DialogueIndex = index + 1;
+      saveState();
+      render();
+    }
+  };
+}
+
+function renderJamesPuzzle() {
+  setFooter("СЛЕД 03 // ОБНАРУЖЕН ПРЕДМЕТ");
+
+  main.innerHTML = `
+    <section class="screen">
+      <div class="eyebrow">СЛЕД 03 // ПРОВЕРКА ВНИМАТЕЛЬНОСТИ</div>
+      <h1>Подсказка на столе</h1>
+      <p>Рядом с Джеймсом лежит коробка конфет. Название на обёртке кажется необычным.</p>
+      <div class="chocolate-scene">
+        <button class="treat" id="jamesCandyBox" aria-label="Осмотреть коробку конфет VGIN">
+          <span style="font-size:14px;letter-spacing:3px;color:var(--gold)">VGIN</span>
+          <span>Коробка конфет</span>
+          <small>Нажми, чтобы рассмотреть поближе</small>
+        </button>
+      </div>
+      <p class="muted">Джеймс сам не притрагивается к коробке.</p>
+    </section>`;
+
+  document.getElementById("jamesCandyBox").onclick = () => {
+    state.fragment03 = ["V", "G", "I", "N"];
+    saveState();
+    setStage("case03_fragment");
+  };
+}
+
+function renderJamesFragment() {
+  setFooter("СЛЕД 03 // ФРАГМЕНТ ПОЛУЧЕН");
+
+  main.innerHTML = `
+    <section class="screen">
+      <div class="eyebrow">СЛЕД 03 // ОБНАРУЖЕННЫЕ ДАННЫЕ</div>
+      <h1>Фрагмент собран.</h1>
+      <div class="chocolate-scene">
+        <div class="treat" style="transform:scale(1.04);min-height:220px">
+          <span style="font-size:24px;letter-spacing:5px;color:var(--gold)">VGIN</span>
+          <span>Коробка конфет</span>
+          <div class="letters">V · G · I · N</div>
+        </div>
+      </div>
+      <div class="console">
+        <p class="success-mark">ФРАГМЕНТ 03 СОБРАН</p>
+        <p class="gold">V · G · I · N</p>
+        <p class="muted">Фрагмент сохранён.</p>
+      </div>
+      <div class="actions">
+        <button class="primary" id="continueJamesReveal">[ ДАЛЬШЕ ]</button>
+      </div>
+    </section>`;
+
+  document.getElementById("continueJamesReveal").onclick = () => {
+    state.trace03RevealIndex = 0;
+    setStage("case03_reveal");
+  };
+}
+
+function renderJamesReveal() {
+  setFooter("СЛЕД 03 // ДОПОЛНИТЕЛЬНЫЕ ДАННЫЕ");
+
+  const lines = [
+    { who: "Ты", text: "Ты явно знаешь больше, чем говоришь." },
+    { who: "Джеймс", text: "Возможно." },
+    { who: "Джеймс", text: "Ты кое-что ищешь." },
+    { who: "Джеймс", text: "Причём вещь довольно важную." },
+    { who: "Джеймс", text: "Ты уже успела побывать в Хогвартсе." },
+    { who: "Джеймс", text: "И поговорить с Уорнером." },
+    { who: "Джеймс", text: "Не смотри на меня так. Я же говорил, что подготовился." },
+    { who: "Джеймс", text: "Ты получила то, за чем пришла." },
+    { who: "Джеймс", text: "А значит, пора идти дальше." },
+    { who: "Джеймс", text: "И не переживай. Думаю, дальше будет ещё интереснее." },
+    { who: "Джеймс", text: "Всё для тебя." }
+  ];
+
+  const index = state.trace03RevealIndex || 0;
+  const item = lines[index];
+
+  main.innerHTML = `
+    <section class="screen">
+      <div class="eyebrow">СЛЕД 03 // НЕ ВСЁ ТАК ПРОСТО</div>
+      <h1>Джеймс Андерсон</h1>
+      <div class="console">
+        <p class="speaker">${item.who.toUpperCase()}</p>
+        <p class="line">${item.text}</p>
+      </div>
+      <div class="actions">
+        <button class="primary" id="nextJamesReveal">
+          ${index === lines.length - 1 ? "[ ЗАВЕРШИТЬ СЛЕД ]" : "[ ДАЛЬШЕ ]"}
+        </button>
+      </div>
+    </section>`;
+
+  document.getElementById("nextJamesReveal").onclick = () => {
+    if (index === lines.length - 1) {
+      state.trace03Done = true;
+      setStage("case03_done");
+    } else {
+      state.trace03RevealIndex = index + 1;
+      saveState();
+      render();
+    }
+  };
+}
+
+function renderJamesDone() {
+  setFooter("СЛЕД 03 // ПРОЙДЕН");
+
+  main.innerHTML = `
+    <section class="screen">
+      <div class="eyebrow">СЛЕД 03 [ПРОЙДЕН ✓]</div>
+      <h1>След восстановлен.</h1>
+      <div class="console">
+        <p>Фрагмент получен: V · G · I · N</p>
+        <p class="success-mark">След 03 восстановлен.</p>
+        <p>Доступ к следу 04 разрешён.</p>
+      </div>
+      <div class="case-list">
+        <div class="case-tile done">СЛЕД 01<br>[ ПРОЙДЕН ✓ ]</div>
+        <div class="case-tile done">СЛЕД 02<br>[ ПРОЙДЕН ✓ ]</div>
+        <div class="case-tile done">СЛЕД 03<br>[ ПРОЙДЕН ✓ ]</div>
+        <div class="case-tile current">СЛЕД 04<br>[ ДОСТУПЕН ]</div>
       </div>
       <div class="actions">
         <button class="primary" id="backToAaron">[ ВЕРНУТЬСЯ К ААРОНУ ]</button>

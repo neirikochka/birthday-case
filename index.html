@@ -841,24 +841,50 @@
   button.onclick = () => setStage("retry");
 }
 
-    function renderRetry() {
-      setFooter("ПОВТОРНАЯ ПРОВЕРКА");
-      main.innerHTML = `
-        <section class="screen">
-          <div class="eyebrow">ПОВТОРНАЯ ПОПЫТКА...</div>
-          <div class="console">
-            <p>ПОВТОРНАЯ ПОПЫТКА...</p>
-            <p>...</p>
-            <p class="red">ОШИБКА.</p>
-            <p>Подождите.</p>
-            <p>ПЕРЕЗАПУСК ПОИСКА...</p>
-          </div>
-          <div class="actions">
-            <button class="primary" id="searchBtn">[ ПРОДОЛЖИТЬ ПОИСК ]</button>
-          </div>
-        </section>`;
-      document.getElementById("searchBtn").onclick = () => setStage("search");
-    }
+   function renderRetry() {
+  setFooter("ПОВТОРНАЯ ПРОВЕРКА");
+
+  main.innerHTML = `
+    <section class="screen terminal-flicker">
+      <div class="eyebrow">ПОВТОРНАЯ ПОПЫТКА...</div>
+
+      <div class="console">
+        <p class="retry-line" style="opacity:0">ПОВТОРНАЯ ПОПЫТКА...</p>
+        <p class="retry-line" style="opacity:0">...</p>
+        <p class="retry-line red" id="retryError" style="opacity:0">ОШИБКА.</p>
+        <p class="retry-line" style="opacity:0">Подождите.</p>
+        <p class="retry-line" style="opacity:0">ПЕРЕЗАПУСК ПОИСКА...</p>
+      </div>
+
+      <div class="actions">
+        <button class="primary" id="searchBtn" style="opacity:0">
+          [ ПРОДОЛЖИТЬ ПОИСК ]
+        </button>
+      </div>
+    </section>`;
+
+  const lines = document.querySelectorAll(".retry-line");
+  const error = document.getElementById("retryError");
+  const button = document.getElementById("searchBtn");
+
+  lines.forEach((line, index) => {
+    setTimeout(() => {
+      line.style.transition = "opacity .45s ease";
+      line.style.opacity = "1";
+
+      if (line === error) {
+        error.classList.add("system-glitch");
+      }
+    }, 400 + index * 650);
+  });
+
+  setTimeout(() => {
+    button.style.transition = "opacity .5s ease";
+    button.style.opacity = "1";
+  }, 3400);
+
+  button.onclick = () => setStage("search");
+}
 
     function renderSearch() {
       setFooter("ПОИСК СОБЫТИЯ");

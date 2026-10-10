@@ -1351,15 +1351,26 @@ function renderRoom() {
       updateDialogue();
     }
 
-    function advanceDialogue() {
-      if (state.dialogueIndex < dialogue.length - 1) {
-        state.dialogueIndex++;
-        saveState();
-        updateDialogue();
-      } else {
-        setStage("case01_puzzle");
-      }
-    }
+   
+function advanceDialogue() {
+  if (!Number.isInteger(state.dialogueIndex) ||
+      state.dialogueIndex < 0 ||
+      state.dialogueIndex >= dialogue.length) {
+    state.dialogueIndex = 0;
+    saveState();
+    updateDialogue();
+    return;
+  }
+
+  if (state.dialogueIndex < dialogue.length - 1) {
+    state.dialogueIndex++;
+    saveState();
+    updateDialogue();
+  } else {
+    setStage("case01_puzzle");
+  }
+}
+
 
     function updateDialogue() {
       const item = dialogue[state.dialogueIndex];

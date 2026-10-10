@@ -263,6 +263,37 @@
       font-size: 12px;
     }
 
+    
+.case-tile {
+  opacity: 0;
+  transform: translateY(8px);
+  animation: traceAppear .55s ease forwards;
+}
+
+.case-tile:nth-child(1) {
+  animation-delay: 0.3s;
+}
+
+.case-tile:nth-child(2) {
+  animation-delay: 0.6s;
+}
+
+.case-tile:nth-child(3) {
+  animation-delay: 0.9s;
+}
+
+.case-tile:nth-child(4) {
+  animation-delay: 1.2s;
+}
+
+@keyframes traceAppear {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
     .case-tile.done {
       border-color: #6c8d70;
       color: #a8d1ac;

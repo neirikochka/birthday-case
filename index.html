@@ -104,6 +104,62 @@
 
     .screen { animation: appear .45s ease both; }
 
+    /* Короткий системный сбой */
+.system-glitch {
+  animation: systemGlitch .35s steps(2, end) both;
+}
+
+@keyframes systemGlitch {
+  0% {
+    transform: translateX(0);
+    text-shadow: none;
+  }
+  25% {
+    transform: translateX(-2px);
+    text-shadow: 2px 0 #a84c55;
+  }
+  50% {
+    transform: translateX(2px);
+    text-shadow: -2px 0 #d7b879;
+  }
+  75% {
+    transform: translateX(-1px);
+    text-shadow: 1px 0 #a84c55;
+  }
+  100% {
+    transform: translateX(0);
+    text-shadow: none;
+  }
+}
+
+    /* Эффекты системного терминала */
+.terminal-flicker {
+  animation: terminalFlicker 6s linear infinite;
+}
+
+@keyframes terminalFlicker {
+  0%, 96%, 100% { opacity: 1; }
+  97% { opacity: .88; }
+  98% { opacity: .96; }
+  99% { opacity: .91; }
+}
+
+.system-glitch {
+  animation: systemGlitch .35s steps(2, end) both;
+}
+
+@keyframes systemGlitch {
+  0% { transform: translateX(0); text-shadow: none; }
+  25% { transform: translateX(-2px); text-shadow: 2px 0 #a84c55; }
+  50% { transform: translateX(2px); text-shadow: -2px 0 #d7b879; }
+  75% { transform: translateX(-1px); text-shadow: 1px 0 #a84c55; }
+  100% { transform: translateX(0); text-shadow: none; }
+}
+
+.progress-fill {
+  box-shadow: 0 0 8px rgba(215, 184, 121, .35);
+}
+
     @keyframes appear {
       from { opacity: 0; transform: translateY(8px); }
       to { opacity: 1; transform: translateY(0); }
@@ -734,25 +790,56 @@
       }
     }
 
-    function renderIntro() {
-      setFooter("ОЖИДАНИЕ КОМАНДЫ");
-      main.innerHTML = `
-        <section class="screen">
-          <div class="eyebrow">СИСТЕМА // ВОССТАНОВЛЕНИЕ СОБЫТИЯ</div>
-          <div class="console">
-            <p>инициализация...</p>
-            <p>проверка базы данных...</p>
-            <p>поиск...</p>
-          </div>
-          <h1 class="red">СИСТЕМНАЯ ОШИБКА</h1>
-          <p>Праздник не найден.</p>
-          <p class="muted">Попробуйте ещё раз.</p>
-          <div class="actions">
-            <button class="primary" id="retryBtn">[ ПОПРОБОВАТЬ ]</button>
-          </div>
-        </section>`;
-      document.getElementById("retryBtn").onclick = () => setStage("retry");
-    }
+   function renderIntro() {
+  setFooter("ОЖИДАНИЕ КОМАНДЫ");
+
+  main.innerHTML = `
+    <section class="screen terminal-flicker">
+      <div class="eyebrow">СИСТЕМА // ВОССТАНОВЛЕНИЕ СОБЫТИЯ</div>
+
+      <div class="console" id="introConsole">
+        <p class="intro-line" style="opacity:0">инициализация...</p>
+        <p class="intro-line" style="opacity:0">проверка базы данных...</p>
+        <p class="intro-line" style="opacity:0">поиск...</p>
+      </div>
+
+      <div id="introError" style="opacity:0">
+        <h1 class="red">СИСТЕМНАЯ ОШИБКА</h1>
+        <p>Праздник не найден.</p>
+        <p class="muted">Попробуйте ещё раз.</p>
+      </div>
+
+      <div class="actions">
+        <button class="primary" id="retryBtn" style="opacity:0">
+          [ ПОПРОБОВАТЬ ]
+        </button>
+      </div>
+    </section>`;
+
+  const lines = document.querySelectorAll(".intro-line");
+  const error = document.getElementById("introError");
+  const button = document.getElementById("retryBtn");
+
+  lines.forEach((line, index) => {
+    setTimeout(() => {
+      line.style.transition = "opacity .5s ease";
+      line.style.opacity = "1";
+    }, 500 + index * 700);
+  });
+
+  setTimeout(() => {
+    error.style.transition = "opacity .6s ease";
+    error.style.opacity = "1";
+    error.classList.add("system-glitch");
+  }, 2800);
+
+  setTimeout(() => {
+    button.style.transition = "opacity .5s ease";
+    button.style.opacity = "1";
+  }, 3500);
+
+  button.onclick = () => setStage("retry");
+}
 
     function renderRetry() {
       setFooter("ПОВТОРНАЯ ПРОВЕРКА");

@@ -48,6 +48,13 @@
       transition: .2s ease;
     }
 
+    #restartBtn {
+  padding: 7px 9px;
+  font-size: 10px;
+  white-space: nowrap;
+  letter-spacing: 0;
+}
+
     button:hover, button:focus-visible {
       border-color: var(--gold);
       color: var(--gold);
@@ -75,6 +82,7 @@
       color: var(--muted);
       font-size: 11px;
       letter-spacing: 1.5px;
+      flex-wrap: wrap;
     }
 
     .status-dot {
@@ -615,6 +623,7 @@
     <header>
       <span><span class="status-dot"></span>АРХИВ НЕИЗВЕСТНЫХ СОБЫТИЙ</span>
       <span id="headerCase">ДЕЛО № 001</span>
+      <button id="restartBtn" type="button">↺ Начать сначала</button>
     </header>
     <main id="main"></main>
     <footer>
@@ -652,6 +661,14 @@
     }
 
     const main = document.getElementById("main");
+    document.getElementById("restartBtn").addEventListener("click", () => {
+  if (window.confirm("Начать историю заново? Сохранённый прогресс будет удалён.")) {
+    localStorage.removeItem(STORAGE_KEY);
+    state = { ...defaultState };
+    setTheme("");
+    render();
+  }
+});
 
     function setStage(stage) {
       state.stage = stage;

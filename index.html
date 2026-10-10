@@ -790,7 +790,7 @@
         case "case01_silhouettes": renderSilhouettes(); break;
         case "case01_map": renderMap(); break;
         case "case01_room": renderRoom(); break;
-        case "case01_dialogue": renderDialogue(); break;
+        case "case01_dialogue": state.stage = "case01_room"; saveState(); renderRoom(); break;
         case "case01_puzzle": renderPuzzle(); break;
         case "case01_fragment": renderFragment(); break;
         case "case01_done": renderDone(); break;

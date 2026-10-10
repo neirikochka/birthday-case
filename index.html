@@ -4,18 +4,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#0b0b10">
-  <title>Дело № 04 — Восстановление события</title>
-
+  <title>Дело № 01 — Украденный день рождения</title>
   <style>
     :root {
-      --bg: #0b0b10;
-      --panel: #12121a;
-      --text: #e9e5df;
-      --muted: #898795;
-      --gold: #c7a873;
-      --line: #34313c;
-      --red: #b56b72;
+      --bg: #0d0d12;
+      --panel: #15151e;
+      --line: #343440;
+      --text: #ece9e4;
+      --muted: #9694a3;
+      --gold: #d7b879;
+      --red: #a84c55;
+      --parchment: #e8d5ad;
+      --ink: #473626;
     }
 
     * { box-sizing: border-box; }
@@ -23,173 +23,156 @@
     body {
       margin: 0;
       min-height: 100vh;
-      padding: 24px 16px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       background:
-        radial-gradient(ellipse at 50% 35%, #191720 0%, transparent 55%),
+        radial-gradient(ellipse at top, #1a1924 0%, transparent 55%),
         var(--bg);
       color: var(--text);
-      font-family: Consolas, "Courier New", monospace;
+      font-family: "Courier New", monospace;
+      transition: background .5s, color .5s;
     }
 
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      opacity: .13;
-      background-image:
-        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
-      background-size: 32px 32px;
+    body.warm {
+      background:
+        radial-gradient(ellipse at top, #704b2d 0%, transparent 65%),
+        #211710;
     }
 
     button, input { font: inherit; }
 
-    button { cursor: pointer; }
-
-    .shell {
-      width: 100%;
-      max-width: 760px;
-      min-height: 460px;
-      position: relative;
+    button {
+      cursor: pointer;
+      color: var(--text);
+      background: transparent;
       border: 1px solid var(--line);
-      background: rgba(12,12,18,.96);
-      box-shadow: 0 0 70px rgba(0,0,0,.25);
+      padding: 12px 17px;
+      transition: .2s ease;
     }
 
-    .topbar {
+    button:hover, button:focus-visible {
+      border-color: var(--gold);
+      color: var(--gold);
+      outline: none;
+    }
+
+    button:disabled { opacity: .35; cursor: not-allowed; }
+
+    #app {
+      width: min(920px, 100%);
+      margin: 0 auto;
+      padding: 24px 18px 40px;
+      min-height: 100vh;
       display: flex;
-      align-items: center;
+      flex-direction: column;
+    }
+
+    header {
+      display: flex;
       justify-content: space-between;
+      align-items: center;
       gap: 12px;
-      padding: 15px 20px;
+      padding-bottom: 14px;
       border-bottom: 1px solid var(--line);
       color: var(--muted);
       font-size: 11px;
       letter-spacing: 1.5px;
     }
 
-    .status {
-      color: var(--gold);
-      text-align: right;
+    .status-dot {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      margin-right: 7px;
+      background: var(--gold);
+      border-radius: 50%;
+      box-shadow: 0 0 9px var(--gold);
     }
 
-    .content {
-      padding: clamp(24px, 6vw, 52px);
-      min-height: 390px;
+    main {
+      flex: 1;
       display: flex;
       flex-direction: column;
       justify-content: center;
+      padding: 42px 0;
+    }
+
+    .screen { animation: appear .45s ease both; }
+
+    @keyframes appear {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .eyebrow {
       color: var(--gold);
       font-size: 11px;
       letter-spacing: 2px;
-      line-height: 1.8;
-      margin-bottom: 25px;
+      margin-bottom: 22px;
     }
 
-    .log {
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 2;
-      white-space: pre-line;
-    }
+    h1, h2, p { overflow-wrap: anywhere; }
 
     h1 {
-      font-size: clamp(25px, 6vw, 39px);
-      letter-spacing: 1px;
-      font-weight: 400;
-      line-height: 1.3;
-      margin: 0 0 16px;
+      font-size: clamp(26px, 5vw, 43px);
+      line-height: 1.2;
+      font-weight: normal;
+      margin: 0 0 22px;
     }
 
     h2 {
-      font-size: 20px;
-      line-height: 1.5;
-      font-weight: 400;
-      margin: 0 0 16px;
+      font-size: clamp(21px, 4vw, 30px);
+      font-weight: normal;
+      margin: 0 0 18px;
     }
 
-    p {
-      color: #bcb8c3;
-      line-height: 1.8;
-      font-size: 14px;
-    }
+    p { line-height: 1.8; }
 
-    .error {
-      color: var(--red);
-      text-shadow: 0 0 18px rgba(181,107,114,.16);
-    }
-
+    .muted { color: var(--muted); }
     .gold { color: var(--gold); }
+    .red { color: #e48a90; }
 
-    .small {
-      font-size: 11px;
-      color: #777381;
-      line-height: 1.8;
+    .console {
+      border: 1px solid var(--line);
+      background: rgba(10, 10, 16, .65);
+      padding: 23px;
+      margin: 20px 0;
+      line-height: 1.9;
+      min-height: 90px;
     }
 
-    .rule {
-      height: 1px;
-      background: var(--line);
-      margin: 24px 0;
-    }
+    .console p { margin: 0; }
+    .console p + p { margin-top: 5px; }
 
     .actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 26px;
+      gap: 10px;
+      margin-top: 24px;
     }
 
-    .btn {
-      min-height: 46px;
-      padding: 12px 18px;
-      border: 1px solid #665641;
-      background: transparent;
+    .primary {
+      border-color: var(--gold);
       color: var(--gold);
-      letter-spacing: 1px;
-      font-size: 12px;
-      transition: background .2s, color .2s;
     }
 
-    .btn:hover {
-      background: var(--gold);
-      color: #111016;
-    }
-
-    .btn:focus-visible, input:focus-visible {
-      outline: 2px solid var(--gold);
-      outline-offset: 4px;
-    }
-
-    .field-label {
-      display: block;
-      color: var(--muted);
-      font-size: 12px;
-      margin: 22px 0 10px;
-    }
-
-    input {
+    .identity-input {
       width: 100%;
-      padding: 14px 12px;
-      border: 1px solid var(--line);
-      background: #0b0b10;
+      max-width: 390px;
+      display: block;
+      background: #101018;
       color: var(--text);
-      border-radius: 0;
+      border: 1px solid var(--line);
+      padding: 14px;
+      margin-top: 12px;
+      outline: none;
     }
 
-    input::placeholder { color: #5f5b68; }
+    .identity-input:focus { border-color: var(--gold); }
 
     .progress-track {
-      height: 2px;
-      background: #292631;
-      margin-top: 20px;
+      width: 100%;
+      height: 5px;
+      background: #292832;
+      margin: 20px 0 10px;
       overflow: hidden;
     }
 
@@ -197,404 +180,942 @@
       height: 100%;
       width: 0;
       background: var(--gold);
-      transition: width .4s;
+      transition: width .4s ease;
     }
 
     .case-list {
       display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 10px;
-      margin: 22px 0;
+      margin-top: 20px;
     }
 
-    .case {
+    .case-tile {
+      padding: 15px;
       border: 1px solid var(--line);
-      padding: 13px 14px;
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      color: #777381;
+      color: var(--muted);
       font-size: 12px;
     }
 
-    .locked { color: var(--red); }
+    .case-tile.done {
+      border-color: #6c8d70;
+      color: #a8d1ac;
+    }
 
-    .cursor::after {
-      content: "▋";
+    .case-tile.current {
+      border-color: var(--gold);
       color: var(--gold);
-      animation: blink 1s steps(2, start) infinite;
-      margin-left: 4px;
     }
 
-    .glitch { animation: glitch .28s linear 2; }
-
-    @keyframes blink {
-      to { visibility: hidden; }
+    /* Восстановление файла */
+    .file-window {
+      border: 1px solid var(--line);
+      background: #101018;
+      padding: 22px;
+      margin: 22px 0;
     }
 
-    @keyframes glitch {
-      0% { transform: translateX(0); opacity: 1; }
-      25% { transform: translateX(-3px); opacity: .75; }
-      50% { transform: translateX(3px); opacity: 1; }
-      75% { transform: translateX(-2px); opacity: .8; }
-      100% { transform: translateX(0); opacity: 1; }
+    .file-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 11px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 12px;
     }
 
-    @media (max-width: 480px) {
-      .topbar {
-        padding: 12px;
-        font-size: 9px;
-        letter-spacing: .6px;
-      }
+    .silhouettes {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin: 25px 0 10px;
+    }
 
-      .content { min-height: 420px; }
+    .silhouette {
+      min-height: 125px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #33313d;
+      background: radial-gradient(ellipse, #292530, #101018 72%);
+      color: #bdb4c1;
+      opacity: 0;
+      animation: materialize .8s ease forwards;
+    }
 
-      .actions { flex-direction: column; }
+    .silhouette:nth-child(2) { animation-delay: .2s; }
+    .silhouette:nth-child(3) { animation-delay: .4s; }
+    .silhouette:nth-child(4) { animation-delay: .6s; }
 
-      .btn { width: 100%; }
+    @keyframes materialize {
+      0% { opacity: 0; filter: blur(8px); transform: translateY(5px); }
+      65% { opacity: .75; filter: blur(1px); }
+      100% { opacity: 1; filter: blur(0); transform: translateY(0); }
+    }
+
+    .silhouette-symbol {
+      font-size: clamp(29px, 6vw, 49px);
+      line-height: 1.3;
+      text-shadow: 0 0 15px rgba(215, 184, 121, .25);
+    }
+
+    .silhouette-name {
+      margin-top: 8px;
+      font-size: 10px;
+      letter-spacing: 1px;
+      color: var(--muted);
+    }
+
+    .mischief {
+      color: var(--gold);
+      text-align: center;
+      letter-spacing: 2px;
+      margin-top: 28px;
+      font-size: clamp(15px, 3vw, 21px);
+      animation: appear 1s ease both;
+    }
+
+    /* Карта Хогвартса */
+    body.map-mode {
+      background: #21190f;
+    }
+
+    .parchment {
+      position: relative;
+      overflow: hidden;
+      padding: 23px;
+      color: var(--ink);
+      background:
+        radial-gradient(ellipse at 20% 20%, rgba(255,255,255,.38), transparent 38%),
+        radial-gradient(ellipse at 80% 75%, rgba(118,75,32,.12), transparent 42%),
+        repeating-linear-gradient(4deg, rgba(83,54,30,.025) 0 2px, transparent 2px 5px),
+        var(--parchment);
+      border: 5px double #9b7950;
+      box-shadow: 0 15px 40px rgba(0,0,0,.28);
+    }
+
+    .map-heading {
+      text-align: center;
+      letter-spacing: 2px;
+      font-size: 12px;
+      margin-bottom: 18px;
+    }
+
+    .map-canvas {
+      min-height: 300px;
+      position: relative;
+      border: 1px dashed rgba(71,54,38,.45);
+      background:
+        linear-gradient(25deg, transparent 48%, rgba(71,54,38,.12) 49%, transparent 50%),
+        linear-gradient(150deg, transparent 48%, rgba(71,54,38,.1) 49%, transparent 50%);
+    }
+
+    .map-path {
+      position: absolute;
+      border: 2px dashed rgba(71,54,38,.55);
+      border-radius: 50%;
+      transform: rotate(-24deg);
+    }
+
+    .path-one { width: 65%; height: 48%; left: 5%; top: 24%; }
+    .path-two { width: 42%; height: 75%; right: 4%; top: 10%; transform: rotate(31deg); }
+
+    .map-note {
+      position: absolute;
+      font-family: Georgia, serif;
+      font-size: 12px;
+      font-style: italic;
+      color: #715337;
+      transform: rotate(-8deg);
+    }
+
+    .note-one { top: 12%; left: 8%; }
+    .note-two { right: 7%; bottom: 9%; transform: rotate(7deg); }
+
+    .tower {
+      position: absolute;
+      left: 50%;
+      top: 48%;
+      transform: translate(-50%, -50%);
+      width: 142px;
+      min-height: 90px;
+      padding: 12px 8px;
+      background: rgba(232,213,173,.94);
+      color: #473626;
+      border: 2px solid #725333;
+      font-family: Georgia, serif;
+      font-size: 14px;
+      line-height: 1.4;
+      box-shadow: 0 0 0 4px rgba(114,83,51,.13);
+    }
+
+    .tower:hover, .tower:focus-visible {
+      color: #2f1e11;
+      border-color: #a34535;
+      box-shadow: 0 0 0 5px rgba(163,69,53,.18);
+    }
+
+    .map-hint {
+      color: #604a31;
+      text-align: center;
+      font-family: Georgia, serif;
+      font-style: italic;
+      margin: 17px 0 0;
+      font-size: 14px;
+    }
+
+    /* Гостиная */
+    body.room-mode {
+      background:
+        radial-gradient(ellipse at 50% 20%, rgba(177,95,43,.3), transparent 60%),
+        #21120f;
+    }
+
+    .room {
+      border: 1px solid #68422e;
+      padding: 20px;
+      background: linear-gradient(180deg, rgba(75,35,25,.7), rgba(27,18,18,.96));
+    }
+
+    .room-scene {
+      position: relative;
+      overflow: hidden;
+      min-height: 145px;
+      margin-bottom: 22px;
+      border: 1px solid rgba(215,184,121,.2);
+      background:
+        radial-gradient(ellipse at 50% 80%, rgba(236,129,54,.28), transparent 25%),
+        linear-gradient(90deg, #321c1b, #593225 48%, #321c1b);
+    }
+
+    .fireplace {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 100px;
+      border: 7px solid #4a2920;
+      border-bottom: 0;
+      border-radius: 45px 45px 0 0;
+      background: radial-gradient(ellipse at 50% 100%, #ffd67a 0%, #e86d31 28%, #7c2e25 62%, #281617 75%);
+      box-shadow: 0 0 28px rgba(245,132,54,.2);
+    }
+
+    .fireplace::before {
+      content: "";
+      position: absolute;
+      width: 35px;
+      height: 58px;
+      left: 25px;
+      bottom: 0;
+      background: linear-gradient(0deg, #ffdc84, #ef6b2f, transparent);
+      clip-path: polygon(50% 0, 95% 55%, 76% 100%, 20% 100%, 0 55%);
+      animation: flame .9s ease-in-out infinite alternate;
+    }
+
+    @keyframes flame {
+      from { transform: scaleY(.82) skewX(-3deg); }
+      to { transform: scaleY(1.05) skewX(3deg); }
+    }
+
+    .room-label {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      font-family: Georgia, serif;
+      color: #e4cba0;
+      font-size: 13px;
+      font-style: italic;
+    }
+
+    .characters {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin: 18px 0;
+    }
+
+    .character {
+      min-width: 0;
+      padding: 12px 7px;
+      text-align: center;
+      border: 1px solid #604239;
+      background: rgba(16,10,12,.42);
+      color: #c4a99a;
+      transition: .25s;
+    }
+
+    .character.active {
+      border-color: var(--gold);
+      background: rgba(149,92,46,.2);
+      box-shadow: 0 0 17px rgba(215,184,121,.13);
+      color: #f3dfb8;
+      transform: translateY(-3px);
+    }
+
+    .avatar {
+      width: 38px;
+      height: 54px;
+      margin: 0 auto 9px;
+      position: relative;
+      opacity: .8;
+    }
+
+    .avatar::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 10px;
+      width: 18px;
+      height: 20px;
+      border-radius: 50%;
+      background: #a88a78;
+      box-shadow: 0 0 0 3px rgba(215,184,121,.06);
+    }
+
+    .avatar::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 3px;
+      width: 32px;
+      height: 33px;
+      border-radius: 14px 14px 3px 3px;
+      background: #51322f;
+    }
+
+    .character:nth-child(2) .avatar::after { background: #292630; }
+    .character:nth-child(3) .avatar::after { background: #786149; }
+    .character:nth-child(4) .avatar::after { background: #38342f; }
+
+    .character-name {
+      font-size: 11px;
+      letter-spacing: .5px;
+    }
+
+    .dialogue {
+      border: 1px solid #68422e;
+      background: rgba(10,8,10,.55);
+      padding: 20px;
+      min-height: 140px;
+    }
+
+    .speaker {
+      color: var(--gold);
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      margin-bottom: 13px;
+    }
+
+    .line {
+      font-family: Georgia, serif;
+      font-size: clamp(18px, 3vw, 23px);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* Загадка */
+    .chocolate-scene {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 15px;
+      margin: 25px 0;
+    }
+
+    .treat {
+      min-height: 180px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 13px;
+      padding: 18px 10px;
+      background: #201611;
+      border: 1px solid #67462e;
+      color: #e6d0ad;
+    }
+
+    .frog {
+      font-size: 52px;
+      filter: drop-shadow(0 6px 5px rgba(0,0,0,.4));
+    }
+
+    .card-art {
+      width: 75px;
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 3px double #d7b879;
+      color: #e8d5ad;
+      background: linear-gradient(140deg, #503728, #17141a);
+      font-size: 27px;
+      box-shadow: 0 5px 12px rgba(0,0,0,.3);
+    }
+
+    .treat small { color: #b9a18a; font-size: 10px; }
+
+    .letters {
+      font-size: clamp(24px, 6vw, 34px);
+      letter-spacing: 7px;
+      color: var(--gold);
+      margin: 18px 0;
+      text-align: center;
+    }
+
+    .success-mark {
+      color: #a8d1ac;
+      letter-spacing: 1px;
+      margin: 14px 0;
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding-top: 13px;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      color: #777583;
+      font-size: 10px;
+    }
+
+    @media (max-width: 560px) {
+      #app { padding: 17px 12px 26px; }
+      main { padding: 30px 0; }
+      .silhouettes { gap: 6px; }
+      .silhouette { min-height: 100px; }
+      .silhouette-name { font-size: 8px; letter-spacing: 0; }
+      .parchment { padding: 12px; }
+      .map-canvas { min-height: 260px; }
+      .tower { width: 120px; font-size: 12px; }
+      .characters { gap: 5px; }
+      .character { padding: 10px 3px; }
+      .character-name { font-size: 9px; }
+      .avatar { transform: scale(.82); margin-bottom: 3px; }
+      .chocolate-scene { gap: 8px; }
+      .treat { min-height: 155px; }
+      .console { padding: 16px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
         animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
         transition-duration: .01ms !important;
       }
     }
   </style>
 </head>
-
 <body>
-  <main class="shell">
-    <header class="topbar">
-      <span>АРХИВ // ДЕЛО № 04</span>
-      <span class="status" id="systemStatus">СИСТЕМА ОЖИДАЕТ</span>
+  <div id="app">
+    <header>
+      <span><span class="status-dot"></span>АРХИВ НЕИЗВЕСТНЫХ СОБЫТИЙ</span>
+      <span id="headerCase">ДЕЛО № 001</span>
     </header>
-
-    <section class="content" id="screen" aria-live="polite">
-      <div class="eyebrow">СИСТЕМА // ВОССТАНОВЛЕНИЕ СОБЫТИЯ</div>
-      <div class="log cursor">инициализация...
-проверка базы данных...
-поиск...</div>
-    </section>
-  </main>
+    <main id="main"></main>
+    <footer>
+      <span>СИСТЕМА ВОССТАНОВЛЕНИЯ СОБЫТИЙ</span>
+      <span id="footerStatus">СОЕДИНЕНИЕ УСТАНОВЛЕНО</span>
+    </footer>
+  </div>
 
   <script>
-    const screen = document.getElementById("screen");
-    const systemStatus = document.getElementById("systemStatus");
-    const SAVE_KEY = "birthdayCaseProgress_v1";
+    const STORAGE_KEY = "birthdayCaseProgress_v1";
 
-    let saved = readSave();
-    let currentStage = saved.stage || "intro";
-    let playerName = saved.name || "";
-    let searchRunning = false;
+    const defaultState = {
+      stage: "intro",
+      name: "",
+      introStarted: false,
+      trace01Done: false,
+      fragment01: [],
+      dialogueIndex: 0,
+      errorCount: 0
+    };
 
-    function readSave() {
+    let state = loadState();
+
+    function loadState() {
       try {
-        return JSON.parse(localStorage.getItem(SAVE_KEY)) || {};
-      } catch {
-        return {};
-      }
-    }
-
-    function saveProgress(extra = {}) {
-      saved = {
-        ...saved,
-        ...extra,
-        stage: currentStage,
-        name: playerName
-      };
-
-      try {
-        localStorage.setItem(SAVE_KEY, JSON.stringify(saved));
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        return saved ? { ...defaultState, ...saved } : { ...defaultState };
       } catch (error) {
-        console.warn("Не удалось сохранить прогресс.", error);
+        return { ...defaultState };
       }
     }
 
-    function wait(ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     }
 
-    function setStatus(value) {
-      systemStatus.textContent = value;
+    const main = document.getElementById("main");
+
+    function setStage(stage) {
+      state.stage = stage;
+      saveState();
+      render();
     }
 
-    function show(content) {
-      screen.innerHTML = content;
+    function setTheme(theme) {
+      document.body.classList.remove("warm", "map-mode", "room-mode");
+      if (theme) document.body.classList.add(theme);
     }
 
-    function button(label, action) {
-      return `<button class="btn" type="button"
-        onclick="${action}">${label}</button>`;
+    function setFooter(text) {
+      document.getElementById("footerStatus").textContent = text;
     }
 
-    function escapeHtml(value) {
-      return String(value).replace(/[&<>"']/g, char => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#039;"
-      })[char]);
+    function render() {
+      setTheme("");
+      document.getElementById("headerCase").textContent = "ДЕЛО № 001";
+
+      switch (state.stage) {
+        case "intro": renderIntro(); break;
+        case "retry": renderRetry(); break;
+        case "search": renderSearch(); break;
+        case "identity": renderIdentity(); break;
+        case "case01_restore": renderRestore(); break;
+        case "case01_silhouettes": renderSilhouettes(); break;
+        case "case01_map": renderMap(); break;
+        case "case01_room": renderRoom(); break;
+        case "case01_dialogue": renderDialogue(); break;
+        case "case01_puzzle": renderPuzzle(); break;
+        case "case01_fragment": renderFragment(); break;
+        case "case01_done": renderDone(); break;
+        case "case02_locked": renderLocked(); break;
+        default:
+          state.stage = "intro";
+          saveState();
+          renderIntro();
+      }
     }
 
-    async function startIntro() {
-      if (searchRunning) return;
-      searchRunning = true;
-      currentStage = "intro";
-      saveProgress();
-
-      setStatus("СИСТЕМА ЗАПУЩЕНА");
-
-      show(`
-        <div class="eyebrow">СИСТЕМА // ВОССТАНОВЛЕНИЕ СОБЫТИЯ</div>
-        <div class="log cursor" id="bootLog">инициализация...
-проверка базы данных...
-поиск...</div>
-      `);
-
-      await wait(1500);
-
-      show(`
-        <div class="eyebrow">СИСТЕМА // ВОССТАНОВЛЕНИЕ СОБЫТИЯ</div>
-        <h1 class="error glitch">СИСТЕМНАЯ ОШИБКА</h1>
-        <p>Праздник не найден.</p>
-        <p class="small">Попробуйте ещё раз.</p>
-        <div class="actions">
-          ${button("[ ПОПРОБОВАТЬ ]", "retrySearch()")}
-        </div>
-      `);
-
-      setStatus("ОШИБКА");
-      searchRunning = false;
+    function renderIntro() {
+      setFooter("ОЖИДАНИЕ КОМАНДЫ");
+      main.innerHTML = `
+        <section class="screen">
+          <div class="eyebrow">СИСТЕМА // ВОССТАНОВЛЕНИЕ СОБЫТИЯ</div>
+          <div class="console">
+            <p>инициализация...</p>
+            <p>проверка базы данных...</p>
+            <p>поиск...</p>
+          </div>
+          <h1 class="red">СИСТЕМНАЯ ОШИБКА</h1>
+          <p>Праздник не найден.</p>
+          <p class="muted">Попробуйте ещё раз.</p>
+          <div class="actions">
+            <button class="primary" id="retryBtn">[ ПОПРОБОВАТЬ ]</button>
+          </div>
+        </section>`;
+      document.getElementById("retryBtn").onclick = () => setStage("retry");
     }
 
-    async function retrySearch() {
-      if (searchRunning) return;
-      searchRunning = true;
-      setStatus("ПОВТОРНЫЙ ПОИСК");
+    function renderRetry() {
+      setFooter("ПОВТОРНАЯ ПРОВЕРКА");
+      main.innerHTML = `
+        <section class="screen">
+          <div class="eyebrow">ПОВТОРНАЯ ПОПЫТКА...</div>
+          <div class="console">
+            <p>ПОВТОРНАЯ ПОПЫТКА...</p>
+            <p>...</p>
+            <p class="red">ОШИБКА.</p>
+            <p>Подождите.</p>
+            <p>ПЕРЕЗАПУСК ПОИСКА...</p>
+          </div>
+          <div class="actions">
+            <button class="primary" id="searchBtn">[ ПРОДОЛЖИТЬ ПОИСК ]</button>
+          </div>
+        </section>`;
+      document.getElementById("searchBtn").onclick = () => setStage("search");
+    }
 
-      show(`
-        <div class="eyebrow">ПОВТОРНАЯ ПОПЫТКА...</div>
-        <h2 class="error">ОШИБКА.</h2>
-        <p>Подождите.</p>
-        <p class="small">ПЕРЕЗАПУСК ПОИСКА...</p>
-        <div class="progress-track">
-          <div class="progress-fill" id="progressFill"></div>
-        </div>
-        <p class="gold" id="progressText">08%</p>
-        <div class="log" id="searchLog"></div>
-      `);
-
-      const steps = [
-        [8, ""],
-        [23, ""],
-        [41, ""],
-        [67, "Необычно большое количество данных."],
-        [94, ""],
-        [99, "Почему их четыре?"],
-        [100, "ПРАЗДНИК ОБНАРУЖЕН."]
+    function renderSearch() {
+      setFooter("ПОИСК СОБЫТИЯ");
+      const lines = [
+        ["08%", "Сканирование архива..."],
+        ["23%", "Поиск совпадений..."],
+        ["41%", "Анализ неизвестных данных..."],
+        ["67%", "Необычно большое количество данных."],
+        ["94%", "Почти готово..."],
+        ["99%", "Почему их четыре?"],
+        ["100%", "ПРАЗДНИК ОБНАРУЖЕН."]
       ];
+      let index = 0;
 
-      for (const [percent, message] of steps) {
-        await wait(percent === 99 ? 1000 : 430);
+      main.innerHTML = `
+        <section class="screen">
+          <div class="eyebrow">ПОИСК СОБЫТИЯ</div>
+          <h2 id="searchTitle">Сканирование архива...</h2>
+          <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+          <p class="muted" id="progressPercent">08%</p>
+          <div class="console" id="searchConsole"></div>
+          <div class="actions"><button class="primary" id="continueSearch" hidden>[ ПРОДОЛЖИТЬ ]</button></div>
+        </section>`;
 
-        const fill = document.getElementById("progressFill");
-        const text = document.getElementById("progressText");
-        const log = document.getElementById("searchLog");
+      const fill = document.getElementById("progressFill");
+      const title = document.getElementById("searchTitle");
+      const percent = document.getElementById("progressPercent");
+      const consoleBox = document.getElementById("searchConsole");
+      const next = document.getElementById("continueSearch");
 
-        if (!fill || !text || !log) {
-          searchRunning = false;
-          return;
-        }
-
-        fill.style.width = percent + "%";
-        text.textContent = String(percent).padStart(2, "0") + "%";
-
-        if (message) {
-          log.textContent += (log.textContent ? "\n" : "") + message;
+      function step() {
+        const item = lines[index];
+        fill.style.width = item[0];
+        percent.textContent = item[0];
+        title.textContent = item[1];
+        const p = document.createElement("p");
+        p.textContent = item[1];
+        if (item[1].includes("Почему")) p.className = "gold";
+        consoleBox.appendChild(p);
+        index++;
+        if (index < lines.length) {
+          window.setTimeout(step, 420);
+        } else {
+          next.hidden = false;
+          next.onclick = () => setStage("identity");
         }
       }
-
-      await wait(850);
-
-      show(`
-        <div class="eyebrow">РЕЗУЛЬТАТ ПОИСКА</div>
-        <div class="log">Проверка завершена.
-День рождения найден.
-...
-День рождения отсутствует.
-Анализ данных...
-Поиск причины исчезновения...
-...
-Причина установлена.</div>
-        <div class="rule"></div>
-        <h2 class="error">День рождения был украден.</h2>
-        <p>Обнаружено четыре следа.</p>
-        <p>Следы ведут к четырём неизвестным источникам.</p>
-        <p class="small">Идентификация источников невозможна.</p>
-
-        <div class="case-list">
-          <div class="case"><span>ДЕЛО 01</span><span class="locked">[ЗАБЛОКИРОВАНО]</span></div>
-          <div class="case"><span>ДЕЛО 02</span><span class="locked">[ЗАБЛОКИРОВАНО]</span></div>
-          <div class="case"><span>ДЕЛО 03</span><span class="locked">[ЗАБЛОКИРОВАНО]</span></div>
-          <div class="case"><span>ДЕЛО 04</span><span class="locked">[ЗАБЛОКИРОВАНО]</span></div>
-        </div>
-
-        <div class="actions">
-          ${button("[ ПРОДОЛЖИТЬ ]", "openIdentity()")}
-        </div>
-      `);
-
-      setStatus("СЛЕДСТВИЕ ОТКРЫТО");
-      searchRunning = false;
-    }
-
-    function openIdentity() {
-      currentStage = "identity";
-      saved.introFinished = true;
-      saveProgress();
-      renderIdentity();
+      step();
     }
 
     function renderIdentity() {
-      setStatus("ОЖИДАНИЕ ИДЕНТИФИКАЦИИ");
+      setFooter("ТРЕБУЕТСЯ ИДЕНТИФИКАЦИЯ");
+      main.innerHTML = `
+        <section class="screen">
+          <div class="eyebrow">ПРОВЕРКА ОБНАРУЖЕННОГО СОБЫТИЯ</div>
+          <div class="console">
+            <p>Проверка завершена.</p>
+            <p>День рождения найден.</p>
+            <p>...</p>
+            <p class="red">День рождения отсутствует.</p>
+            <p>Анализ данных...</p>
+            <p>Поиск причины исчезновения...</p>
+            <p>...</p>
+            <p>Причина установлена.</p>
+            <p class="red">День рождения был украден.</p>
+            <p>Обнаружено четыре следа.</p>
+            <p>Следы ведут к четырём неизвестным источникам.</p>
+            <p>Идентификация источников невозможна.</p>
+          </div>
+          <div class="case-list">
+            <div class="case-tile">СЛЕД 01<br>[ ЗАБЛОКИРОВАНО ]</div>
+            <div class="case-tile">СЛЕД 02<br>[ ЗАБЛОКИРОВАНО ]</div>
+            <div class="case-tile">СЛЕД 03<br>[ ЗАБЛОКИРОВАНО ]</div>
+            <div class="case-tile">СЛЕД 04<br>[ ЗАБЛОКИРОВАНО ]</div>
+          </div>
+          <p>Введите имя:</p>
+          <input class="identity-input" id="nameInput" maxlength="50" placeholder="Имя" autocomplete="off">
+          <div class="actions"><button class="primary" id="verifyBtn">[ ПОДТВЕРДИТЬ ]</button></div>
+          <p class="muted" id="identityMessage"></p>
+        </section>`;
 
-      show(`
-        <div class="eyebrow">ПРОТОКОЛ 01 // ИДЕНТИФИКАЦИЯ</div>
-        <h2>Установите личность пользователя.</h2>
-        <p>Для доступа к материалам дела необходимо подтвердить личность.</p>
-
-        <label class="field-label" for="playerName">Введите имя:</label>
-        <input id="playerName" maxlength="40"
-          autocomplete="given-name"
-          placeholder="Ваше имя..."
-          value="${escapeHtml(playerName)}">
-
-        <div id="identityFeedback" class="log"></div>
-
-        <div class="actions">
-          ${button("[ ПОДТВЕРДИТЬ ]", "checkIdentity()")}
-        </div>
-        <p class="small">Доступ к следам ограничен.</p>
-      `);
-
-      const field = document.getElementById("playerName");
-
-      field.addEventListener("keydown", event => {
-        if (event.key === "Enter") checkIdentity();
+      const input = document.getElementById("nameInput");
+      input.value = state.name || "";
+      input.addEventListener("keydown", event => {
+        if (event.key === "Enter") verifyName();
       });
+      document.getElementById("verifyBtn").onclick = verifyName;
 
-      field.focus();
-    }
-
-    function checkIdentity() {
-      const field = document.getElementById("playerName");
-      const feedback = document.getElementById("identityFeedback");
-
-      if (!field || !feedback) return;
-
-      const enteredName = field.value.trim();
-
-      if (!enteredName) {
-        feedback.textContent = "Поле не может быть пустым.";
-        field.focus();
-        return;
+      function verifyName() {
+        const name = input.value.trim();
+        const message = document.getElementById("identityMessage");
+        if (!name) {
+          message.innerHTML = "Проверка личности...<br>Сопоставление данных...<br>...<br><span class='red'>Нет.</span><br>Личность не подтверждена. Попробуйте ещё раз.";
+          return;
+        }
+        state.name = name;
+        saveState();
+        main.innerHTML = `
+          <section class="screen">
+            <div class="eyebrow">ИДЕНТИФИКАЦИЯ ЗАВЕРШЕНА</div>
+            <div class="console">
+              <p class="gold">Доступ разрешён.</p>
+              <p>Перейти к следу 01?</p>
+            </div>
+            <div class="actions"><button class="primary" id="openTrace">[ СЛЕД 01 ]</button></div>
+          </section>`;
+        document.getElementById("openTrace").onclick = () => setStage("case01_restore");
       }
+    }
 
-      /*
-        Временный режим: принимается любое непустое имя.
-        Позже настроим проверку по точному имени именинницы.
-      */
+    function renderRestore() {
+      setFooter("ВОССТАНОВЛЕНИЕ ФАЙЛА");
+      main.innerHTML = `
+        <section class="screen">
+          <div class="eyebrow">СЛЕД 01 // ФАЙЛ ПОВРЕЖДЁН</div>
+          <h1>Восстановление данных</h1>
+          <p class="muted">Обнаружен фрагмент старого магического файла.</p>
+          <div class="file-window">
+            <div class="file-top"><span>marauders_trace_01.dat</span><span id="restorePercent">0%</span></div>
+            <div class="progress-track"><div class="progress-fill" id="restoreFill"></div></div>
+            <div class="console" id="restoreLines">
+              <p>Проверка целостности...</p>
+            </div>
+          </div>
+          <div class="actions"><button class="primary" id="restoreBtn">[ ВОССТАНОВИТЬ ФАЙЛ ]</button></div>
+        </section>`;
+      document.getElementById("restoreBtn").onclick = () => {
+        let n = 0;
+        const btn = document.getElementById("restoreBtn");
+        btn.disabled = true;
+        const fill = document.getElementById("restoreFill");
+        const percent = document.getElementById("restorePercent");
+        const lines = document.getElementById("restoreLines");
+        const messages = [
+          "Поиск повреждённых участков...",
+          "Восстановление магических следов...",
+          "Четыре источника обнаружены.",
+          "Файл восстановлен."
+        ];
+        function tick() {
+          n++;
+          fill.style.width = (n * 25) + "%";
+          percent.textContent = (n * 25) + "%";
+          const p = document.createElement("p");
+          p.textContent = messages[n - 1];
+          lines.appendChild(p);
+          if (n < 4) {
+            window.setTimeout(tick, 450);
+          } else {
+            window.setTimeout(() => setStage("case01_silhouettes"), 500);
+          }
+        }
+        tick();
+      };
+    }
 
-      playerName = enteredName;
-      currentStage = "case01";
+    function renderSilhouettes() {
+      setFooter("ФАЙЛ ВОССТАНОВЛЕН");
+      main.innerHTML = `
+        <section class="screen">
+          <div class="eyebrow">СЛЕД 01 // НЕИЗВЕСТНЫЕ ФИГУРЫ</div>
+          <h1>Четыре силуэта</h1>
+          <p class="muted">Файл восстановлен. Имена источников пока не определены.</p>
+          <div class="file-window">
+            <div class="file-top"><span>ОБНАРУЖЕНЫ МАГИЧЕСКИЕ ОТПЕЧАТКИ</span><span>4/4</span></div>
+            <div class="silhouettes">
+              <div class="silhouette"><div class="silhouette-symbol">♞</div><div class="silhouette-name">ОЛЕНЬ</div></div>
+              <div class="silhouette"><div class="silhouette-symbol">♟</div><div class="silhouette-name">ВОЛК</div></div>
+              <div class="silhouette"><div class="silhouette-symbol">♜</div><div class="silhouette-name">СОБАКА</div></div>
+              <div class="silhouette"><div class="silhouette-symbol">♣</div><div class="silhouette-name">КРЫСА</div></div>
+            </div>
+            <div class="mischief">Шалость удалась.</div>
+          </div>
+          <div class="actions"><button class="primary" id="mapBtn">[ ОТКРЫТЬ КАРТУ ]</button></div>
+        </section>`;
+      document.getElementById("mapBtn").onclick = () => setStage("case01_map");
+    }
 
-      saveProgress({
-        introFinished: true,
-        name: playerName
+    function renderMap() {
+      setTheme("map-mode");
+      setFooter("КАРТА ХОГВАРТСА");
+      main.innerHTML = `
+        <section class="screen">
+          <div class="eyebrow">СЛЕД 01 // МЕСТО ОБНАРУЖЕНИЯ</div>
+          <h1>Карта Хогвартса</h1>
+          <p class="muted">Чернильные линии складываются в знакомые коридоры. Среди пометок кто-то оставил маршрут.</p>
+          <div class="parchment">
+            <div class="map-heading">КАРТА ШКОЛЫ ЧАР И ВОЛШЕБСТВА</div>
+            <div class="map-canvas">
+              <div class="map-path path-one"></div>
+              <div class="map-path path-two"></div>
+              <div class="map-note note-one">сюда не ходить после отбоя</div>
+              <div class="map-note note-two">почти незаметный проход...</div>
+              <button class="tower" id="towerBtn">♜<br>Башня<br>Гриффиндора</button>
+            </div>
+            <p class="map-hint">Некоторые двери открываются только тем, кто знает, куда смотреть.</p>
+          </div>
+          <div class="actions"><button id="towerBtn2">[ ИДТИ К БАШНЕ ГРИФФИНДОРА ]</button></div>
+        </section>`;
+      document.getElementById("towerBtn").onclick = () => setStage("case01_room");
+      document.getElementById("towerBtn2").onclick = () => setStage("case01_room");
+    }
+
+    const dialogue = [
+      { who: "Джеймс", text: "Мы хотели сделать одну вещь." },
+      { who: "Сириус", text: "Хорошую вещь." },
+      { who: "Питер", text: "Очень хорошую." },
+      { who: "Джеймс", text: "Но заклинание немного..." },
+      { who: "Сириус", text: "Сильно." },
+      { who: "Питер", text: "Очень сильно пошло не туда." },
+      { who: "Римус", text: "Вы перепутали два заклинания." },
+      { who: "Джеймс", text: "Это техническая деталь." }
+    ];
+
+    function renderRoom() {
+      setTheme("room-mode");
+      setFooter("СВЯЗЬ С ИСТОЧНИКОМ УСТАНОВЛЕНА");
+      state.dialogueIndex = 0;
+      saveState();
+      main.innerHTML = `
+        <section class="screen">
+          <div class="eyebrow">СЛЕД 01 // БАШНЯ ГРИФФИНДОРА</div>
+          <h1>Гостиная Гриффиндора</h1>
+          <div class="room">
+            <div class="room-scene">
+              <div class="room-label">Поздний вечер. Камин ещё горит.</div>
+              <div class="fireplace"></div>
+            </div>
+            <p class="muted">У огня собрались четверо. Судя по выражениям лиц, кто-то из них определённо что-то натворил.</p>
+            <div class="characters" id="characters">
+              <div class="character" data-name="Джеймс"><div class="avatar"></div><div class="character-name">Джеймс</div></div>
+              <div class="character" data-name="Сириус"><div class="avatar"></div><div class="character-name">Сириус</div></div>
+              <div class="character" data-name="Римус"><div class="avatar"></div><div class="character-name">Римус</div></div>
+              <div class="character" data-name="Питер"><div class="avatar"></div><div class="character-name">Питер</div></div>
+            </div>
+            <div class="dialogue">
+              <div class="speaker" id="speaker">ДЖЕЙМС</div>
+              <p class="line" id="line">Мы хотели сделать одну вещь.</p>
+            </div>
+            <div class="actions"><button class="primary" id="nextLine">[ ДАЛЬШЕ ]</button></div>
+          </div>
+        </section>`;
+      document.getElementById("nextLine").onclick = advanceDialogue;
+      updateDialogue();
+    }
+
+    function advanceDialogue() {
+      if (state.dialogueIndex < dialogue.length - 1) {
+        state.dialogueIndex++;
+        saveState();
+        updateDialogue();
+      } else {
+        setStage("case01_puzzle");
+      }
+    }
+
+    function updateDialogue() {
+      const item = dialogue[state.dialogueIndex];
+      document.getElementById("speaker").textContent = item.who.toUpperCase();
+      document.getElementById("line").textContent = item.text;
+      document.querySelectorAll(".character").forEach(el => {
+        el.classList.toggle("active", el.dataset.name === item.who);
       });
-
-      setStatus("ДОСТУП РАЗРЕШЁН");
-
-      show(`
-        <div class="eyebrow">ЛИЧНОСТЬ ПОДТВЕРЖДЕНА</div>
-        <h1 class="gold">Доступ разрешён.</h1>
-        <p>Перейти к следу 01?</p>
-        <div class="rule"></div>
-        <p class="small">Пользователь: ${escapeHtml(playerName)}</p>
-        <div class="actions">
-          ${button("[ СЛЕД 01 ]", "openCase01()")}
-        </div>
-      `);
+      const button = document.getElementById("nextLine");
+      button.textContent = state.dialogueIndex === dialogue.length - 1
+        ? "[ К ЗАГАДКЕ ]"
+        : "[ ДАЛЬШЕ ]";
     }
 
-    function openCase01() {
-      currentStage = "case01";
-      saveProgress();
-      renderCase01();
+    function renderPuzzle() {
+      setTheme("room-mode");
+      setFooter("ОБНАРУЖЕН ПРЕДМЕТ");
+      main.innerHTML = `
+        <section class="screen">
+          <div class="eyebrow">СЛЕД 01 // НЕОПОЗНАННЫЙ ПРЕДМЕТ</div>
+          <h1>Что-то осталось после заклинания</h1>
+          <p>На столике у камина лежит шоколадная лягушка. Рядом — коллекционная карточка. Кажется, кто-то очень старался сделать подарок и слегка перестарался.</p>
+          <div class="chocolate-scene">
+            <button class="treat" id="frogBtn">
+              <span class="frog">🐸</span>
+              <span>Шоколадная лягушка</span>
+              <small>Выглядит подозрительно довольной</small>
+            </button>
+            <button class="treat" id="cardBtn">
+              <span class="card-art">✦</span>
+              <span>Коллекционная карточка</span>
+              <small>На обороте что-то написано</small>
+            </button>
+          </div>
+          <div class="console" id="clueBox"><p class="muted">Выбери предмет, чтобы осмотреть его.</p></div>
+          <div class="actions"><button class="primary" id="takeFragment" hidden>[ ЗАБРАТЬ ФРАГМЕНТ ]</button></div>
+        </section>`;
+      document.getElementById("frogBtn").onclick = () => {
+        document.getElementById("clueBox").innerHTML =
+          "<p>Лягушка делает небольшой прыжок и замирает, будто ничего не произошло.</p><p class='gold'>Под ней обнаружилась карточка!</p>";
+      };
+      document.getElementById("cardBtn").onclick = () => {
+        document.getElementById("clueBox").innerHTML =
+          "<p>На коллекционной карточке пять букв:</p><div class='letters'>G · E · M · I · N</div><p class='muted'>Порядок букв ещё ничего не объясняет. Это фрагмент, а не готовый ответ.</p>";
+        document.getElementById("takeFragment").hidden = false;
+      };
+      document.getElementById("takeFragment").onclick = () => {
+        state.fragment01 = ["G", "E", "M", "I", "N"];
+        saveState();
+        setStage("case01_fragment");
+      };
     }
 
-    function renderCase01() {
-      setStatus("СЛЕДСТВИЕ ПРОДОЛЖАЕТСЯ");
-
-      show(`
-        <div class="eyebrow">ДЕЛО 01 // МАРОДЁРЫ</div>
-        <h1 class="gold">След обнаружен.</h1>
-        <p>Доступ разрешён, ${escapeHtml(playerName)}.</p>
-        <p>Здесь начнётся история Мародёров: восстановление файла, карта Хогвартса и путь в гостиную Гриффиндора.</p>
-        <div class="rule"></div>
-        <p class="small">Изображения пока не добавлены. Мы подготовим для них отдельные места.</p>
-        <div class="actions">
-          ${button("[ ПРОСМОТРЕТЬ ПРОЛОГ ]", "startIntro()")}
-        </div>
-      `);
+    function renderFragment() {
+      setTheme("room-mode");
+      setFooter("ФРАГМЕНТ ПОЛУЧЕН");
+      main.innerHTML = `
+        <section class="screen">
+          <div class="eyebrow">СЛЕД 01 // ФРАГМЕНТ ОБНАРУЖЕН</div>
+          <div class="room">
+            <div class="characters">
+              <div class="character active"><div class="avatar"></div><div class="character-name">Джеймс</div></div>
+              <div class="character"><div class="avatar"></div><div class="character-name">Сириус</div></div>
+              <div class="character"><div class="avatar"></div><div class="character-name">Римус</div></div>
+              <div class="character"><div class="avatar"></div><div class="character-name">Питер</div></div>
+            </div>
+            <div class="dialogue">
+              <div class="speaker">ДЖЕЙМС</div>
+              <p class="line">Всё для тебя.</p>
+            </div>
+            <div class="console">
+              <p class="success-mark">СЛЕД 01 [ПРОЙДЕН ✓]</p>
+              <p>СЛЕД 02 [🔒]</p>
+              <p>СЛЕД 03 [🔒]</p>
+              <p>СЛЕД 04 [🔒]</p>
+              <p class="gold">След 01 восстановлен.</p>
+              <p>Фрагмент получен.</p>
+              <p>Доступ к следу 02 разрешён.</p>
+            </div>
+            <div class="actions"><button class="primary" id="finishTrace">[ ПРОДОЛЖИТЬ ]</button></div>
+          </div>
+        </section>`;
+      document.getElementById("finishTrace").onclick = () => {
+        state.trace01Done = true;
+        saveState();
+        setStage("case01_done");
+      };
     }
 
-    function renderArchive() {
-      setStatus("АРХИВ");
-
-      show(`
-        <div class="eyebrow">АРХИВ // ДЕЛО № 04</div>
-        <h1>Архив дела</h1>
-        <p>Материалы расследования будут собраны здесь.</p>
-        <div class="case-list">
-          <div class="case"><span>СЛЕД 01 — МАРОДЁРЫ</span><span>${saved.case01Done ? "[ПРОЙДЕН]" : "[ЗАКРЫТ]"}</span></div>
-          <div class="case"><span>СЛЕД 02 — УОРНЕР</span><span>${saved.case02Done ? "[ПРОЙДЕН]" : "[ЗАКРЫТ]"}</span></div>
-          <div class="case"><span>СЛЕД 03 — АНДЕРСОН</span><span>${saved.case03Done ? "[ПРОЙДЕН]" : "[ЗАКРЫТ]"}</span></div>
-          <div class="case"><span>СЛЕД 04 — РУДИ И ЯН</span><span>${saved.case04Done ? "[ПРОЙДЕН]" : "[ЗАКРЫТ]"}</span></div>
-        </div>
-        <div class="actions">
-          ${button("[ НАЗАД ]", "goBackFromArchive()")}
-        </div>
-      `);
+    function renderDone() {
+      setFooter("СЛЕД 01 ЗАВЕРШЁН");
+      main.innerHTML = `
+        <section class="screen">
+          <div class="eyebrow">ДЕЛО № 001 // СТАТУС ОБНОВЛЁН</div>
+          <h1>След 01 восстановлен.</h1>
+          <p>Первый фрагмент сохранён в архиве. Часть данных всё ещё скрыта.</p>
+          <div class="case-list">
+            <div class="case-tile done">СЛЕД 01<br>[ ПРОЙДЕН ✓ ]</div>
+            <div class="case-tile current">СЛЕД 02<br>[ ДОСТУПЕН ПО ДАННЫМ ]</div>
+            <div class="case-tile">СЛЕД 03<br>[ 🔒 ]</div>
+            <div class="case-tile">СЛЕД 04<br>[ 🔒 ]</div>
+          </div>
+          <div class="console">
+            <p class="success-mark">Фрагмент получен.</p>
+            <p>Доступ к следующему делу разрешён.</p>
+          </div>
+          <div class="actions"><button class="primary" id="nextTrace">[ СЛЕД 02 ]</button></div>
+        </section>`;
+      document.getElementById("nextTrace").onclick = () => setStage("case02_locked");
     }
 
-    function openArchive() {
-      saved.stageBeforeArchive = currentStage;
-      currentStage = "archive";
-      saveProgress();
-      renderArchive();
+    function renderLocked() {
+      setFooter("СЛЕДУЮЩИЙ ЭТАП ЕЩЁ НЕ ДОБАВЛЕН");
+      main.innerHTML = `
+        <section class="screen">
+          <div class="eyebrow">СЛЕД 02 // АРХИВИРУЕТСЯ</div>
+          <h1>Источник найден.</h1>
+          <div class="console">
+            <p>Данные следующего следа пока не восстановлены.</p>
+            <p class="muted">Это временная остановка. След 02 будет добавлен на следующем этапе.</p>
+          </div>
+          <div class="actions">
+            <button class="primary" id="backToTrace">[ ВЕРНУТЬСЯ К СЛЕДУ 01 ]</button>
+          </div>
+        </section>`;
+      document.getElementById("backToTrace").onclick = () => setStage("case01_done");
     }
 
-    function goBackFromArchive() {
-      currentStage = saved.stageBeforeArchive || "case01";
-      saveProgress();
-
-      if (currentStage === "identity") renderIdentity();
-      else if (currentStage === "intro") startIntro();
-      else renderCase01();
-    }
-
-    // Восстанавливаем сохранённый этап при повторном открытии.
-    if (currentStage === "archive") {
-      renderArchive();
-    } else if (currentStage === "identity") {
-      renderIdentity();
-    } else if (currentStage === "case01") {
-      renderCase01();
-    } else {
-      startIntro();
-    }
+    // Возвращаемся к сохранённому этапу, а не начинаем всё сначала.
+    render();
   </script>
 </body>
 </html>

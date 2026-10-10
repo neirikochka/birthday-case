@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -711,12 +710,23 @@
         case "case02_puzzle": renderAaronPuzzle(); break;
         case "case02_fragment": renderAaronFragment(); break;
                 case "case02_done": renderAaronDone(); break;
+        
         case "case03_locked": renderLocked(); break;
         case "case03_dialogue": renderJamesDialogue(); break;
         case "case03_puzzle": renderJamesPuzzle(); break;
         case "case03_fragment": renderJamesFragment(); break;
         case "case03_reveal": renderJamesReveal(); break;
         case "case03_done": renderJamesDone(); break;
+        case "case04_intro": renderRudyYanIntro(); break;
+        case "case04_dialogue": renderRudyYanDialogue(); break;
+        case "case04_book": renderRudyYanBook(); break;
+        case "case04_fragment": renderRudyYanFragment(); break;
+                case "case04_done": renderRudyYanDone(); break;
+                case "final_code": renderFinalCode(); break;
+        case "final_intro": renderFinalIntro(); break;
+        case "final_characters": renderFinalCharacters(); break;
+        case "final_letter": renderFinalLetter(); break;
+        case "final_end": renderFinalEnd(); break;
         default:
           state.stage = "intro";
           saveState();
@@ -1717,6 +1727,7 @@ function renderJamesReveal() {
   };
 }
 
+
 function renderJamesDone() {
   setFooter("СЛЕД 03 // ПРОЙДЕН");
 
@@ -1733,16 +1744,426 @@ function renderJamesDone() {
         <div class="case-tile done">СЛЕД 01<br>[ ПРОЙДЕН ✓ ]</div>
         <div class="case-tile done">СЛЕД 02<br>[ ПРОЙДЕН ✓ ]</div>
         <div class="case-tile done">СЛЕД 03<br>[ ПРОЙДЕН ✓ ]</div>
-        <div class="case-tile current">СЛЕД 04<br>[ ДОСТУПЕН ]</div>
+        <button class="case-tile current" id="openTrace04">
+          СЛЕД 04<br>[ ДОСТУПЕН ]
+        </button>
       </div>
       <div class="actions">
         <button class="primary" id="backToAaron">[ ВЕРНУТЬСЯ К ААРОНУ ]</button>
       </div>
     </section>`;
 
+  document.getElementById("openTrace04").onclick = () => setStage("case04_intro");
   document.getElementById("backToAaron").onclick = () => setStage("case02_done");
 }
 
+
+function renderRudyYanIntro() {
+  setFooter("СЛЕД 04 // РУДИ И ЯН");
+
+  main.innerHTML = `
+    <section class="screen">
+      <div class="eyebrow">СЛЕД 04 // ИСТОЧНИК ОБНАРУЖЕН</div>
+      <h1>Два знакомых лица.</h1>
+      <div class="console">
+        <p>Руди и Ян явно ждали твоего появления.</p>
+        <p>Один из них держит конверт. Второй, кажется, уже приготовил какой-то вопрос.</p>
+        <p>Судя по их выражениям, просто забрать подарок не получится.</p>
+      </div>
+      <div class="actions">
+        <button class="primary" id="meetRudyYan">[ ПОДОЙТИ ]</button>
+      </div>
+    </section>`;
+
+  document.getElementById("meetRudyYan").onclick = () => {
+    setStage("case04_dialogue");
+  };
+}
+
+function renderRudyYanDialogue() {
+  setFooter("СЛЕД 04 // ВСТРЕЧА");
+
+  main.innerHTML = `
+    <section class="screen">
+      <div class="eyebrow">РУДИ И ЯН</div>
+      <div class="console">
+        <p><strong>Руди:</strong> Мы тут кое-что для тебя приготовили.</p>
+        <p><strong>Ян:</strong> Но сначала один очень важный вопрос.</p>
+        <p><strong>Руди и Ян:</strong> Когда свадьба с Эдрианом?</p>
+      </div>
+      <label for="weddingAnswer">Твой ответ:</label>
+      <textarea id="weddingAnswer" rows="3"
+        placeholder="Ну что ты им ответишь?"></textarea>
+      <div class="actions">
+        <button class="primary" id="answerWedding">[ ОТВЕТИТЬ ]</button>
+      </div>
+    </section>`;
+
+  document.getElementById("answerWedding").onclick = () => {
+    const answer = document.getElementById("weddingAnswer").value.trim();
+
+    if (!answer) {
+      document.getElementById("weddingAnswer").focus();
+      return;
+    }
+
+    state.weddingAnswer = answer;
+    saveState();
+
+    main.innerHTML = `
+      <section class="screen">
+        <div class="eyebrow">ОТВЕТ ПРИНЯТ</div>
+        <h1>Так и запишем.</h1>
+        <div class="console">
+          <p><strong>Руди:</strong> Ну вот, теперь мы всё знаем.</p>
+          <p><strong>Ян:</strong> Не уверен, что мы узнали хоть что-то.</p>
+          <p><strong>Руди:</strong> Зато подарок у нас действительно есть.</p>
+          <p>Они протягивают тебе книгу с шоколадкой на обложке.</p>
+        </div>
+        <div class="actions">
+          <button class="primary" id="openGiftBook">[ ОТКРЫТЬ КНИГУ ]</button>
+        </div>
+      </section>`;
+
+    document.getElementById("openGiftBook").onclick = () => {
+      setStage("case04_book");
+    };
+  };
+}
+
+function renderRudyYanBook() {
+  setFooter("СЛЕД 04 // ПОДАРОК");
+
+  main.innerHTML = `
+    <section class="screen">
+      <div class="eyebrow">ОБНАРУЖЕН ОБЪЕКТ</div>
+      <h1>Книга с сюрпризом.</h1>
+      <p class="muted">На обложке нарисована шоколадка. Что же спрятано внутри?</p>
+
+      <button class="book-object" id="openBookPage"
+        aria-label="Открыть книгу">
+        <span class="book-cover">
+          <span class="book-chocolate">▰</span>
+          <span>Сладкие секреты</span>
+        </span>
+      </button>
+
+      <div class="actions">
+        <button class="primary" id="turnBookPage">[ ОТКРЫТЬ КНИГУ ]</button>
+      </div>
+    </section>`;
+
+  const openPage = () => setStage("case04_fragment");
+
+  document.getElementById("openBookPage").onclick = openPage;
+  document.getElementById("turnBookPage").onclick = openPage;
+}
+
+function renderRudyYanFragment() {
+  setFooter("СЛЕД 04 // ФРАГМЕНТ НАЙДЕН");
+
+  main.innerHTML = `
+    <section class="screen">
+      <div class="eyebrow">СТРАНИЦА ОБНАРУЖЕНА</div>
+      <h1>Послание внутри.</h1>
+      <div class="console">
+        <p>На странице аккуратным почерком выведены пять букв:</p>
+        <p class="fragment-letters">T · E · O · I · Y</p>
+        <p class="success-mark">ФРАГМЕНТ ПОЛУЧЕН</p>
+        <p><strong>Руди:</strong> Всё для тебя.</p>
+        <p><strong>Ян:</strong> И не вздумай потерять.</p>
+      </div>
+      <div class="actions">
+        <button class="primary" id="collectTrace04">[ СОХРАНИТЬ ФРАГМЕНТ ]</button>
+      </div>
+    </section>`;
+
+  document.getElementById("collectTrace04").onclick = () => {
+    state.fragment04 = ["T", "E", "O", "I", "Y"];
+    state.trace04Done = true;
+    saveState();
+    setStage("case04_done");
+  };
+}
+
+function renderRudyYanDone() {
+  setFooter("СЛЕД 04 // ПРОЙДЕН");
+
+  main.innerHTML = `
+    <section class="screen">
+      <div class="eyebrow">СЛЕД 04 [ПРОЙДЕН ✓]</div>
+      <h1>Последний след восстановлен.</h1>
+      <div class="console">
+        <p>Фрагмент получен: T · E · O · I · Y</p>
+        <p class="success-mark">Все четыре следа найдены.</p>
+        <p>Осталось собрать фрагменты воедино.</p>
+      </div>
+      <div class="case-list">
+        <div class="case-tile done">СЛЕД 01<br>[ ПРОЙДЕН ✓ ]</div>
+        <div class="case-tile done">СЛЕД 02<br>[ ПРОЙДЕН ✓ ]</div>
+        <div class="case-tile done">СЛЕД 03<br>[ ПРОЙДЕН ✓ ]</div>
+        <div class="case-tile done">СЛЕД 04<br>[ ПРОЙДЕН ✓ ]</div>
+      </div>
+      <div class="actions">
+        <button class="primary" id="assembleFinalCode">[ СОБРАТЬ ФИНАЛЬНЫЙ КОД ]</button>
+      </div>
+    </section>`;
+
+  document.getElementById("assembleFinalCode").onclick = () => {
+    setStage("final_code");
+  };
+}
+
+
+  
+function renderFinalCode() {
+  setFooter("ФИНАЛЬНЫЙ КОД // ПРОВЕРКА");
+
+  main.innerHTML = `
+    <section class="screen">
+      <div class="eyebrow">ПОСЛЕДНИЙ ЭТАП</div>
+      <h1>Собери фрагменты.</h1>
+      <div class="console">
+        <p>Четыре следа. Четыре истории.</p>
+        <p>Буквы перемешаны, но вместе они образуют фразу.</p>
+        <p>Введи финальный код на английском языке.</p>
+      </div>
+      <label for="finalCodeInput">Финальный код:</label>
+      <input id="finalCodeInput" type="text"
+        placeholder="Введи найденную фразу"
+        autocomplete="off" />
+      <div id="finalCodeMessage" class="console" hidden></div>
+      <div class="actions">
+        <button class="primary" id="checkFinalCode">[ ПРОВЕРИТЬ КОД ]</button>
+      </div>
+    </section>`;
+
+  const input = document.getElementById("finalCodeInput");
+  const message = document.getElementById("finalCodeMessage");
+
+  function checkCode() {
+    const answer = input.value
+      .toLowerCase()
+      .replace(/[^a-z]/g, "");
+
+    const correctCode = "ignitemyloveignite";
+
+    message.hidden = false;
+
+    if (answer === correctCode) {
+      state.finalCodeAccepted = true;
+      saveState();
+
+      message.innerHTML = `
+        <p class="success-mark">ФИНАЛЬНЫЙ КОД ПРИНЯТ.</p>
+        <p>Все четыре следа восстановлены.</p>
+        <p>Наше путешествие подходит к концу, ${escapeHtml(state.name || "мон амур")}.</p>
+        <p>Но подожди… Неужели ты правда думала, что это всё?</p>
+      `;
+
+      document.getElementById("checkFinalCode").textContent =
+        "[ ПРОДОЛЖИТЬ ]";
+
+      document.getElementById("checkFinalCode").onclick = () => {
+        state.finalCodeAccepted = true;
+        saveState();
+        setStage("final_intro");
+      };
+    } else {
+      message.innerHTML = `
+        <p>Код не подошёл.</p>
+        <p>Подсказка: вспомни человека из следа 02.</p>
+      `;
+    }
+  }
+
+  document.getElementById("checkFinalCode").onclick = checkCode;
+
+  input.addEventListener("keydown", event => {
+    if (event.key === "Enter") checkCode();
+  });
+
+  if (state.finalCodeAccepted) {
+    message.hidden = false;
+    message.innerHTML = `
+      <p class="success-mark">ФИНАЛЬНЫЙ КОД ПРИНЯТ.</p>
+      <p>Все четыре следа восстановлены.</p>
+      <p>Наше путешествие подходит к концу, ${escapeHtml(state.name || "мон амур")}.</p>
+      <p>Но подожди… Неужели ты правда думала, что это всё?</p>
+    `;
+    document.getElementById("checkFinalCode").textContent =
+      "[ ПРОДОЛЖИТЬ ]";
+    document.getElementById("checkFinalCode").onclick = () => {
+      setStage("final_intro");
+    };
+  }
+}
+
+    function renderFinalIntro() {
+  setFooter("ДЕЛО № 001 // ЗАВЕРШЕНО?");
+
+  main.innerHTML = `
+    <section class="screen">
+      <div class="eyebrow">СИСТЕМА // ПОСЛЕДНЕЕ СООБЩЕНИЕ</div>
+      <h1>Думала, всё?</h1>
+      <div class="console">
+        <p>А вот нет.</p>
+        <p>От меня не так просто избавиться.</p>
+        <p class="muted">Перезапуск финального протокола...</p>
+      </div>
+      <div class="actions">
+        <button class="primary" id="showFinalCharacters">
+          [ ПОКАЗАТЬ, КТО ЗДЕСЬ ]
+        </button>
+      </div>
+    </section>`;
+
+  document.getElementById("showFinalCharacters").onclick = () => {
+    setStage("final_characters");
+  };
+}
+
+function renderFinalCharacters() {
+  setFooter("ДЕЛО № 001 // ВСЕ СОБРАЛИСЬ");
+
+  const characters = [
+    "Джеймс Поттер",
+    "Сириус Блэк",
+    "Ремус Люпин",
+    "Питер Петтигрю",
+    "Аарон Уорнер",
+    "Джеймс Андерсон",
+    "Руди",
+    "Ян"
+  ];
+
+  main.innerHTML = `
+    <section class="screen">
+      <div class="eyebrow">СИСТЕМА // СОСТАВ ВОССТАНОВЛЕН</div>
+      <h1 id="birthdayTitle" style="opacity:0;transition:opacity 1s;">
+        С днём рождения, мон амур!
+      </h1>
+      <p class="muted">Сегодня здесь собрались все, кто должен быть рядом.</p>
+
+      <div style="
+        display:grid;
+        grid-template-columns:repeat(4,minmax(0,1fr));
+        gap:10px;
+        margin:24px 0;
+      ">
+        ${characters.map((name, index) => `
+          <div style="
+            min-height:95px;
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            justify-content:center;
+            padding:8px 4px;
+            border:1px solid var(--line);
+            border-radius:6px;
+            background:rgba(255,255,255,0.03);
+            text-align:center;
+          ">
+            <span style="font-size:24px;margin-bottom:8px;">✦</span>
+            <span style="font-size:12px;">${name}</span>
+          </div>
+        `).join("")}
+      </div>
+
+      <div class="console">
+        <p>Тебе понравилось?</p>
+        <p>Это ещё не всё. Для тебя кое-что оставили.</p>
+      </div>
+
+      <div class="actions">
+        <button class="primary" id="openBirthdayEnvelope">
+          [ КОНВЕРТ ДЛЯ МОЕЙ ЛЮБИМОЙ ]
+        </button>
+      </div>
+    </section>`;
+
+  setTimeout(() => {
+    const title = document.getElementById("birthdayTitle");
+    if (title) title.style.opacity = "1";
+  }, 1000);
+
+  document.getElementById("openBirthdayEnvelope").onclick = () => {
+    setStage("final_letter");
+  };
+}
+
+function renderFinalLetter() {
+  setFooter("ДЕЛО № 001 // ЛИЧНОЕ ПИСЬМО");
+
+  main.innerHTML = `
+    <section class="screen">
+      <div class="eyebrow">ДЛЯ МОЕЙ ЛЮБИМОЙ</div>
+      <div style="
+        max-width:560px;
+        margin:20px auto;
+        padding:24px;
+        border:1px solid var(--gold);
+        border-radius:6px;
+        background:rgba(255,248,230,0.06);
+        box-shadow:0 0 24px rgba(0,0,0,0.15);
+      ">
+        <div style="text-align:center;font-size:28px;color:var(--gold);">
+          ✉
+        </div>
+        <h1 style="text-align:center;">Несколько слов для тебя</h1>
+        <p style="line-height:1.8;">
+          Здесь будет твоё личное поздравление — то самое, которое ты хочешь
+          оставить ей после всех приключений.
+        </p>
+        <p class="muted" style="text-align:center;">
+          Текст письма мы добавим отдельно, когда ты будешь готова.
+        </p>
+      </div>
+      <div class="actions">
+        <button class="primary" id="hugButton">[ ОБНЯТЬ ]</button>
+      </div>
+    </section>`;
+
+  document.getElementById("hugButton").onclick = () => {
+    state.finalHugged = true;
+    saveState();
+    setStage("final_end");
+  };
+}
+
+function renderFinalEnd() {
+  setFooter("ДЕЛО № 001 // ЗАКРЫТО");
+
+  main.innerHTML = `
+    <section class="screen" style="text-align:center;padding-top:35px;">
+      <div class="eyebrow">СИСТЕМА // ПОСЛЕДНЕЕ СООБЩЕНИЕ</div>
+      <div style="font-size:48px;color:var(--gold);margin:24px 0;">
+        ✦ ♡ ✦
+      </div>
+      <h1>С днём рождения, мон амур!</h1>
+      <div class="console" style="text-align:center;margin-top:24px;">
+        <p>Сегодня тебя обнимает целая вселенная.</p>
+        <p>И я — крепче всех!</p>
+      </div>
+      <p class="muted">Дело закрыто. Но это приключение всегда можно пережить снова.</p>
+      <div class="actions">
+        <button class="primary" id="replayBirthday">
+          [ ПЕРЕЖИТЬ ЗАНОВО ]
+        </button>
+      </div>
+    </section>`;
+
+  document.getElementById("replayBirthday").onclick = () => {
+    const confirmed = confirm(
+      "Начать заново? Сохранённый прогресс будет сброшен."
+    );
+
+    if (confirmed) {
+      localStorage.removeItem(STORAGE_KEY);
+      location.reload();
+    }
+  };
+}
 
     // Возвращаемся к сохранённому этапу, а не начинаем всё сначала.
     render();

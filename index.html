@@ -239,12 +239,15 @@
       overflow: hidden;
     }
 
-    .progress-fill {
-      height: 100%;
-      width: 0;
-      background: var(--gold);
-      transition: width .4s ease;
-    }
+   
+.progress-fill {
+  height: 100%;
+  width: 0;
+  background: var(--gold);
+  box-shadow: 0 0 12px rgba(215, 184, 121, .55);
+  transition: width 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 
     .case-list {
       display: grid;
@@ -935,7 +938,6 @@ function renderSearch() {
   const next = document.getElementById("continueSearch");
 
   fill.style.width = "0%";
-  fill.style.transition = "width 0.7s ease";
 
   function step() {
     const item = lines[index];

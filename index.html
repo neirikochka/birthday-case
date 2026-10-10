@@ -2023,26 +2023,29 @@ function renderFinalCode() {
   };
 }
 
+
 function renderFinalCharacters() {
   setFooter("ДЕЛО № 001 // ВСЕ СОБРАЛИСЬ");
 
   const characters = [
-    "Джеймс Поттер",
-    "Сириус Блэк",
-    "Ремус Люпин",
-    "Питер Петтигрю",
-    "Аарон Уорнер",
-    "Джеймс Андерсон",
-    "Руди",
-    "Ян"
+    { name: "Джеймс Поттер", file: "Джеймс Поттер.jpg" },
+    { name: "Сириус Блэк", file: "Сириус Блэк.jpg" },
+    { name: "Ремус Люпин", file: "Римус Люпин.jpg" },
+    { name: "Питер Петтигрю", file: "Питер Петтигрю.jpg" },
+    { name: "Аарон Уорнер", file: "Аарон Уорнер.jpg" },
+    { name: "Джеймс Андерсон", file: "Джеймс Андерсон.jpg" },
+    { name: "Руди", file: "Руди КР.jpg" },
+    { name: "Ян", file: "Ян КР.jpg" }
   ];
 
   main.innerHTML = `
     <section class="screen">
       <div class="eyebrow">СИСТЕМА // СОСТАВ ВОССТАНОВЛЕН</div>
+
       <h1 id="birthdayTitle" style="opacity:0;transition:opacity 1s;">
         С днём рождения, мон амур!
       </h1>
+
       <p class="muted">Сегодня здесь собрались все, кто должен быть рядом.</p>
 
       <div style="
@@ -2051,21 +2054,37 @@ function renderFinalCharacters() {
         gap:10px;
         margin:24px 0;
       ">
-        ${characters.map((name, index) => `
+        ${characters.map(character => `
           <div style="
-            min-height:95px;
             display:flex;
             flex-direction:column;
             align-items:center;
-            justify-content:center;
+            justify-content:flex-start;
+            gap:8px;
             padding:8px 4px;
             border:1px solid var(--line);
             border-radius:6px;
             background:rgba(255,255,255,0.03);
             text-align:center;
+            min-width:0;
           ">
-            <span style="font-size:24px;margin-bottom:8px;">✦</span>
-            <span style="font-size:12px;">${name}</span>
+            <img
+              src="images/${encodeURIComponent(character.file)}"
+              alt="${character.name}"
+              loading="eager"
+              style="
+                display:block;
+                width:100%;
+                height:150px;
+                object-fit:contain;
+                border-radius:4px;
+              "
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+            >
+            <span style="display:none;font-size:12px;color:#d99b65;">
+              Не удалось загрузить изображение
+            </span>
+            <span style="font-size:12px;">${character.name}</span>
           </div>
         `).join("")}
       </div>
@@ -2091,6 +2110,7 @@ function renderFinalCharacters() {
     setStage("final_letter");
   };
 }
+
 
 function renderFinalLetter() {
   setFooter("ДЕЛО № 001 // ЛИЧНОЕ ПИСЬМО");

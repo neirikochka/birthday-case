@@ -893,54 +893,108 @@
   button.onclick = () => setStage("search");
 }
 
-    function renderSearch() {
-      setFooter("ПОИСК СОБЫТИЯ");
-      const lines = [
-        ["08%", "Сканирование архива..."],
-        ["23%", "Поиск совпадений..."],
-        ["41%", "Анализ неизвестных данных..."],
-        ["67%", "Необычно большое количество данных."],
-        ["94%", "Почти готово..."],
-        ["99%", "Почему их четыре?"],
-        ["100%", "ПРАЗДНИК ОБНАРУЖЕН."]
-      ];
-      let index = 0;
+    
+function renderSearch() {
+  setFooter("ПОИСК СОБЫТИЯ");
 
-      main.innerHTML = `
-        <section class="screen">
-          <div class="eyebrow">ПОИСК СОБЫТИЯ</div>
-          <h2 id="searchTitle">Сканирование архива...</h2>
-          <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
-          <p class="muted" id="progressPercent">08%</p>
-          <div class="console" id="searchConsole"></div>
-          <div class="actions"><button class="primary" id="continueSearch" hidden>[ ПРОДОЛЖИТЬ ]</button></div>
-        </section>`;
+  const lines = [
+    ["08%", "Сканирование архива..."],
+    ["23%", "Поиск совпадений..."],
+    ["41%", "Анализ неизвестных данных..."],
+    ["67%", "Необычно большое количество данных."],
+    ["94%", "Почти готово..."],
+    ["99%", "Почему их четыре?"],
+    ["100%", "ПРАЗДНИК ОБНАРУЖЕН."]
+  ];
 
-      const fill = document.getElementById("progressFill");
-      const title = document.getElementById("searchTitle");
-      const percent = document.getElementById("progressPercent");
-      const consoleBox = document.getElementById("searchConsole");
-      const next = document.getElementById("continueSearch");
+  let index = 0;
 
-      function step() {
-        const item = lines[index];
-        fill.style.width = item[0];
-        percent.textContent = item[0];
-        title.textContent = item[1];
-        const p = document.createElement("p");
-        p.textContent = item[1];
-        if (item[1].includes("Почему")) p.className = "gold";
-        consoleBox.appendChild(p);
-        index++;
-        if (index < lines.length) {
-          window.setTimeout(step, 420);
-        } else {
-          next.hidden = false;
-          next.onclick = () => setStage("identity");
-        }
-      }
-      step();
+  main.innerHTML = `
+    <section class="screen terminal-flicker">
+      <div class="eyebrow">ПОИСК СОБЫТИЯ</div>
+      <h2 id="searchTitle">Подключение к архиву...</h2>
+
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+
+      <p class="muted" id="progressPercent">00%</p>
+      <div class="console" id="searchConsole"></div>
+
+      <div class="actions">
+        <button class="primary" id="continueSearch" hidden>
+          [ ПРОДОЛЖИТЬ ]
+        </button>
+      </div>
+    </section>`;
+
+  const fill = document.getElementById("progressFill");
+  const title = document.getElementById("searchTitle");
+  const percent = document.getElementById("progressPercent");
+  const consoleBox = document.getElementById("searchConsole");
+  const next = document.getElementById("continueSearch");
+
+  fill.style.width = "0%";
+  fill.style.transition = "width 0.7s ease";
+
+  function step() {
+    const item = lines[index];
+
+    title.textContent = item[1];
+    percent.textContent = item[0];
+
+    const p = document.createElement("p");
+    p.textContent = item[1];
+    p.style.opacity = "0";
+    p.style.transition = "opacity 0.45s ease";
+
+    if (item[1].includes("Почему")) {
+      p.className = "gold";
+      title.classList.add("system-glitch");
+      percent.classList.add("red");
+    } else {
+      title.classList.remove("system-glitch");
+      percent.classList.remove("red");
     }
+
+    consoleBox.appendChild(p);
+
+    requestAnimationFrame(() => {
+      p.style.opacity = "1";
+    });
+
+    fill.style.width = item[0];
+
+    index++;
+
+    if (index < lines.length) {
+      let delay = 1100;
+
+      if (item[0] === "99%") {
+        delay = 2600;
+      }
+
+      if (item[0] === "100%") {
+        delay = 1500;
+      }
+
+      window.setTimeout(step, delay);
+    } else {
+      next.hidden = false;
+      next.style.opacity = "0";
+      next.style.transition = "opacity 0.5s ease";
+
+      requestAnimationFrame(() => {
+        next.style.opacity = "1";
+      });
+
+      next.onclick = () => setStage("identity");
+    }
+  }
+
+  window.setTimeout(step, 700);
+}
+
 
     function renderIdentity() {
       setFooter("ТРЕБУЕТСЯ ИДЕНТИФИКАЦИЯ");

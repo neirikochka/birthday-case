@@ -1033,65 +1033,150 @@ function renderSearch() {
 }
 
 
-    function renderIdentity() {
-      setFooter("ТРЕБУЕТСЯ ИДЕНТИФИКАЦИЯ");
-      main.innerHTML = `
-        <section class="screen">
-          <div class="eyebrow">ПРОВЕРКА ОБНАРУЖЕННОГО СОБЫТИЯ</div>
-          <div class="console">
-            <p>Проверка завершена.</p>
-            <p>День рождения найден.</p>
-            <p>...</p>
-            <p class="red">День рождения отсутствует.</p>
-            <p>Анализ данных...</p>
-            <p>Поиск причины исчезновения...</p>
-            <p>...</p>
-            <p>Причина установлена.</p>
-            <p class="red">День рождения был украден.</p>
-            <p>Обнаружено четыре следа.</p>
-            <p>Следы ведут к четырём неизвестным источникам.</p>
-            <p>Идентификация источников невозможна.</p>
-          </div>
-          <div class="case-list">
-            <div class="case-tile">СЛЕД 01<br>[ ЗАБЛОКИРОВАНО ]</div>
-            <div class="case-tile">СЛЕД 02<br>[ ЗАБЛОКИРОВАНО ]</div>
-            <div class="case-tile">СЛЕД 03<br>[ ЗАБЛОКИРОВАНО ]</div>
-            <div class="case-tile">СЛЕД 04<br>[ ЗАБЛОКИРОВАНО ]</div>
-          </div>
-          <p>Введите имя:</p>
-          <input class="identity-input" id="nameInput" maxlength="50" placeholder="Имя" autocomplete="off">
-          <div class="actions"><button class="primary" id="verifyBtn">[ ПОДТВЕРДИТЬ ]</button></div>
-          <p class="muted" id="identityMessage"></p>
-        </section>`;
+    
 
-      const input = document.getElementById("nameInput");
-      input.value = state.name || "";
-      input.addEventListener("keydown", event => {
-        if (event.key === "Enter") verifyName();
-      });
-      document.getElementById("verifyBtn").onclick = verifyName;
+function renderIdentity() {
+  setFooter("ТРЕБУЕТСЯ ИДЕНТИФИКАЦИЯ");
 
-      function verifyName() {
-        const name = input.value.trim();
-        const message = document.getElementById("identityMessage");
-        if (!name) {
-          message.innerHTML = "Проверка личности...<br>Сопоставление данных...<br>...<br><span class='red'>Нет.</span><br>Личность не подтверждена. Попробуйте ещё раз.";
-          return;
-        }
-        state.name = name;
-        saveState();
-        main.innerHTML = `
-          <section class="screen">
-            <div class="eyebrow">ИДЕНТИФИКАЦИЯ ЗАВЕРШЕНА</div>
-            <div class="console">
-              <p class="gold">Доступ разрешён.</p>
-              <p>Перейти к следу 01?</p>
-            </div>
-            <div class="actions"><button class="primary" id="openTrace">[ СЛЕД 01 ]</button></div>
-          </section>`;
-        document.getElementById("openTrace").onclick = () => setStage("case01_restore");
+  main.innerHTML = `
+    <section class="screen terminal-flicker">
+      <div class="eyebrow">ПРОВЕРКА ОБНАРУЖЕННОГО СОБЫТИЯ</div>
+
+      <div class="console identity-console">
+        <p class="identity-line">Проверка завершена.</p>
+        <p class="identity-line">День рождения найден.</p>
+        <p class="identity-line">...</p>
+        <p class="identity-line red">День рождения отсутствует.</p>
+        <p class="identity-line">Анализ данных...</p>
+        <p class="identity-line">Поиск причины исчезновения...</p>
+        <p class="identity-line">...</p>
+        <p class="identity-line">Причина установлена.</p>
+        <p class="identity-line red">День рождения был украден.</p>
+        <p class="identity-line">Обнаружено четыре следа.</p>
+        <p class="identity-line">Следы ведут к четырём неизвестным источникам.</p>
+        <p class="identity-line">Идентификация источников невозможна.</p>
+      </div>
+
+      <div class="case-list" id="identityCases">
+        <div class="case-tile">СЛЕД 01<br>[ ЗАБЛОКИРОВАНО ]</div>
+        <div class="case-tile">СЛЕД 02<br>[ ЗАБЛОКИРОВАНО ]</div>
+        <div class="case-tile">СЛЕД 03<br>[ ЗАБЛОКИРОВАНО ]</div>
+        <div class="case-tile">СЛЕД 04<br>[ ЗАБЛОКИРОВАНО ]</div>
+      </div>
+
+      <div id="identityControls">
+        <p>Введите имя:</p>
+        <input
+          class="identity-input"
+          id="nameInput"
+          maxlength="50"
+          placeholder="Имя"
+          autocomplete="off"
+        >
+        <div class="actions">
+          <button class="primary" id="verifyBtn">[ ПОДТВЕРДИТЬ ]</button>
+        </div>
+        <p class="muted" id="identityMessage"></p>
+      </div>
+    </section>`;
+
+  const lines = document.querySelectorAll(".identity-line");
+  const cases = document.getElementById("identityCases");
+  const tiles = cases.querySelectorAll(".case-tile");
+  const controls = document.getElementById("identityControls");
+  const input = document.getElementById("nameInput");
+
+  input.value = state.name || "";
+
+  // Сначала скрываем все элементы, чтобы ничего не появилось раньше времени.
+  lines.forEach(line => {
+    line.style.opacity = "0";
+    line.style.transition = "opacity .6s ease";
+  });
+
+  cases.style.opacity = "0";
+  cases.style.transition = "opacity .7s ease";
+
+  tiles.forEach(tile => {
+    tile.style.opacity = "0";
+    tile.style.transition = "opacity .5s ease";
+  });
+
+  controls.style.opacity = "0";
+  controls.style.pointerEvents = "none";
+  controls.style.transition = "opacity .7s ease";
+
+  // Плавное появление строк проверки.
+  lines.forEach((line, index) => {
+    setTimeout(() => {
+      line.style.opacity = "1";
+
+      if (line.classList.contains("red")) {
+        line.classList.add("system-glitch");
       }
+    }, 500 + index * 750);
+  });
+
+  // После проверки появляются четыре следа.
+  const casesDelay = 500 + lines.length * 750 + 500;
+
+  setTimeout(() => {
+    cases.style.opacity = "1";
+
+    tiles.forEach((tile, index) => {
+      setTimeout(() => {
+        tile.style.opacity = "1";
+      }, 250 + index * 250);
+    });
+  }, casesDelay);
+
+  // Поле имени появляется в самом конце.
+  setTimeout(() => {
+    controls.style.opacity = "1";
+    controls.style.pointerEvents = "auto";
+  }, casesDelay + 1800);
+
+  input.addEventListener("keydown", event => {
+    if (event.key === "Enter") verifyName();
+  });
+
+  document.getElementById("verifyBtn").onclick = verifyName;
+
+  function verifyName() {
+    const name = input.value.trim();
+    const message = document.getElementById("identityMessage");
+
+    if (!name) {
+      message.innerHTML =
+        "Проверка личности...<br>" +
+        "Сопоставление данных...<br>" +
+        "...<br>" +
+        "<span class='red'>Нет.</span><br>" +
+        "Личность не подтверждена. Попробуйте ещё раз.";
+      return;
     }
+
+    state.name = name;
+    saveState();
+
+    main.innerHTML = `
+      <section class="screen">
+        <div class="eyebrow">ИДЕНТИФИКАЦИЯ ЗАВЕРШЕНА</div>
+        <div class="console">
+          <p class="gold">Доступ разрешён.</p>
+          <p>Перейти к следу 01?</p>
+        </div>
+        <div class="actions">
+          <button class="primary" id="openTrace">[ СЛЕД 01 ]</button>
+        </div>
+      </section>`;
+
+    document.getElementById("openTrace").onclick =
+      () => setStage("case01_restore");
+  }
+}
+
+
 
     function renderRestore() {
       setFooter("ВОССТАНОВЛЕНИЕ ФАЙЛА");

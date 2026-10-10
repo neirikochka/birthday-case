@@ -838,11 +838,11 @@ function renderIntro() {
         <p class="intro-line" style="opacity:0">поиск...</p>
       </div>
 
-      <div id="introError" style="opacity:0">
-        <h1 class="red">СИСТЕМНАЯ ОШИБКА</h1>
-        <p>Праздник не найден.</p>
-        <p class="muted">Попробуйте ещё раз.</p>
-      </div>
+      <div id="introError" style="display:none">
+  <h1 class="red">СИСТЕМНАЯ ОШИБКА</h1>
+  <p>Праздник не найден.</p>
+  <p class="muted">Попробуйте ещё раз.</p>
+</div>
 
       <div class="actions">
         <button class="primary" id="retryBtn" style="opacity:0">
@@ -863,10 +863,15 @@ function renderIntro() {
   });
 
   setTimeout(() => {
-    error.style.transition = "opacity .6s ease";
+  error.style.display = "block";
+  error.style.opacity = "0";
+  error.style.transition = "opacity .6s ease";
+
+  requestAnimationFrame(() => {
     error.style.opacity = "1";
     error.classList.add("system-glitch");
-  }, 2800);
+  });
+}, 2800);
 
   setTimeout(() => {
     button.style.transition = "opacity .5s ease";

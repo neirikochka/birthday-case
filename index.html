@@ -1146,18 +1146,20 @@ function renderIdentity() {
     const name = input.value.trim();
     const message = document.getElementById("identityMessage");
 
-    if (!name) {
-      message.innerHTML =
-        "Проверка личности...<br>" +
-        "Сопоставление данных...<br>" +
-        "...<br>" +
-        "<span class='red'>Нет.</span><br>" +
-        "Личность не подтверждена. Попробуйте ещё раз.";
-      return;
-    }
+   
+if (name.toLocaleLowerCase("ru-RU") !== "ульяна") {
+  message.innerHTML =
+    "Проверка личности...<br>" +
+    "Сопоставление данных...<br>" +
+    "...<br>" +
+    "<span class='red'>Нет.</span><br>" +
+    "Личность не подтверждена. Попробуйте ещё раз.";
+  return;
+}
 
-    state.name = name;
-    saveState();
+state.name = "Ульяна";
+saveState();
+
 
     main.innerHTML = `
       <section class="screen">

@@ -1314,10 +1314,15 @@ saveState();
       { who: "Джеймс", text: "Это техническая деталь." }
     ];
 
-    function renderRoom() {
+    
+function renderRoom() {
       setTheme("room-mode");
       setFooter("СВЯЗЬ С ИСТОЧНИКОМ УСТАНОВЛЕНА");
-      state.dialogueIndex = 0;
+      if (!Number.isInteger(state.dialogueIndex) ||
+          state.dialogueIndex < 0 ||
+          state.dialogueIndex >= dialogue.length) {
+        state.dialogueIndex = 0;
+      }
       saveState();
       main.innerHTML = `
         <section class="screen">

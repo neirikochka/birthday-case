@@ -1177,6 +1177,7 @@ function renderAaronIntro() {
   };
 }
 
+
 function renderAaronDialogue() {
   setFooter("СЛЕД 02 // ДИАЛОГ");
 
@@ -1185,7 +1186,10 @@ function renderAaronDialogue() {
       <section class="screen">
         <div class="eyebrow">АРХИВ // ДИАЛОГ</div>
         <h1>Аарон Уорнер</h1>
-        <p>— Я знал, что ты придёшь. Не могла не прийти.</p>
+        <div class="console">
+          <p class="speaker">ААРОН УОРНЕР</p>
+          <p class="line">Я знал, что ты придёшь. Не могла не прийти.</p>
+        </div>
         <p>Что ты ответишь?</p>
         <div class="actions">
           <button id="branchWorld">[ ОТКУДА ТЫ МЕНЯ ЖДАЛ? ]</button>
@@ -1194,36 +1198,92 @@ function renderAaronDialogue() {
         </div>
       </section>`;
 
-    document.getElementById("branchWorld").onclick = () => chooseAaronBranch("world");
-    document.getElementById("branchEvent").onclick = () => chooseAaronBranch("event");
-    document.getElementById("branchExplain").onclick = () => chooseAaronBranch("explain");
+    document.getElementById("branchWorld").onclick =
+      () => chooseAaronBranch("world");
+    document.getElementById("branchEvent").onclick =
+      () => chooseAaronBranch("event");
+    document.getElementById("branchExplain").onclick =
+      () => chooseAaronBranch("explain");
     return;
   }
 
   const dialogues = {
     world: [
-      "Из твоего мира.",
-      "Тогда ты знаешь, зачем я здесь.",
-      "Знаю.",
-      "Но если ты пришла сюда сама, значит, должна понять это сама.",
-      "Хорошо. С чего мне начать?",
-      "С того, что здесь не должно быть.",
-      "Ищи то, что оказалось не на своём месте."
+      { who: "Ты", text: "Откуда ты меня ждал?" },
+      { who: "Аарон", text: "Из твоего мира." },
+      {
+        type: "choice",
+        question: "Что ты ответишь?",
+        options: [
+          { text: "Тогда ты знаешь, зачем я здесь.", next: 3 }
+        ]
+      },
+      { who: "Аарон", text: "Знаю." },
+      {
+        who: "Аарон",
+        text: "Но если ты пришла сюда сама, значит, должна понять это сама."
+      },
+      {
+        type: "choice",
+        question: "Что ты ответишь?",
+        options: [
+          { text: "Хорошо. С чего мне начать?", next: 6 }
+        ]
+      },
+      {
+        who: "Аарон",
+        text: "С того, что здесь не должно быть."
+      },
+      {
+        who: "Аарон",
+        text: "Ищи то, что оказалось не на своём месте."
+      }
     ],
+
     event: [
-      "Зависит от того, что именно ты считаешь произошедшим.",
-      "Ты ведь не просто так здесь.",
-      "Нет.",
-      "Тогда, возможно, ты уже знаешь больше, чем думаешь.",
-      "Начни с того, что здесь не должно находиться.",
-      "Иногда именно лишняя деталь говорит больше всего."
+      { who: "Ты", text: "Ты знаешь, что произошло?" },
+      {
+        who: "Аарон",
+        text: "Зависит от того, что именно ты считаешь произошедшим."
+      },
+      { who: "Аарон", text: "Ты ведь не просто так здесь." },
+      {
+        type: "choice",
+        question: "Что ты ответишь?",
+        options: [
+          { text: "Нет.", next: 4 }
+        ]
+      },
+      {
+        who: "Аарон",
+        text: "Тогда, возможно, ты уже знаешь больше, чем думаешь."
+      },
+      {
+        who: "Аарон",
+        text: "Начни с того, что здесь не должно находиться."
+      },
+      {
+        who: "Аарон",
+        text: "Иногда именно лишняя деталь говорит больше всего."
+      }
     ],
+
     explain: [
-      "Могу.",
-      "Но тогда тебе станет слишком легко.",
-      "А я почему-то думаю, что ты не ради лёгкого пути сюда пришла.",
-      "Поэтому попробуй сама.",
-      "Посмотри вокруг. Здесь есть одна вещь, которой быть не должно."
+      {
+        who: "Ты",
+        text: "Тогда, может, объяснишь, что здесь происходит?"
+      },
+      { who: "Аарон", text: "Могу." },
+      { who: "Аарон", text: "Но тогда тебе станет слишком легко." },
+      {
+        who: "Аарон",
+        text: "А я почему-то думаю, что ты не ради лёгкого пути сюда пришла."
+      },
+      { who: "Аарон", text: "Поэтому попробуй сама." },
+      {
+        who: "Аарон",
+        text: "Посмотри вокруг. Здесь есть одна вещь, которой быть не должно."
+      }
     ]
   };
 
@@ -1235,16 +1295,48 @@ function renderAaronDialogue() {
     return;
   }
 
+  const item = lines[index];
+
+  if (item.type === "choice") {
+    main.innerHTML = `
+      <section class="screen">
+        <div class="eyebrow">СЛЕД 02 // ДИАЛОГ</div>
+        <h1>Аарон Уорнер</h1>
+        <p>${item.question}</p>
+        <div class="actions" id="aaronChoices"></div>
+      </section>`;
+
+    const choices = document.getElementById("aaronChoices");
+
+    item.options.forEach(option => {
+      const button = document.createElement("button");
+      button.textContent = `[ ${option.text} ]`;
+
+      button.onclick = () => {
+        state.trace02DialogueIndex = option.next;
+        saveState();
+        render();
+      };
+
+      choices.appendChild(button);
+    });
+
+    return;
+  }
+
   main.innerHTML = `
     <section class="screen">
-      <div class="eyebrow">АРХИВ // ДИАЛОГ</div>
+      <div class="eyebrow">СЛЕД 02 // ДИАЛОГ</div>
       <h1>Аарон Уорнер</h1>
       <div class="console">
-        <p>${lines[index]}</p>
+        <p class="speaker">${item.who.toUpperCase()}</p>
+        <p class="line">${item.text}</p>
       </div>
       <div class="actions">
         <button class="primary" id="nextAaron">
-          ${index === lines.length - 1 ? "[ ОСМОТРЕТЬСЯ ]" : "[ ДАЛЬШЕ ]"}
+          ${index === lines.length - 1
+            ? "[ ОСМОТРЕТЬСЯ ]"
+            : "[ ДАЛЬШЕ ]"}
         </button>
       </div>
     </section>`;
@@ -1266,6 +1358,7 @@ function chooseAaronBranch(branch) {
   saveState();
   render();
 }
+
 
 function renderAaronPuzzle() {
   setFooter("СЛЕД 02 // ПОИСК");

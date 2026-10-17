@@ -316,50 +316,62 @@
     }
 
     .silhouettes {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
-      margin: 25px 0 10px;
-    }
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+  align-items: end;
+  margin: 25px 0 10px;
+  overflow: hidden;
+}
 
     .silhouette {
-      min-height: 125px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid #33313d;
-      background: radial-gradient(ellipse, #292530, #101018 72%);
-      color: #bdb4c1;
-      opacity: 0;
-      animation: materialize .8s ease forwards;
-    }
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  border: none;
+  background: transparent;
+  color: #c5b7a0;
+  opacity: 0;
+  animation: materialize .8s ease forwards;
+}
 
     .silhouette:nth-child(2) { animation-delay: .2s; }
-    .silhouette:nth-child(3) { animation-delay: .4s; }
-    .silhouette:nth-child(4) { animation-delay: .6s; }
+.silhouette:nth-child(3) { animation-delay: .4s; }
+.silhouette:nth-child(4) { animation-delay: .6s; }
 
     @keyframes materialize {
-      0% { opacity: 0; filter: blur(8px); transform: translateY(5px); }
-      65% { opacity: .75; filter: blur(1px); }
-      100% { opacity: 1; filter: blur(0); transform: translateY(0); }
-    }
+  0% {
+    opacity: 0;
+    filter: blur(8px);
+    transform: translateY(5px);
+  }
+  65% {
+    opacity: .75;
+    filter: blur(1px);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
 
     .animal-silhouette {
   display: block;
-  width: clamp(42px, 7vw, 68px);
-  height: 68px;
+  width: 100%;
+  max-width: 110px;
+  height: 100px;
   color: #c5b7a0;
   fill: currentColor;
   filter: drop-shadow(0 0 8px rgba(215, 184, 121, .18));
 }
 
     .silhouette-name {
-      margin-top: 8px;
-      font-size: 10px;
-      letter-spacing: 1px;
-      color: var(--muted);
-    }
+  display: none;
+}
 
     .mischief {
       color: var(--gold);

@@ -539,53 +539,37 @@
     }
 
     .character {
-      min-width: 0;
-      padding: 12px 7px;
-      text-align: center;
-      border: 1px solid #604239;
-      background: rgba(16,10,12,.42);
-      color: #c4a99a;
-      transition: .25s;
-    }
+  min-width: 0;
+  padding: 6px 4px;
+  text-align: center;
+  border: 1px solid transparent;
+  background: transparent;
+  color: #c4a99a;
+  transition: border-color 0.3s ease, background 0.3s ease,
+              color 0.3s ease, transform 0.3s ease;
+}
 
     .character.active {
-      border-color: var(--gold);
-      background: rgba(149,92,46,.2);
-      box-shadow: 0 0 17px rgba(215,184,121,.13);
-      color: #f3dfb8;
-      transform: translateY(-3px);
-    }
+  border-color: rgba(215,184,121,.65);
+  background: rgba(149,92,46,.14);
+  box-shadow: 0 0 22px rgba(215,184,121,.15);
+  color: #f3dfb8;
+  transform: translateY(-5px);
+}
 
     .avatar {
-      width: 38px;
-      height: 54px;
-      margin: 0 auto 9px;
-      position: relative;
-      opacity: .8;
-    }
+  display: block;
+  width: 100%;
+  height: 180px;
+  margin: 0 auto 12px;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 6px;
+  opacity: 0.85;
+  filter: brightness(0.8) saturate(0.85);
+  transition: transform 0.35s ease, filter 0.35s ease, opacity 0.35s ease;
+}
 
-    .avatar::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 10px;
-      width: 18px;
-      height: 20px;
-      border-radius: 50%;
-      background: #a88a78;
-      box-shadow: 0 0 0 3px rgba(215,184,121,.06);
-    }
-
-    .avatar::after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: 3px;
-      width: 32px;
-      height: 33px;
-      border-radius: 14px 14px 3px 3px;
-      background: #51322f;
-    }
 
     .character:nth-child(2) .avatar::after { background: #292630; }
     .character:nth-child(3) .avatar::after { background: #786149; }
@@ -1335,11 +1319,22 @@ function renderRoom() {
             </div>
             <p class="muted">У огня собрались четверо. Судя по выражениям лиц, кто-то из них определённо что-то натворил.</p>
             <div class="characters" id="characters">
-              <div class="character" data-name="Джеймс"><div class="avatar"></div><div class="character-name">Джеймс</div></div>
-              <div class="character" data-name="Сириус"><div class="avatar"></div><div class="character-name">Сириус</div></div>
-              <div class="character" data-name="Римус"><div class="avatar"></div><div class="character-name">Римус</div></div>
-              <div class="character" data-name="Питер"><div class="avatar"></div><div class="character-name">Питер</div></div>
-            </div>
+             <div class="character" data-name="Джеймс">
+  <img class="avatar" src="images/Джеймс%20Поттер.jpg" alt="Джеймс Поттер">
+  <div class="character-name">Джеймс</div>
+</div>
+<div class="character" data-name="Сириус">
+  <img class="avatar" src="images/Сириус%20Блэк.jpg" alt="Сириус Блэк">
+  <div class="character-name">Сириус</div>
+</div>
+<div class="character" data-name="Римус">
+  <img class="avatar" src="images/Ремус%20Люпин.jpg" alt="Ремус Люпин">
+  <div class="character-name">Римус</div>
+</div>
+<div class="character" data-name="Питер">
+  <img class="avatar" src="images/Питер%20Петтигрю.jpg" alt="Питер Петтигрю">
+  <div class="character-name">Питер</div>
+</div>
             <div class="dialogue">
               <div class="speaker" id="speaker">ДЖЕЙМС</div>
               <p class="line" id="line">Мы хотели сделать одну вещь.</p>

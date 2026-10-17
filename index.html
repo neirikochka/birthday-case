@@ -2067,7 +2067,6 @@ function renderJamesDone() {
     </section>`;
 
   document.getElementById("openTrace04").onclick = () => setStage("case04_intro");
-  document.getElementById("backToAaron").onclick = () => setStage("case02_done");
 }
 
 
@@ -2184,7 +2183,6 @@ function renderRudyYanFragment() {
         <p class="fragment-letters">T · E · O · I · Y</p>
         <p class="success-mark">ФРАГМЕНТ ПОЛУЧЕН</p>
         <p><strong>Руди:</strong> Всё для тебя.</p>
-        <p><strong>Ян:</strong> И не вздумай потерять.</p>
       </div>
       <div class="actions">
         <button class="primary" id="collectTrace04">[ СОХРАНИТЬ ФРАГМЕНТ ]</button>
@@ -2264,41 +2262,56 @@ function renderFinalCode() {
   const input = document.getElementById("finalCodeInput");
   const message = document.getElementById("finalCodeMessage");
 
-  function checkCode() {
-    const answer = input.value
-      .toLowerCase()
-      .replace(/[^a-z]/g, "");
-
-    const correctCode = "ignitemyloveignite";
-
+  
+function checkCode() {
+  if (state.finalCodeAccepted) {
     message.hidden = false;
+    message.innerHTML = `
+      <p class="success-mark">ФИНАЛЬНЫЙ КОД ПРИНЯТ.</p>
+      <p>Все четыре следа восстановлены.</p>
+      <p>Наше путешествие подходит к концу, ${escapeHtml(state.name || "мон амур")}.</p>
+      <p>Но подожди… Неужели ты правда думала, что это всё?</p>
+    `;
 
-    if (answer === correctCode) {
-      state.finalCodeAccepted = true;
-      saveState();
+    document.getElementById("checkFinalCode").textContent =
+      "[ ПРОДОЛЖИТЬ ]";
 
-      message.innerHTML = `
-        <p class="success-mark">ФИНАЛЬНЫЙ КОД ПРИНЯТ.</p>
-        <p>Все четыре следа восстановлены.</p>
-        <p>Наше путешествие подходит к концу, ${escapeHtml(state.name || "мон амур")}.</p>
-        <p>Но подожди… Неужели ты правда думала, что это всё?</p>
-      `;
-
-      document.getElementById("checkFinalCode").textContent =
-        "[ ПРОДОЛЖИТЬ ]";
-
-      document.getElementById("checkFinalCode").onclick = () => {
-        state.finalCodeAccepted = true;
-        saveState();
-        setStage("final_intro");
-      };
-    } else {
-      message.innerHTML = `
-        <p>Код не подошёл.</p>
-        <p>Подсказка: вспомни человека из следа 02.</p>
-      `;
-    }
+    return;
   }
+
+  const answer = input.value
+    .toLowerCase()
+    .replace(/[^a-z]/g, "");
+
+  const correctCode = "ignitemyloveignite";
+
+  message.hidden = false;
+
+  if (answer === correctCode) {
+    state.finalCodeAccepted = true;
+    saveState();
+
+    message.innerHTML = `
+      <p class="success-mark">ФИНАЛЬНЫЙ КОД ПРИНЯТ.</p>
+      <p>Все четыре следа восстановлены.</p>
+      <p>Наше путешествие подходит к концу, ${escapeHtml(state.name || "мон амур")}.</p>
+      <p>Но подожди… Неужели ты правда думала, что это всё?</p>
+    `;
+
+    document.getElementById("checkFinalCode").textContent =
+      "[ ПРОДОЛЖИТЬ ]";
+
+    document.getElementById("checkFinalCode").onclick = () => {
+      saveState();
+      setStage("final_intro");
+    };
+  } else {
+    message.innerHTML = `
+      <p>Код не подошёл.</p>
+      <p>Подсказка: вспомни человека из следа 02.</p>
+    `;
+  }
+}
 
   document.getElementById("checkFinalCode").onclick = checkCode;
 

@@ -336,6 +336,9 @@
   color: #c5b7a0;
   opacity: 0;
   animation: materialize .8s ease forwards;
+          box-shadow: none !important;
+outline: none !important;
+border-radius: 0 !important;
 }
 
     .silhouette:nth-child(2) { animation-delay: .2s; }

@@ -315,14 +315,24 @@
       padding-bottom: 12px;
     }
 
-    .silhouettes {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0;
-  align-items: end;
+    
+.silhouettes {
+  display: block;
+  width: 100%;
   margin: 25px 0 10px;
   overflow: hidden;
 }
+
+.animal-silhouette-group {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 230px;
+  overflow: visible;
+  color: #a99b89;
+  filter: drop-shadow(0 0 9px rgba(201, 185, 157, .2));
+}
+
 
     .silhouette {
   min-width: 0;

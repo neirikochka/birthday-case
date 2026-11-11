@@ -557,30 +557,41 @@ saveState();
       document.getElementById("mapBtn").onclick = () => setStage("case01_map");
     }
 
-    function renderMap() {
-      setTheme("map-mode");
-      setFooter("КАРТА ХОГВАРТСА");
-      main.innerHTML = `
-        <section class="screen">
-          <div class="eyebrow">СЛЕД 01 // МЕСТО ОБНАРУЖЕНИЯ</div>
-          <h1>Карта Хогвартса</h1>
-          <p class="muted">Чернильные линии складываются в знакомые коридоры. Среди пометок кто-то оставил маршрут.</p>
-          <div class="parchment">
-            <div class="map-heading">КАРТА ШКОЛЫ ЧАР И ВОЛШЕБСТВА</div>
-            <div class="map-canvas">
-              <div class="map-path path-one"></div>
-              <div class="map-path path-two"></div>
-              <div class="map-note note-one">сюда не ходить после отбоя</div>
-              <div class="map-note note-two">почти незаметный проход...</div>
-              <button class="tower" id="towerBtn">♜<br>Башня<br>Гриффиндора</button>
-            </div>
-            <p class="map-hint">Некоторые двери открываются только тем, кто знает, куда смотреть.</p>
-          </div>
-          <div class="actions"><button id="towerBtn2">[ ИДТИ К БАШНЕ ГРИФФИНДОРА ]</button></div>
-        </section>`;
-      document.getElementById("towerBtn").onclick = () => setStage("case01_room");
-      document.getElementById("towerBtn2").onclick = () => setStage("case01_room");
-    }
+    
+function renderMap() {
+  setTheme("map-mode");
+  setFooter("КАРТА ХОГВАРТСА");
+
+  main.innerHTML = `
+    <section class="screen">
+      <div class="eyebrow">СЛЕД 01 // МЕСТО ОБНАРУЖЕНИЯ</div>
+      <h1>Карта Хогвартса</h1>
+      <p class="muted">Чернильные линии складываются в знакомые коридоры. Среди пометок кто-то оставил маршрут.</p>
+
+      <div class="parchment">
+        <div class="map-heading">КАРТА ШКОЛЫ ЧАР И ВОЛШЕБСТВА</div>
+
+        <div class="map-image-wrap">
+          <img
+            src="images/карта.png"
+            alt="Карта Хогвартса"
+            class="map-image"
+          >
+          <button id="towerBtn2" class="map-tower-button">
+            БАШНЯ ГРИФФИНДОРА
+          </button>
+        </div>
+
+        <p class="map-hint">Некоторые двери открываются только тем, кто знает, куда смотреть.</p>
+      </div>
+    </section>`;
+
+  document.getElementById("towerBtn2").onclick = () => {
+    setStage("case01_room");
+  };
+}
+
+    
 
     const dialogue = [
       { who: "Джеймс", text: "Мы хотели сделать одну вещь." },

@@ -326,13 +326,13 @@
 
 .animal-silhouette-group {
   display: block;
-  width: 100%;
+  width: 120%;
   height: auto;
   max-height: none;
-  min-height: 260px;
+  margin-left: -10%;
   overflow: visible;
   color: #a99b89;
-  filter: drop-shadow(0 0 12px rgba(201, 185, 157, .3));
+  filter: drop-shadow(0 0 14px rgba(201, 185, 157, .35));
 }
 
 

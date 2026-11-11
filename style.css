@@ -64,6 +64,16 @@
       flex-direction: column;
     }
 
+/* Магический переход между экранами */
+main {
+  transition: opacity .25s ease, filter .25s ease;
+}
+
+main.stage-leaving {
+  opacity: 0;
+  filter: blur(5px);
+}
+
     header {
       display: flex;
       justify-content: space-between;

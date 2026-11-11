@@ -60,10 +60,18 @@
 });
 
     function setStage(stage) {
-      state.stage = stage;
-      saveState();
-      render();
-    }
+  const main = document.getElementById("main");
+
+  main.classList.add("stage-leaving");
+
+  setTimeout(() => {
+    state.stage = stage;
+    saveState();
+    render();
+
+    main.classList.remove("stage-leaving");
+  }, 250);
+}
 
     function setTheme(theme) {
       document.body.classList.remove("warm", "map-mode", "room-mode");

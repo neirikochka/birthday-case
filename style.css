@@ -495,42 +495,26 @@ main.stage-leaving {
       background: linear-gradient(180deg, rgba(75,35,25,.7), rgba(27,18,18,.96));
     }
 
-    .room-scene {
-      position: relative;
-      overflow: hidden;
-      min-height: 145px;
-      margin-bottom: 22px;
-      border: 1px solid rgba(215,184,121,.2);
-      background:
-        radial-gradient(ellipse at 50% 80%, rgba(236,129,54,.28), transparent 25%),
-        linear-gradient(90deg, #321c1b, #593225 48%, #321c1b);
-    }
+.room-scene {
+  position: relative;
+  overflow: hidden;
+  min-height: 300px;
+  margin-bottom: 22px;
+  border: 1px solid rgba(215,184,121,.35);
+  background:
+    linear-gradient(rgba(20, 10, 8, .2), rgba(20, 10, 8, .35)),
+    url("images/гостиная%20гриффа.jpg") center 55% / cover no-repeat;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .35);
+}
 
-    .fireplace {
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100px;
-      height: 100px;
-      border: 7px solid #4a2920;
-      border-bottom: 0;
-      border-radius: 45px 45px 0 0;
-      background: radial-gradient(ellipse at 50% 100%, #ffd67a 0%, #e86d31 28%, #7c2e25 62%, #281617 75%);
-      box-shadow: 0 0 28px rgba(245,132,54,.2);
-    }
+    /* Старый нарисованный камин больше не нужен */
+.fireplace {
+  display: none;
+}
 
-    .fireplace::before {
-      content: "";
-      position: absolute;
-      width: 35px;
-      height: 58px;
-      left: 25px;
-      bottom: 0;
-      background: linear-gradient(0deg, #ffdc84, #ef6b2f, transparent);
-      clip-path: polygon(50% 0, 95% 55%, 76% 100%, 20% 100%, 0 55%);
-      animation: flame .9s ease-in-out infinite alternate;
-    }
+   .fireplace::before {
+  display: none;
+}
 
     @keyframes flame {
       from { transform: scaleY(.82) skewX(-3deg); }
@@ -538,14 +522,18 @@ main.stage-leaving {
     }
 
     .room-label {
-      position: absolute;
-      top: 15px;
-      left: 15px;
-      font-family: Georgia, serif;
-      color: #e4cba0;
-      font-size: 13px;
-      font-style: italic;
-    }
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  z-index: 1;
+  padding: 8px 12px;
+  font-family: Georgia, serif;
+  color: #f0dfbd;
+  font-size: 13px;
+  font-style: italic;
+  background: rgba(25, 14, 12, .7);
+  border: 1px solid rgba(215,184,121,.25);
+}
 
     .characters {
       display: grid;

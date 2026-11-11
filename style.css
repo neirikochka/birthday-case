@@ -708,3 +708,203 @@ main.stage-leaving {
         transition-duration: .01ms !important;
       }
     }
+
+
+/* Старинная карта Хогвартса */
+.map-canvas {
+  min-height: 0;
+  padding: 8px;
+  border: 1px solid rgba(71, 54, 38, .45);
+  background:
+    radial-gradient(ellipse at 50% 48%, rgba(255,255,255,.16), transparent 70%),
+    rgba(190, 158, 111, .12);
+}
+
+.hogwarts-map {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.map-ink {
+  fill: none;
+  stroke: #57432f;
+  stroke-width: 2.2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.building {
+  fill: rgba(105, 78, 49, .10);
+  stroke: #59432e;
+  stroke-width: 2.4;
+}
+
+.building-detail {
+  fill: url(#stone);
+  stroke: #765a3b;
+  stroke-width: 1.4;
+}
+
+.corridor {
+  fill: none;
+  stroke: #725638;
+  stroke-width: 2;
+  stroke-dasharray: 5 4;
+}
+
+.tower-roof {
+  fill: rgba(104, 76, 48, .16);
+  stroke: #59432e;
+  stroke-width: 2;
+}
+
+.courtyard {
+  fill: rgba(128, 103, 69, .12);
+  stroke: #806343;
+  stroke-width: 1.8;
+  stroke-dasharray: 4 3;
+}
+
+.courtyard-path {
+  fill: none;
+  stroke: #8a6d48;
+  stroke-width: 1.4;
+  stroke-dasharray: 3 4;
+}
+
+.fountain {
+  fill: none;
+  stroke: #715638;
+  stroke-width: 2;
+}
+
+.fountain-inner {
+  fill: rgba(100, 116, 104, .22);
+  stroke: #715638;
+  stroke-width: 1.3;
+}
+
+.map-label {
+  fill: #59432e;
+  stroke: none;
+  font-family: Georgia, serif;
+  font-size: 11px;
+  font-weight: bold;
+  text-anchor: middle;
+  letter-spacing: 1px;
+}
+
+.map-small {
+  fill: #725638;
+  stroke: none;
+  font-family: Georgia, serif;
+  font-size: 10px;
+  text-anchor: middle;
+}
+
+.stairs {
+  fill: none;
+  stroke: #745638;
+  stroke-width: 1.5;
+}
+
+.secret-passage {
+  fill: none;
+  stroke: #8a503b;
+  stroke-width: 2;
+  stroke-dasharray: 3 6;
+  opacity: .85;
+}
+
+.map-note-text {
+  fill: #805438;
+  stroke: none;
+  font-family: Georgia, serif;
+  font-size: 12px;
+  font-style: italic;
+}
+
+.map-handwriting {
+  fill: #754d38;
+  font-family: Georgia, serif;
+  font-size: 12px;
+  font-style: italic;
+}
+
+.hand-arrow {
+  fill: none;
+  stroke: #754d38;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+.map-border-flourish {
+  fill: none;
+  stroke: #806343;
+  stroke-width: 1.5;
+}
+
+.map-signature {
+  font-size: 9px;
+  letter-spacing: 2px;
+}
+
+/* Башня Гриффиндора — единственная выделенная точка */
+.gryffindor-highlight {
+  cursor: pointer;
+  outline: none;
+}
+
+.tower-halo {
+  fill: rgba(154, 54, 39, .22);
+  filter: url(#tower-glow);
+}
+
+.tower-ring {
+  fill: rgba(163, 69, 53, .10);
+  stroke: #a34535;
+  stroke-width: 2;
+}
+
+.gryffindor-tower {
+  fill: #a34535;
+  stroke: #633426;
+  stroke-width: 2.5;
+}
+
+.gryffindor-inner {
+  fill: rgba(232, 213, 173, .28);
+  stroke: #e8d5ad;
+  stroke-width: 1.2;
+}
+
+.tower-symbol {
+  fill: #f1dfbd;
+  stroke: none;
+  font-family: Georgia, serif;
+  font-size: 24px;
+  text-anchor: middle;
+}
+
+.tower-caption {
+  fill: #8e392d;
+  stroke: none;
+  font-family: Georgia, serif;
+  font-size: 12px;
+  font-weight: bold;
+  text-anchor: middle;
+  letter-spacing: .7px;
+}
+
+.gryffindor-highlight:hover .tower-ring,
+.gryffindor-highlight:focus .tower-ring {
+  stroke-width: 4;
+}
+
+.gryffindor-highlight:hover .tower-halo,
+.gryffindor-highlight:focus .tower-halo {
+  fill: rgba(154, 54, 39, .38);
+}
+

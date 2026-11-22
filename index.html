@@ -606,51 +606,69 @@ function renderMap() {
 
     
 function renderRoom() {
-      setTheme("room-mode");
-      setFooter("СВЯЗЬ С ИСТОЧНИКОМ УСТАНОВЛЕНА");
-      if (!Number.isInteger(state.dialogueIndex) ||
-          state.dialogueIndex < 0 ||
-          state.dialogueIndex >= dialogue.length) {
-        state.dialogueIndex = 0;
-      }
-      saveState();
-      main.innerHTML = `
-        <section class="screen">
-          <div class="eyebrow">СЛЕД 01 // БАШНЯ ГРИФФИНДОРА</div>
-          <h1>Гостиная Гриффиндора</h1>
-          <div class="room">
-            <div class="room-scene">
-              <div class="room-label">Поздний вечер. Камин ещё горит.</div>
-              <div class="fireplace"></div>
+  setTheme("room-mode");
+  setFooter("СВЯЗЬ С ИСТОЧНИКОМ УСТАНОВЛЕНА");
+
+  if (!Number.isInteger(state.dialogueIndex) ||
+      state.dialogueIndex < 0 ||
+      state.dialogueIndex >= dialogue.length) {
+    state.dialogueIndex = 0;
+  }
+
+  saveState();
+
+  main.innerHTML = `
+    <section class="screen">
+      <div class="eyebrow">СЛЕД 01 // БАШНЯ ГРИФФИНДОРА</div>
+      <h1>Гостиная Гриффиндора</h1>
+
+      <div class="room">
+
+        <div class="room-scene">
+          <div class="room-label">Поздний вечер. Камин ещё горит.</div>
+
+          <div class="characters" id="characters">
+
+            <div class="character" data-name="Джеймс">
+              <img class="avatar" src="images/Джеймс%20Поттер.png" alt="Джеймс Поттер">
+              <div class="character-name">Джеймс</div>
             </div>
-            <p class="muted">У огня собрались четверо. Судя по выражениям лиц, кто-то из них определённо что-то натворил.</p>
-            <div class="characters" id="characters">
-             <div class="character" data-name="Джеймс">
-  <img class="avatar" src="images/Джеймс%20Поттер.png" alt="Джеймс Поттер">
-  <div class="character-name">Джеймс</div>
-</div>
-<div class="character" data-name="Сириус">
-  <img class="avatar" src="images/Сириус%20Блэк.jpg" alt="Сириус Блэк">
-  <div class="character-name">Сириус</div>
-</div>
-<div class="character" data-name="Римус">
-  <img class="avatar" src="images/Римус%20Люпин.jpg" alt="Ремус Люпин">
-  <div class="character-name">Римус</div>
-</div>
-<div class="character" data-name="Питер">
-  <img class="avatar" src="images/Питер%20Петтигрю.jpg" alt="Питер Петтигрю">
-  <div class="character-name">Питер</div>
-</div>
-            <div class="dialogue">
-              <div class="speaker" id="speaker">ДЖЕЙМС</div>
-              <p class="line" id="line">Мы хотели сделать одну вещь.</p>
+
+            <div class="character" data-name="Сириус">
+              <img class="avatar" src="images/Сириус%20Блэк.jpg" alt="Сириус Блэк">
+              <div class="character-name">Сириус</div>
             </div>
-            <div class="actions"><button class="primary" id="nextLine">[ ДАЛЬШЕ ]</button></div>
+
+            <div class="character" data-name="Римус">
+              <img class="avatar" src="images/Римус%20Люпин.jpg" alt="Римус Люпин">
+              <div class="character-name">Римус</div>
+            </div>
+
+            <div class="character" data-name="Питер">
+              <img class="avatar" src="images/Питер%20Петтигрю.jpg" alt="Питер Петтигрю">
+              <div class="character-name">Питер</div>
+            </div>
+
           </div>
-        </section>`;
-      document.getElementById("nextLine").onclick = advanceDialogue;
-      updateDialogue();
-    }
+        </div>
+
+        <p class="muted">У огня собрались четверо. Судя по выражениям лиц, кто-то из них определённо что-то натворил.</p>
+
+        <div class="dialogue">
+          <div class="speaker" id="speaker">ДЖЕЙМС</div>
+          <p class="line" id="line">Мы хотели сделать одну вещь.</p>
+        </div>
+
+        <div class="actions">
+          <button class="primary" id="nextLine">[ ДАЛЬШЕ ]</button>
+        </div>
+
+      </div>
+    </section>`;
+
+  document.getElementById("nextLine").onclick = advanceDialogue;
+  updateDialogue();
+}
 
    
 function advanceDialogue() {

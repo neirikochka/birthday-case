@@ -498,7 +498,7 @@ main.stage-leaving {
 .room-scene {
   position: relative;
   overflow: hidden;
-  min-height: 300px;
+  min-height: 360px;
   margin-bottom: 22px;
   border: 1px solid rgba(215,184,121,.35);
   background:
@@ -938,17 +938,19 @@ main.stage-leaving {
 /* Персонажи внутри сцены гостиной */
 .room-scene #characters {
   position: absolute;
-  left: 0;
-  right: 0;
+  left: 50%;
+  transform: translateX(-50%);
   bottom: 0;
   z-index: 2;
 
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 8px;
+  gap: 5px;
 
+  width: 85%;
+  max-width: 750px;
   margin: 0;
-  padding: 45px 10px 8px;
+  padding: 35px 5px 8px;
   align-items: end;
 }
 

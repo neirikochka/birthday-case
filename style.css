@@ -1202,3 +1202,10 @@ main.stage-leaving {
 .frog-treat:hover {
   transform: translateX(-50%) translateY(-5px);
 }
+
+.frog-treat .item-title,
+.frog-treat small,
+.frog-treat .item-caption {
+  color: #000000;
+  text-shadow: none;
+}

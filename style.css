@@ -987,5 +987,6 @@ main.stage-leaving {
 
 .room-scene #characters [data-name="Сириус"] .avatar,
 .room-scene #characters [data-name="Римус"] .avatar {
-  height: 310px;
+  width: 130%;
+  margin-left: -15%;
 }

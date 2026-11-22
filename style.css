@@ -606,13 +606,10 @@ main.stage-leaving {
       margin: 0;
     }
 
-    /* Загадка — магические предметы */
+   /* Загадка — магические предметы */
 .chocolate-scene {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 22px;
   margin: 30px 0;
-  padding: 25px;
+  padding: 20px;
   background:
     radial-gradient(ellipse at center, rgba(179, 119, 65, .12), transparent 75%),
     linear-gradient(145deg, #261810, #130e0c);
@@ -620,36 +617,46 @@ main.stage-leaving {
   box-shadow: inset 0 0 35px rgba(0,0,0,.35);
 }
 
-.treat {
+.table-scene {
   position: relative;
-  min-height: 290px;
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.table-image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.treat {
+  position: absolute;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  gap: 12px;
-  padding: 22px 14px;
-  overflow: hidden;
+  gap: 10px;
+  padding: 12px;
+  overflow: visible;
 
   color: #e6d0ad;
   font-family: Georgia, serif;
-  background: linear-gradient(180deg, #33251b, #1b120e);
-  border: 1px solid rgba(215,184,121,.35);
+  background: transparent;
+  border: none;
   cursor: pointer;
 
-  transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+  transition: transform .3s ease;
 }
 
 .treat:hover {
   transform: translateY(-5px);
-  border-color: #d7b879;
-  box-shadow: 0 8px 24px rgba(0,0,0,.35), 0 0 15px rgba(215,184,121,.08);
 }
 
 .treat[hidden] {
   display: none !important;
 }
-
 .item-caption {
   position: absolute;
   top: 14px;

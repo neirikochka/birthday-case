@@ -1005,3 +1005,11 @@ main.stage-leaving {
   transform: scale(1.25);
   transform-origin: bottom center;
 }
+
+.room-scene #characters [data-name="Сириус"] {
+  transform: translateX(-12px);
+}
+
+.room-scene #characters [data-name="Римус"] {
+  transform: translateX(12px);
+}

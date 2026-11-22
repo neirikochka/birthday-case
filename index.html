@@ -713,33 +713,45 @@ function advanceDialogue() {
           <h1>Что-то осталось после заклинания</h1>
          <p>На столике у камина лежит шоколадная лягушка. Кажется, кто-то очень старался сделать подарок и слегка перестарался.</p>
          <div class="chocolate-scene">
+  <div class="table-scene">
 
-  <button class="treat frog-treat" id="frogBtn">
-    <span class="item-caption">ПРЕДМЕТ № 01</span>
+    <img
+      src="images/деревянный%20стол.png"
+      alt="Деревянный стол"
+      class="table-image"
+    >
 
-    <span class="frog-display">
-  <img src="images/шоколадная%20лягушка%20гп1.png" alt="Шоколадная лягушка" class="frog-image">
-</span>
+    <button class="treat frog-treat" id="frogBtn">
+      <span class="item-caption">ПРЕДМЕТ № 01</span>
 
-    <span class="item-title">Шоколадная лягушка</span>
-    <small>Выглядит подозрительно довольной</small>
-  </button>
-
-  <button class="treat card-treat" id="cardBtn" hidden>
-    <span class="item-caption">ПРЕДМЕТ № 02</span>
-
-    <span class="card-art">
-      <span class="card-inner">
-        <span class="card-star">✦</span>
-        <span class="card-ornament">WIZARD</span>
-        <span class="card-bottom">CHOCOLATE FROG</span>
+      <span class="frog-display">
+        <img
+          src="images/шоколадная%20лягушка%20гп1.png"
+          alt="Шоколадная лягушка"
+          class="frog-image"
+        >
       </span>
-    </span>
 
-    <span class="item-title">Коллекционная карточка</span>
-    <small>На обороте что-то написано</small>
-  </button>
+      <span class="item-title">Шоколадная лягушка</span>
+      <small>Выглядит подозрительно довольной</small>
+    </button>
 
+    <button class="treat card-treat" id="cardBtn" hidden>
+      <span class="item-caption">ПРЕДМЕТ № 02</span>
+
+      <span class="card-art">
+        <span class="card-inner">
+          <span class="card-star">✦</span>
+          <span class="card-ornament">WIZARD</span>
+          <span class="card-bottom">CHOCOLATE FROG</span>
+        </span>
+      </span>
+
+      <span class="item-title">Коллекционная карточка</span>
+      <small>На обороте что-то написано</small>
+    </button>
+
+  </div>
 </div>
           <div class="console" id="clueBox"><p class="muted">Выбери предмет, чтобы осмотреть его.</p></div>
           <div class="actions"><button class="primary" id="takeFragment" hidden>[ ЗАБРАТЬ ФРАГМЕНТ ]</button></div>

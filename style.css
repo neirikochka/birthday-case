@@ -1188,8 +1188,10 @@ main.stage-leaving {
 .room-scene #characters [data-name="Римус"] .avatar {
   width: 130%;
   margin-left: -15%;
+}
 
-      .frog-treat {
+/* Положение шоколадной лягушки на столе */
+.frog-treat {
   top: 15%;
   left: 50%;
   transform: translateX(-50%);
@@ -1199,9 +1201,4 @@ main.stage-leaving {
 
 .frog-treat:hover {
   transform: translateX(-50%) translateY(-5px);
-}
-
-.frog-display {
-  width: 100%;
-}
 }

@@ -984,3 +984,24 @@ main.stage-leaving {
   background: rgba(25, 14, 12, .8);
   border: 1px solid rgba(215, 184, 121, .3);
 }
+
+/* Индивидуальный размер персонажей */
+.room-scene #characters [data-name="Джеймс"] .avatar {
+  transform: scale(0.85);
+  transform-origin: bottom center;
+}
+
+.room-scene #characters [data-name="Питер"] .avatar {
+  transform: scale(0.85);
+  transform-origin: bottom center;
+}
+
+.room-scene #characters [data-name="Сириус"] .avatar {
+  transform: scale(1.25);
+  transform-origin: bottom center;
+}
+
+.room-scene #characters [data-name="Римус"] .avatar {
+  transform: scale(1.25);
+  transform-origin: bottom center;
+}

@@ -606,46 +606,224 @@ main.stage-leaving {
       margin: 0;
     }
 
-    /* Загадка */
-    .chocolate-scene {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 15px;
-      margin: 25px 0;
-    }
+    /* Загадка — магические предметы */
+.chocolate-scene {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  margin: 30px 0;
+  padding: 25px;
+  background:
+    radial-gradient(ellipse at center, rgba(179, 119, 65, .12), transparent 75%),
+    linear-gradient(145deg, #261810, #130e0c);
+  border: 1px solid rgba(215,184,121,.25);
+  box-shadow: inset 0 0 35px rgba(0,0,0,.35);
+}
 
-    .treat {
-      min-height: 180px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 13px;
-      padding: 18px 10px;
-      background: #201611;
-      border: 1px solid #67462e;
-      color: #e6d0ad;
-    }
+.treat {
+  position: relative;
+  min-height: 290px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 22px 14px;
+  overflow: hidden;
 
-    .frog {
-      font-size: 52px;
-      filter: drop-shadow(0 6px 5px rgba(0,0,0,.4));
-    }
+  color: #e6d0ad;
+  font-family: Georgia, serif;
+  background: linear-gradient(180deg, #33251b, #1b120e);
+  border: 1px solid rgba(215,184,121,.35);
+  cursor: pointer;
 
-    .card-art {
-      width: 75px;
-      height: 100px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 3px double #d7b879;
-      color: #e8d5ad;
-      background: linear-gradient(140deg, #503728, #17141a);
-      font-size: 27px;
-      box-shadow: 0 5px 12px rgba(0,0,0,.3);
-    }
+  transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+}
 
-    .treat small { color: #b9a18a; font-size: 10px; }
+.treat:hover {
+  transform: translateY(-5px);
+  border-color: #d7b879;
+  box-shadow: 0 8px 24px rgba(0,0,0,.35), 0 0 15px rgba(215,184,121,.08);
+}
+
+.item-caption {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: #a68a64;
+}
+
+/* Шоколадная лягушка */
+.frog-display {
+  position: relative;
+  width: 170px;
+  height: 155px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px auto;
+  filter: drop-shadow(0 12px 9px rgba(0,0,0,.45));
+  transition: transform .3s ease;
+}
+
+.frog-treat:hover .frog-display {
+  transform: translateY(-4px) rotate(-2deg);
+}
+
+.frog-body {
+  position: absolute;
+  width: 118px;
+  height: 85px;
+  bottom: 18px;
+  left: 26px;
+
+  background:
+    radial-gradient(ellipse at 32% 25%, #a38b56, transparent 18%),
+    radial-gradient(ellipse at 70% 35%, #9c8049, transparent 15%),
+    linear-gradient(145deg, #75552e, #4a321b 65%, #352315);
+
+  border: 2px solid #3c2918;
+  border-radius: 55% 45% 48% 52% / 46% 50% 50% 54%;
+
+  box-shadow:
+    inset -10px -12px 15px rgba(0,0,0,.25),
+    inset 7px 6px 12px rgba(220,184,120,.12);
+}
+
+.frog-body::before,
+.frog-body::after {
+  content: "";
+  position: absolute;
+  width: 37px;
+  height: 25px;
+  bottom: -8px;
+  background: linear-gradient(145deg, #70502a, #382719);
+  border: 2px solid #3c2918;
+  border-radius: 65% 40% 55% 45%;
+}
+
+.frog-body::before {
+  left: -17px;
+  transform: rotate(-25deg);
+}
+
+.frog-body::after {
+  right: -17px;
+  transform: rotate(25deg);
+}
+
+.frog-eye {
+  position: absolute;
+  width: 31px;
+  height: 34px;
+  top: 29px;
+
+  background: radial-gradient(circle at 40% 35%, #a58a57, #5e4527);
+  border: 2px solid #3c2918;
+  border-radius: 50%;
+  z-index: 2;
+}
+
+.frog-eye::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 12px;
+  top: 8px;
+  left: 9px;
+  background: #17110b;
+  border-radius: 50%;
+  box-shadow: 2px -2px 0 rgba(255,255,255,.3);
+}
+
+.frog-eye-left {
+  left: 42px;
+}
+
+.frog-eye-right {
+  right: 42px;
+}
+
+/* Коллекционная карточка */
+.card-art {
+  width: 130px;
+  height: 175px;
+  padding: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 4px auto 0;
+
+  background: linear-gradient(135deg, #c2a46d, #6f4d2e, #c2a46d);
+  box-shadow: 0 12px 20px rgba(0,0,0,.4);
+  transform: rotate(2deg);
+  transition: transform .3s ease;
+}
+
+.card-treat:hover .card-art {
+  transform: rotate(0deg) scale(1.04);
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+
+  border: 1px solid #c7ab75;
+  background:
+    radial-gradient(ellipse at center, rgba(191,154,92,.2), transparent 75%),
+    linear-gradient(180deg, #38281d, #171217);
+  color: #d8bd88;
+}
+
+.card-inner::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border: 1px solid rgba(215,184,121,.45);
+  pointer-events: none;
+}
+
+.card-star {
+  font-size: 48px;
+  line-height: 1;
+  margin-top: 32px;
+  color: #d7b879;
+  text-shadow: 0 0 15px rgba(215,184,121,.3);
+}
+
+.card-ornament {
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: #c4a575;
+}
+
+.card-bottom {
+  font-size: 7px;
+  letter-spacing: 1px;
+  text-align: center;
+  margin-bottom: 14px;
+  color: #b79b70;
+}
+
+.item-title {
+  font-size: 16px;
+  color: #e3c89d;
+  text-align: center;
+}
+
+.treat small {
+  color: #b9a18a;
+  font-size: 10px;
+  font-style: italic;
+  text-align: center;
+}
 
     .letters {
       font-size: clamp(24px, 6vw, 34px);

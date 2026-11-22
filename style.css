@@ -672,6 +672,16 @@ main.stage-leaving {
   transition: transform .3s ease;
 }
 
+.frog-display .frog-image {
+  display: block;
+  width: 100%;
+  max-width: 170px;
+  height: 145px;
+  object-fit: contain;
+  object-position: center;
+  margin: 0 auto;
+}
+
 .frog-treat:hover .frog-display {
   transform: translateY(-4px) rotate(-2deg);
 }

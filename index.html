@@ -727,7 +727,7 @@ function advanceDialogue() {
     <small>Выглядит подозрительно довольной</small>
   </button>
 
-  <button class="treat card-treat" id="cardBtn">
+  <button class="treat card-treat" id="cardBtn" hidden>
     <span class="item-caption">ПРЕДМЕТ № 02</span>
 
     <span class="card-art">
@@ -746,10 +746,12 @@ function advanceDialogue() {
           <div class="console" id="clueBox"><p class="muted">Выбери предмет, чтобы осмотреть его.</p></div>
           <div class="actions"><button class="primary" id="takeFragment" hidden>[ ЗАБРАТЬ ФРАГМЕНТ ]</button></div>
         </section>`;
-      document.getElementById("frogBtn").onclick = () => {
-        document.getElementById("clueBox").innerHTML =
-          "<p>Лягушка делает небольшой прыжок и замирает, будто ничего не произошло.</p><p class='gold'>Под ней обнаружилась карточка!</p>";
-      };
+     document.getElementById("frogBtn").onclick = () => {
+  document.getElementById("clueBox").innerHTML =
+    "<p>Лягушка делает небольшой прыжок, переворачивается и замирает.</p><p class='gold'>Из-под неё показалась коллекционная карточка!</p>";
+
+  document.getElementById("cardBtn").hidden = false;
+};
       document.getElementById("cardBtn").onclick = () => {
         document.getElementById("clueBox").innerHTML =
           "<p>На коллекционной карточке пять букв:</p><div class='letters'>G · E · M · I · N</div><p class='muted'>Порядок букв ещё ничего не объясняет. Это фрагмент, а не готовый ответ.</p>";

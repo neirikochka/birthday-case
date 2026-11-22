@@ -1188,4 +1188,20 @@ main.stage-leaving {
 .room-scene #characters [data-name="Римус"] .avatar {
   width: 130%;
   margin-left: -15%;
+
+      .frog-treat {
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 220px;
+  z-index: 2;
+}
+
+.frog-treat:hover {
+  transform: translateX(-50%) translateY(-5px);
+}
+
+.frog-display {
+  width: 100%;
+}
 }

@@ -934,3 +934,50 @@ main.stage-leaving {
   background: #f3e4c2;
   box-shadow: 0 0 16px rgba(114, 83, 51, .4);
 }
+
+/* Персонажи внутри сцены гостиной */
+.room-scene #characters {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+
+  margin: 0;
+  padding: 45px 10px 8px;
+  align-items: end;
+}
+
+.room-scene #characters .character {
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #ead7b5;
+}
+
+.room-scene #characters .avatar {
+  width: 100%;
+  height: 190px;
+  margin: 0 auto 5px;
+
+  object-fit: contain;
+  object-position: center bottom;
+
+  border-radius: 0;
+  opacity: 1;
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, .65));
+}
+
+.room-scene #characters .character-name {
+  display: inline-block;
+  padding: 4px 7px;
+  font-size: 10px;
+  letter-spacing: 1px;
+
+  background: rgba(25, 14, 12, .8);
+  border: 1px solid rgba(215, 184, 121, .3);
+}

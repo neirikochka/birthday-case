@@ -1209,3 +1209,15 @@ main.stage-leaving {
   color: #000000;
   text-shadow: none;
 }
+
+/* Положение коллекционной карточки на столе */
+.card-treat {
+  top: 15%;
+  left: 72%;
+  width: 170px;
+  z-index: 2;
+}
+
+.card-treat:hover {
+  transform: translateY(-5px);
+}

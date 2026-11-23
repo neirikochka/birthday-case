@@ -1221,3 +1221,10 @@ main.stage-leaving {
 .card-treat:hover {
   transform: translateY(-5px);
 }
+
+.card-treat .item-title,
+.card-treat small,
+.card-treat .item-caption {
+  color: #000000;
+  text-shadow: none;
+}

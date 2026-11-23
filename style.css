@@ -1144,10 +1144,7 @@ main.stage-leaving {
 
 /* Персонажи внутри сцены гостиной */
 .room-scene #characters {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 0;
+  position: relative;
   z-index: 2;
 
   display: grid;
@@ -1156,7 +1153,7 @@ main.stage-leaving {
 
   width: 85%;
   max-width: 750px;
-  margin: 0;
+  margin: 0 auto;
   padding: 35px 5px 8px;
   align-items: end;
 }

@@ -813,7 +813,7 @@ function advanceDialogue() {
       </div>
 
       <div class="console" id="fragmentConsole">
-        <p class="archive-line">СЛЕД 01 [ПРОЙДЕН ✓]</p>
+        <p class="archive-line">СЛЕД 01 [ПРОЙДЕН <span class="check">✓</span>]</p>
         <p class="archive-line">СЛЕД 02 [🔒]</p>
         <p class="archive-line">СЛЕД 03 [🔒]</p>
         <p class="archive-line">СЛЕД 04 [🔒]</p>
@@ -832,17 +832,16 @@ function advanceDialogue() {
 
   archiveLines.forEach((line, index) => {
     line.style.opacity = "0";
-    line.style.transition = "opacity .6s ease";
+    line.style.transition = "opacity .4s ease";
 
     setTimeout(() => {
       line.style.opacity = "1";
-    }, 900 + index * 900);
+    }, 400 + index * 400);
   });
 
   setTimeout(() => {
     finishButton.hidden = false;
-  }, 900 + archiveLines.length * 900);
-
+  }, 400 + archiveLines.length * 400);
   finishButton.onclick = () => {
     state.trace01Done = true;
     saveState();

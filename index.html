@@ -756,10 +756,11 @@ function advanceDialogue() {
           <div class="console" id="clueBox"><p class="muted">Выбери предмет, чтобы осмотреть его.</p></div>
           <div class="actions"><button class="primary" id="takeFragment" hidden>[ ЗАБРАТЬ ФРАГМЕНТ ]</button></div>
         </section>`;
-     document.getElementById("frogBtn").onclick = () => {
+    document.getElementById("frogBtn").onclick = () => {
   document.getElementById("clueBox").innerHTML =
     "<p>Лягушка делает небольшой прыжок, переворачивается и замирает.</p><p class='gold'>Из-под неё показалась коллекционная карточка!</p>";
 
+  document.getElementById("frogBtn").hidden = true;
   document.getElementById("cardBtn").hidden = false;
 };
       document.getElementById("cardBtn").onclick = () => {

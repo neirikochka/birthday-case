@@ -1170,17 +1170,30 @@ function renderAaronPuzzle() {
   setFooter("СЛЕД 02 // ПОИСК");
 
   main.innerHTML = `
-    <section class="screen">
-      <div class="eyebrow">АРХИВ // НЕСООТВЕТСТВИЕ</div>
-      <h1>Что здесь лишнее?</h1>
-      <p>Аарон кивает на стол.</p>
-      <p>Среди бумаг и аккуратно разложенных вещей лежит обычная шоколадка.</p>
-      <p class="muted">— Иногда ответ оказывается прямо перед глазами.</p>
-      <div class="actions">
-        <button class="primary" id="takeChocolate">[ ВЗЯТЬ ШОКОЛАДКУ ]</button>
-      </div>
-    </section>`;
+  <section class="screen">
+    <div class="eyebrow">АРХИВ // НЕСООТВЕТСТВИЕ</div>
+    <h1>Что здесь лишнее?</h1>
 
+    <p>Аарон кивает на стол.</p>
+    <p>Среди бумаг и аккуратно разложенных вещей лежит обычная шоколадка.</p>
+    <p class="muted">— Иногда ответ оказывается прямо перед глазами.</p>
+
+    <div class="aaron-puzzle-scene">
+      <img
+        src="images/деревянный%20стол.png"
+        alt="Деревянный стол"
+        class="aaron-table"
+      >
+
+      <img
+        src="images/шоколад%20Аарон.jpg"
+        alt="Шоколадка"
+        class="aaron-chocolate"
+        id="takeChocolate"
+      >
+    </div>
+  </section>`;
+  
   document.getElementById("takeChocolate").onclick = () => {
     state.fragment02 = ["I", "L", "T", "E"];
     setStage("case02_fragment");

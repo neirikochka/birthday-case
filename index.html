@@ -874,27 +874,84 @@ function advanceDialogue() {
     
 function renderAaronIntro() {
   setFooter("СЛЕД 02 // ААРОН УОРНЕР");
+
   main.innerHTML = `
+    <style>
+      @keyframes signalReveal {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .signal-console .signal-line,
+      .aaron-intro-text,
+      .aaron-intro-title,
+      .aaron-intro-button {
+        opacity: 0;
+      }
+
+      .signal-console .signal-line.visible,
+      .aaron-intro-text.visible,
+      .aaron-intro-title.visible,
+      .aaron-intro-button.visible {
+        animation: signalReveal .7s ease forwards;
+      }
+    </style>
+
     <section class="screen">
       <div class="eyebrow">СЛЕД 02 // ВОССТАНОВЛЕНИЕ СВЯЗИ</div>
-     <div class="console signal-console">
-  <p class="signal-line">СИГНАЛ ОБНАРУЖЕН...</p>
-  <p class="signal-line">Помехи устранены.</p>
-  <p class="signal-line">Источник идентифицирован.</p>
-</div>
-      <h1>Готовься, любовь моя.</h1>
-      <p>Аарон Уорнер смотрит на тебя так, словно твоё появление его ничуть не удивило.</p>
-      <div class="actions">
+
+      <div class="console signal-console">
+        <p class="signal-line">СИГНАЛ ОБНАРУЖЕН...</p>
+        <p class="signal-line">Помехи устранены.</p>
+        <p class="signal-line">Источник идентифицирован.</p>
+      </div>
+
+      <h1 class="aaron-intro-title">Готовься, любовь моя.</h1>
+
+      <p class="aaron-intro-text">
+        Аарон Уорнер смотрит на тебя так, словно твоё появление его ничуть не удивило.
+      </p>
+
+      <div class="actions aaron-intro-button">
         <button class="primary" id="startAaron">[ ПОДОЙТИ ]</button>
       </div>
     </section>`;
+
+  const lines = main.querySelectorAll(".signal-line");
+  const title = main.querySelector(".aaron-intro-title");
+  const text = main.querySelector(".aaron-intro-text");
+  const button = main.querySelector(".aaron-intro-button");
+
+  lines.forEach((line, index) => {
+    setTimeout(() => {
+      line.classList.add("visible");
+    }, 500 + index * 1000);
+  });
+
+  setTimeout(() => {
+    title.classList.add("visible");
+  }, 4000);
+
+  setTimeout(() => {
+    text.classList.add("visible");
+  }, 5000);
+
+  setTimeout(() => {
+    button.classList.add("visible");
+  }, 6000);
+
   document.getElementById("startAaron").onclick = () => {
     state.trace02Branch = "";
     state.trace02DialogueIndex = 0;
     setStage("case02_dialogue");
   };
 }
-
 
 function renderAaronDialogue() {
   setFooter("СЛЕД 02 // ДИАЛОГ");

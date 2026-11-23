@@ -1085,9 +1085,21 @@ function renderAaronDialogue() {
   if (item.type === "choice") {
     main.innerHTML = `
       <section class="screen">
-        <div class="eyebrow">СЛЕД 02 // ДИАЛОГ</div>
-        <h1>Аарон Уорнер</h1>
-        <p>${item.question}</p>
+        <div class="eyebrow">АРХИВ // ДИАЛОГ</div>
+
+        <div class="aaron-scene">
+          <img
+            src="images/Аарон%20Уорнер.png"
+            alt="Аарон Уорнер"
+            class="aaron-character"
+          >
+
+          <div class="dialogue aaron-dialogue">
+            <p class="speaker">ААРОН УОРНЕР</p>
+            <p class="line">${item.question}</p>
+          </div>
+        </div>
+
         <div class="actions" id="aaronChoices"></div>
       </section>`;
 
@@ -1109,22 +1121,31 @@ function renderAaronDialogue() {
     return;
   }
 
-  main.innerHTML = `
-    <section class="screen">
-      <div class="eyebrow">СЛЕД 02 // ДИАЛОГ</div>
-      <h1>Аарон Уорнер</h1>
-      <div class="console">
+main.innerHTML = `
+  <section class="screen">
+    <div class="eyebrow">АРХИВ // ДИАЛОГ</div>
+
+    <div class="aaron-scene">
+      <img
+        src="images/Аарон%20Уорнер.png"
+        alt="Аарон Уорнер"
+        class="aaron-character"
+      >
+
+      <div class="dialogue aaron-dialogue">
         <p class="speaker">${item.who.toUpperCase()}</p>
         <p class="line">${item.text}</p>
       </div>
-      <div class="actions">
-        <button class="primary" id="nextAaron">
-          ${index === lines.length - 1
-            ? "[ ОСМОТРЕТЬСЯ ]"
-            : "[ ДАЛЬШЕ ]"}
-        </button>
-      </div>
-    </section>`;
+    </div>
+
+    <div class="actions">
+      <button class="primary" id="nextAaron">
+        ${index === lines.length - 1
+          ? "[ ОСМОТРЕТЬСЯ ]"
+          : "[ ДАЛЬШЕ ]"}
+      </button>
+    </div>
+  </section>`;
 
   document.getElementById("nextAaron").onclick = () => {
     if (index === lines.length - 1) {

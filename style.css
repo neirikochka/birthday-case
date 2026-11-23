@@ -1213,13 +1213,14 @@ main.stage-leaving {
 /* Положение коллекционной карточки на столе */
 .card-treat {
   top: 15%;
-  left: 72%;
+  left: 50%;
   width: 170px;
+  transform: translateX(-50%);
   z-index: 2;
 }
 
 .card-treat:hover {
-  transform: translateY(-5px);
+  transform: translateX(-50%) translateY(-5px);
 }
 
 .card-treat .item-title,

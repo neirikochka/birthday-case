@@ -490,10 +490,12 @@ main.stage-leaving {
     }
 
     .room {
-      border: 1px solid #68422e;
-      padding: 20px;
-      background: linear-gradient(180deg, rgba(75,35,25,.7), rgba(27,18,18,.96));
-    }
+  border: 1px solid #68422e;
+  padding: 20px;
+  background:
+    linear-gradient(rgba(20, 10, 8, .25), rgba(20, 10, 8, .55)),
+    url("images/гостиная%20гриффа.jpg") center 55% / cover no-repeat;
+}
 
 .room-scene {
   position: relative;

@@ -599,6 +599,38 @@ main.stage-leaving {
       min-height: 140px;
     }
 
+/* Сцена с Аароном */
+.aaron-scene {
+  position: relative;
+  overflow: hidden;
+  min-height: 480px;
+  margin: 30px 0;
+  border: 1px solid rgba(215,184,121,.35);
+  background:
+    linear-gradient(rgba(10, 8, 10, .18), rgba(10, 8, 10, .35)),
+    url("images/фон%20Аарон.jpg") center / cover no-repeat;
+}
+
+.aaron-character {
+  position: absolute;
+  bottom: 0;
+  right: 4%;
+  height: 95%;
+  max-width: 65%;
+  object-fit: contain;
+  object-position: bottom;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.aaron-dialogue {
+  position: absolute;
+  left: 4%;
+  bottom: 5%;
+  width: 55%;
+  z-index: 3;
+}
+
     .speaker {
       color: var(--gold);
       font-size: 11px;

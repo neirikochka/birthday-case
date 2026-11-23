@@ -1236,3 +1236,8 @@ main.stage-leaving {
   color: #000000;
   text-shadow: none;
 }
+
+.check {
+  color: #7cdb8a;
+  text-shadow: 0 0 8px rgba(124, 219, 138, .45);
+}

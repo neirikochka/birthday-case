@@ -776,40 +776,79 @@ function advanceDialogue() {
     }
 
     function renderFragment() {
-      setTheme("room-mode");
-      setFooter("ФРАГМЕНТ ПОЛУЧЕН");
-      main.innerHTML = `
-        <section class="screen">
-          <div class="eyebrow">СЛЕД 01 // ФРАГМЕНТ ОБНАРУЖЕН</div>
-          <div class="room">
-            <div class="characters">
-              <div class="character active"><div class="avatar"></div><div class="character-name">Джеймс</div></div>
-              <div class="character"><div class="avatar"></div><div class="character-name">Сириус</div></div>
-              <div class="character"><div class="avatar"></div><div class="character-name">Римус</div></div>
-              <div class="character"><div class="avatar"></div><div class="character-name">Питер</div></div>
-            </div>
-            <div class="dialogue">
-              <div class="speaker">ДЖЕЙМС</div>
-              <p class="line">Всё для тебя.</p>
-            </div>
-            <div class="console">
-              <p class="success-mark">СЛЕД 01 [ПРОЙДЕН ✓]</p>
-              <p>СЛЕД 02 [🔒]</p>
-              <p>СЛЕД 03 [🔒]</p>
-              <p>СЛЕД 04 [🔒]</p>
-              <p class="gold">След 01 восстановлен.</p>
-              <p>Фрагмент получен.</p>
-              <p>Доступ к следу 02 разрешён.</p>
-            </div>
-            <div class="actions"><button class="primary" id="finishTrace">[ ПРОДОЛЖИТЬ ]</button></div>
+  setTheme("room-mode");
+  setFooter("ФРАГМЕНТ ПОЛУЧЕН");
+
+  main.innerHTML = `
+    <section class="screen">
+      <div class="eyebrow">СЛЕД 01 // ФРАГМЕНТ ОБНАРУЖЕН</div>
+
+      <div class="room-scene">
+        <div class="characters" id="characters">
+          <div class="character active">
+            <img src="images/Джеймс%20Поттер.png" class="avatar" alt="Джеймс Поттер">
+            <div class="character-name">Джеймс</div>
           </div>
-        </section>`;
-      document.getElementById("finishTrace").onclick = () => {
-        state.trace01Done = true;
-        saveState();
-        setStage("case01_done");
-      };
-    }
+
+          <div class="character">
+            <img src="images/Сириус%20Блэк.png" class="avatar" alt="Сириус Блэк">
+            <div class="character-name">Сириус</div>
+          </div>
+
+          <div class="character">
+            <img src="images/Римус%20Люпин.png" class="avatar" alt="Римус Люпин">
+            <div class="character-name">Римус</div>
+          </div>
+
+          <div class="character">
+            <img src="images/Питер%20Петтигрю.png" class="avatar" alt="Питер Петтигрю">
+            <div class="character-name">Питер</div>
+          </div>
+        </div>
+
+        <div class="dialogue">
+          <div class="speaker">ДЖЕЙМС</div>
+          <p class="line">Всё для тебя.</p>
+        </div>
+      </div>
+
+      <div class="console" id="fragmentConsole">
+        <p class="archive-line">СЛЕД 01 [ПРОЙДЕН ✓]</p>
+        <p class="archive-line">СЛЕД 02 [🔒]</p>
+        <p class="archive-line">СЛЕД 03 [🔒]</p>
+        <p class="archive-line">СЛЕД 04 [🔒]</p>
+        <p class="archive-line gold">След 01 восстановлен.</p>
+        <p class="archive-line">Фрагмент получен.</p>
+        <p class="archive-line">Доступ к следу 02 разрешён.</p>
+      </div>
+
+      <div class="actions" id="fragmentActions">
+        <button class="primary" id="finishTrace" hidden>[ ПРОДОЛЖИТЬ ]</button>
+      </div>
+    </section>`;
+
+  const archiveLines = document.querySelectorAll(".archive-line");
+  const finishButton = document.getElementById("finishTrace");
+
+  archiveLines.forEach((line, index) => {
+    line.style.opacity = "0";
+    line.style.transition = "opacity .6s ease";
+
+    setTimeout(() => {
+      line.style.opacity = "1";
+    }, 900 + index * 900);
+  });
+
+  setTimeout(() => {
+    finishButton.hidden = false;
+  }, 900 + archiveLines.length * 900);
+
+  finishButton.onclick = () => {
+    state.trace01Done = true;
+    saveState();
+    setStage("case01_done");
+  };
+}
 
     function renderDone() {
       setFooter("СЛЕД 01 ЗАВЕРШЁН");

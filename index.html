@@ -957,21 +957,31 @@ function renderAaronDialogue() {
   setFooter("СЛЕД 02 // ДИАЛОГ");
 
   if (!state.trace02Branch) {
-    main.innerHTML = `
-      <section class="screen">
-        <div class="eyebrow">АРХИВ // ДИАЛОГ</div>
-        <h1>Аарон Уорнер</h1>
-        <div class="console">
-          <p class="speaker">ААРОН УОРНЕР</p>
-          <p class="line">Я знал, что ты придёшь. Не могла не прийти.</p>
-        </div>
-        <p>Что ты ответишь?</p>
-        <div class="actions">
-          <button id="branchWorld">[ ОТКУДА ТЫ МЕНЯ ЖДАЛ? ]</button>
-          <button id="branchEvent">[ ТЫ ЗНАЕШЬ, ЧТО ПРОИЗОШЛО? ]</button>
-          <button id="branchExplain">[ МОЖЕТ, ОБЪЯСНИШЬ, ЧТО ЗДЕСЬ ПРОИСХОДИТ? ]</button>
-        </div>
-      </section>`;
+   main.innerHTML = `
+  <section class="screen">
+    <div class="eyebrow">АРХИВ // ДИАЛОГ</div>
+
+    <div class="aaron-scene">
+      <img
+        src="images/Аарон%20Уорнер.png"
+        alt="Аарон Уорнер"
+        class="aaron-character"
+      >
+
+      <div class="dialogue aaron-dialogue">
+        <p class="speaker">ААРОН УОРНЕР</p>
+        <p class="line">Я знал, что ты придёшь. Не могла не прийти.</p>
+      </div>
+    </div>
+
+    <p>Что ты ответишь?</p>
+
+    <div class="actions">
+      <button id="branchWorld">[ ОТКУДА ТЫ МЕНЯ ЖДАЛ? ]</button>
+      <button id="branchEvent">[ ТЫ ЗНАЕШЬ, ЧТО ПРОИЗОШЛО? ]</button>
+      <button id="branchExplain">[ МОЖЕТ, ОБЪЯСНИШЬ, ЧТО ЗДЕСЬ ПРОИСХОДИТ? ]</button>
+    </div>
+  </section>`;
 
     document.getElementById("branchWorld").onclick =
       () => chooseAaronBranch("world");

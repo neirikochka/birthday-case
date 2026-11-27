@@ -1484,16 +1484,44 @@ function renderJamesPuzzle() {
   main.innerHTML = `
     <section class="screen">
       <div class="eyebrow">СЛЕД 03 // ПРОВЕРКА ВНИМАТЕЛЬНОСТИ</div>
+
       <h1>Подсказка на столе</h1>
-      <p>Рядом с Джеймсом лежит коробка конфет. Название на обёртке кажется необычным.</p>
-      <div class="chocolate-scene">
-        <button class="treat" id="jamesCandyBox" aria-label="Осмотреть коробку конфет VGIN">
-          <span style="font-size:14px;letter-spacing:3px;color:var(--gold)">VGIN</span>
-          <span>Коробка конфет</span>
+
+      <p class="muted">
+        Рядом с Джеймсом лежит коробка конфет.
+        Название на обёртке кажется необычным.
+      </p>
+
+      <div class="aaron-puzzle-scene james-scene">
+
+        <img
+          src="images/Джеймс%20Андерсон.png"
+          alt="Джеймс Андерсон"
+          class="aaron-character"
+        >
+
+        <img
+          src="images/деревянный%20стол.png"
+          alt=""
+          class="aaron-table"
+        >
+
+        <button
+          class="treat james-treat"
+          id="jamesCandyBox"
+          aria-label="Осмотреть коробку конфет VGIN"
+        >
+          <span class="item-caption">ПРЕДМЕТ № 03</span>
+          <span class="james-candy-name">VGIN</span>
+          <span class="item-title">Коробка конфет</span>
           <small>Нажми, чтобы рассмотреть поближе</small>
         </button>
+
       </div>
-      <p class="muted">Джеймс сам не притрагивается к коробке.</p>
+
+      <p class="muted">
+        Джеймс сам не притрагивается к коробке.
+      </p>
     </section>`;
 
   document.getElementById("jamesCandyBox").onclick = () => {

@@ -1671,18 +1671,38 @@ function renderJamesDone() {
 }
 
 
+
 function renderRudyYanIntro() {
   setFooter("СЛЕД 04 // РУДИ И ЯН");
 
   main.innerHTML = `
-    <section class="screen">
+    <section class="screen rudy-yan-intro">
       <div class="eyebrow">СЛЕД 04 // ИСТОЧНИК ОБНАРУЖЕН</div>
+
       <h1>Два знакомых лица.</h1>
+
+      <div class="rudy-yan-scene">
+
+        <img
+          src="images/Руди%20КР.png"
+          alt="Руди"
+          class="rudy-yan-character rudy-character"
+        >
+
+        <img
+          src="images/Ян%20КР.png"
+          alt="Ян"
+          class="rudy-yan-character yan-character"
+        >
+
+      </div>
+
       <div class="console">
         <p>Руди и Ян явно ждали твоего появления.</p>
         <p>Один из них держит конверт. Второй, кажется, уже приготовил какой-то вопрос.</p>
         <p>Судя по их выражениям, просто забрать подарок не получится.</p>
       </div>
+
       <div class="actions">
         <button class="primary" id="meetRudyYan">[ ПОДОЙТИ ]</button>
       </div>

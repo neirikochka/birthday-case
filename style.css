@@ -1464,3 +1464,50 @@ main.stage-leaving {
 .james-treat small {
   display: none;
 }
+
+/* Фрагмент 03 — Джеймс */
+.james-fragment-screen {
+  text-align: center;
+}
+
+.james-fragment-object {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 35px auto;
+  min-height: 220px;
+}
+
+.james-fragment-box {
+  display: block;
+  width: 210px;
+  max-width: 70%;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 18px rgba(0,0,0,.4));
+  animation: jamesBoxAppear .8s ease both;
+}
+
+.james-fragment-console {
+  margin: 25px auto;
+  max-width: 500px;
+  padding: 25px;
+  text-align: center;
+}
+
+.james-fragment-letters {
+  font-size: 24px;
+  letter-spacing: 5px;
+  margin: 20px 0;
+}
+
+@keyframes jamesBoxAppear {
+  from {
+    opacity: 0;
+    transform: translateY(15px) scale(.92);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

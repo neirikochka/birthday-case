@@ -1980,6 +1980,9 @@ function renderFinalCode() {
   function checkCode() {
   if (state.finalCodeAccepted) {
     message.hidden = false;
+    if (state.finalCodeAccepted) {
+  message.classList.add("final-code-message-restored");
+  message.hidden = false;
     message.innerHTML = `
       <div class="final-success-message">
         <p class="success-mark">ФИНАЛЬНЫЙ КОД ПРИНЯТ.</p>
@@ -2036,13 +2039,17 @@ function renderFinalCode() {
     if (event.key === "Enter") checkCode();
   });
 
-  if (state.finalCodeAccepted) {
+    if (state.finalCodeAccepted) {
+    message.classList.add("final-code-message-restored");
     message.hidden = false;
+
     message.innerHTML = `
-      <p class="success-mark">ФИНАЛЬНЫЙ КОД ПРИНЯТ.</p>
-      <p>Все четыре следа восстановлены.</p>
-      <p>Наше путешествие подходит к концу, ${escapeHtml(state.name || "мон амур")}.</p>
-      <p>Но подожди… Неужели ты правда думала, что это всё?</p>
+      <div class="final-success-message">
+        <p class="success-mark">ФИНАЛЬНЫЙ КОД ПРИНЯТ.</p>
+        <p>Все четыре следа восстановлены.</p>
+        <p>Наше путешествие подходит к концу, ${escapeHtml(state.name || "мон амур")}.</p>
+        <p>Но подожди… Неужели ты правда думала, что это всё?</p>
+      </div>
     `;
 
     document.getElementById("checkFinalCode").textContent =
@@ -2053,7 +2060,6 @@ function renderFinalCode() {
     };
   }
 }
-
 
     function renderFinalIntro() {
   setFooter("ДЕЛО № 001 // ЗАВЕРШЕНО?");

@@ -1591,14 +1591,28 @@ function renderJamesReveal() {
   main.innerHTML = `
     <section class="screen">
       <div class="eyebrow">СЛЕД 03 // НЕ ВСЁ ТАК ПРОСТО</div>
-      <h1>Джеймс Андерсон</h1>
-      <div class="console">
-        <p class="speaker">${item.who.toUpperCase()}</p>
-        <p class="line">${item.text}</p>
+
+      <div class="aaron-scene james-scene">
+
+        <img
+          src="images/Джеймс%20Андерсон.png"
+          alt="Джеймс Андерсон"
+          class="aaron-character"
+        >
+
+        <div class="dialogue aaron-dialogue james-dialogue">
+          <h1 class="james-reveal-heading">Джеймс Андерсон</h1>
+          <p class="speaker">${item.who.toUpperCase()}</p>
+          <p class="line james-line">${item.text}</p>
+        </div>
+
       </div>
+
       <div class="actions">
         <button class="primary" id="nextJamesReveal">
-          ${index === lines.length - 1 ? "[ ЗАВЕРШИТЬ СЛЕД ]" : "[ ДАЛЬШЕ ]"}
+          ${index === lines.length - 1
+            ? "[ ЗАВЕРШИТЬ СЛЕД ]"
+            : "[ ДАЛЬШЕ ]"}
         </button>
       </div>
     </section>`;
@@ -1614,7 +1628,6 @@ function renderJamesReveal() {
     }
   };
 }
-
 
 function renderJamesDone() {
   setFooter("СЛЕД 03 // ПРОЙДЕН");

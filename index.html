@@ -1919,6 +1919,7 @@ function escapeHtml(value) {
 
   
 
+
 function renderFinalCode() {
   setFooter("ФИНАЛЬНЫЙ КОД // ПРОВЕРКА");
 
@@ -1976,37 +1977,67 @@ function renderFinalCode() {
 
   const input = document.getElementById("finalCodeInput");
   const message = document.getElementById("finalCodeMessage");
+  const button = document.getElementById("checkFinalCode");
 
-   function checkCode() {
+  let transitionStarted = false;
+
+  function playFinalGlitch() {
+    if (transitionStarted) return;
+    transitionStarted = true;
+
+    main.innerHTML = `
+      <div class="final-glitch-screen" id="finalGlitchScreen">
+        <div class="final-glitch-noise"></div>
+        <p class="final-glitch-message">
+          Но подожди… Неужели ты правда думала, что это всё?
+        </p>
+      </div>
+    `;
+
+    const glitchScreen = document.getElementById("finalGlitchScreen");
+
+    setTimeout(() => {
+      glitchScreen.classList.add("blackout");
+    }, 1000);
+
+    setTimeout(() => {
+      glitchScreen.classList.add("show-message");
+    }, 1500);
+
+    setTimeout(() => {
+      setStage("final_intro");
+    }, 4300);
+  }
+
+  function showSuccess() {
+    message.hidden = false;
+
+    message.innerHTML = `
+      <div class="final-success-message">
+        <p class="success-mark">ФИНАЛЬНЫЙ КОД ПРИНЯТ.</p>
+        <p>Все четыре следа восстановлены.</p>
+        <p>Наше путешествие подходит к концу, ${escapeHtml(state.name || "Ульяна")}.</p>
+      </div>
+    `;
+
+    button.hidden = true;
+
+    setTimeout(playFinalGlitch, 3500);
+  }
+
+  function checkCode() {
     const answer = input.value
       .toLowerCase()
       .replace(/[^a-z]/g, "");
 
     const correctCode = "ignitemyloveignite";
 
-    message.hidden = false;
-
     if (answer === correctCode) {
       state.finalCodeAccepted = true;
       saveState();
-
-      message.innerHTML = `
-        <div class="final-success-message">
-          <p class="success-mark">ФИНАЛЬНЫЙ КОД ПРИНЯТ.</p>
-          <p>Все четыре следа восстановлены.</p>
-          <p>Наше путешествие подходит к концу, ${escapeHtml(state.name || "мон амур")}.</p>
-          <p>Но подожди… Неужели ты правда думала, что это всё?</p>
-        </div>
-      `;
-
-      document.getElementById("checkFinalCode").textContent =
-        "[ ПРОДОЛЖИТЬ ]";
-
-      document.getElementById("checkFinalCode").onclick = () => {
-        saveState();
-        setStage("final_intro");
-      };
+      showSuccess();
     } else {
+      message.hidden = false;
       message.innerHTML = `
         <p>Код не подошёл.</p>
         <p>Подсказка: вспомни человека из следа 02.</p>
@@ -2014,33 +2045,17 @@ function renderFinalCode() {
     }
   }
 
-  document.getElementById("checkFinalCode").onclick = checkCode;
+  button.onclick = checkCode;
 
   input.addEventListener("keydown", event => {
     if (event.key === "Enter") checkCode();
   });
 
   if (state.finalCodeAccepted) {
-    message.classList.add("final-code-message-restored");
-    message.hidden = false;
-
-    message.innerHTML = `
-      <div class="final-success-message">
-        <p class="success-mark">ФИНАЛЬНЫЙ КОД ПРИНЯТ.</p>
-        <p>Все четыре следа восстановлены.</p>
-        <p>Наше путешествие подходит к концу, ${escapeHtml(state.name || "мон амур")}.</p>
-        <p>Но подожди… Неужели ты правда думала, что это всё?</p>
-      </div>
-    `;
-
-    document.getElementById("checkFinalCode").textContent =
-      "[ ПРОДОЛЖИТЬ ]";
-
-    document.getElementById("checkFinalCode").onclick = () => {
-      setStage("final_intro");
-    };
+    showSuccess();
   }
 }
+
 
     function renderFinalIntro() {
   setFooter("ДЕЛО № 001 // ЗАВЕРШЕНО?");

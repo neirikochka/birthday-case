@@ -1629,18 +1629,22 @@ function renderJamesReveal() {
   };
 }
 
+
 function renderJamesDone() {
   setFooter("СЛЕД 03 // ПРОЙДЕН");
 
   main.innerHTML = `
-    <section class="screen">
+    <section class="screen trace03-done-screen">
       <div class="eyebrow">СЛЕД 03 [ПРОЙДЕН ✓]</div>
+
       <h1>След восстановлен.</h1>
+
       <div class="console">
         <p>Фрагмент получен: V · G · I · N</p>
         <p class="success-mark">След 03 восстановлен.</p>
         <p>Доступ к следу 04 разрешён.</p>
       </div>
+
       <div class="case-list">
         <div class="case-tile done">СЛЕД 01<br>[ ПРОЙДЕН ✓ ]</div>
         <div class="case-tile done">СЛЕД 02<br>[ ПРОЙДЕН ✓ ]</div>
@@ -1649,12 +1653,21 @@ function renderJamesDone() {
           СЛЕД 04<br>[ ДОСТУПЕН ]
         </button>
       </div>
+
       <div class="actions">
-        <button class="primary" id="backToAaron">[ Вернуться к Джеймсу ]</button>
+        <button class="primary" id="continueTrace04">
+          [ ПЕРЕЙТИ К СЛЕДУ 04 ]
+        </button>
       </div>
     </section>`;
 
-  document.getElementById("openTrace04").onclick = () => setStage("case04_intro");
+  document.getElementById("openTrace04").onclick = () => {
+    setStage("case04_intro");
+  };
+
+  document.getElementById("continueTrace04").onclick = () => {
+    setStage("case04_intro");
+  };
 }
 
 

@@ -1269,21 +1269,31 @@ function renderLocked() {
 function renderJamesIntro() {
   setFooter("СЛЕД 03 // ДЖЕЙМС АНДЕРСОН");
 
-  main.innerHTML = `
-    <section class="screen">
-      <div class="eyebrow">СЛЕД 03 // ИСТОЧНИК ОБНАРУЖЕН</div>
-      <h1>Джеймс Андерсон</h1>
-      <div class="console">
-        <p class="speaker">ДЖЕЙМС</p>
+ main.innerHTML = `
+  <section class="screen">
+    <div class="eyebrow">СЛЕД 03 // ИСТОЧНИК ОБНАРУЖЕН</div>
+
+    <div class="aaron-scene james-scene">
+      <img
+        src="images/Джеймс%20Андерсон.png"
+        alt="Джеймс Андерсон"
+        class="aaron-character"
+      >
+
+      <div class="dialogue aaron-dialogue">
+        <p class="speaker">ДЖЕЙМС АНДЕРСОН</p>
         <p class="line">Ну наконец-то.</p>
         <p>А я уже начал думать, что ты решила заставить меня ждать.</p>
       </div>
-      <p>Что ты ответишь?</p>
-      <div class="actions">
-        <button id="jamesBranchWait">[ ТЫ МЕНЯ ЖДАЛ? ]</button>
-        <button id="jamesBranchGirls">[ И ДАВНО ТЫ ТАК ВСТРЕЧАЕШЬ ВСЕХ НЕЗНАКОМЫХ ДЕВУШЕК? ]</button>
-      </div>
-    </section>`;
+    </div>
+
+    <p>Что ты ответишь?</p>
+
+    <div class="actions">
+      <button id="jamesBranchWait">[ ТЫ МЕНЯ ЖДАЛ? ]</button>
+      <button id="jamesBranchGirls">[ И ДАВНО ТЫ ТАК ВСТРЕЧАЕШЬ ВСЕХ НЕЗНАКОМЫХ ДЕВУШЕК? ]</button>
+    </div>
+  </section>`;
 
   document.getElementById("jamesBranchWait").onclick =
     () => chooseJamesBranch("wait");

@@ -1786,3 +1786,34 @@ main.stage-leaving {
 .rudy-yan-dialogue-screen > .rudy-yan-response-actions {
   animation-delay: 5.9s;
 }
+
+/* Книга Руди и Яна */
+.rudy-yan-book-screen {
+  text-align: center;
+}
+
+.rudy-yan-book-object {
+  display: block;
+  width: 260px;
+  max-width: 75%;
+  margin: 35px auto;
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  cursor: pointer;
+  transition: transform .3s ease, filter .3s ease;
+}
+
+.rudy-yan-book-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 18px rgba(0,0,0,.4));
+}
+
+.rudy-yan-book-object:hover {
+  transform: translateY(-6px);
+  filter: brightness(1.1);
+}

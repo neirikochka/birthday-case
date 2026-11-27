@@ -1536,23 +1536,29 @@ function renderJamesFragment() {
   setFooter("СЛЕД 03 // ФРАГМЕНТ ПОЛУЧЕН");
 
   main.innerHTML = `
-    <section class="screen">
+    <section class="screen james-fragment-screen">
       <div class="eyebrow">СЛЕД 03 // ОБНАРУЖЕННЫЕ ДАННЫЕ</div>
+
       <h1>Фрагмент собран.</h1>
-      <div class="chocolate-scene">
-        <div class="treat" style="transform:scale(1.04);min-height:220px">
-          <span style="font-size:24px;letter-spacing:5px;color:var(--gold)">VGIN</span>
-          <span>Коробка конфет</span>
-          <div class="letters">V · G · I · N</div>
-        </div>
+
+      <div class="james-fragment-object">
+        <img
+          src="images/конфеты%20Джеймс.png"
+          alt="Коробка конфет"
+          class="james-fragment-box"
+        >
       </div>
-      <div class="console">
+
+      <div class="console james-fragment-console">
         <p class="success-mark">ФРАГМЕНТ 03 СОБРАН</p>
-        <p class="gold">V · G · I · N</p>
+        <p class="gold james-fragment-letters">V · G · I · N</p>
         <p class="muted">Фрагмент сохранён.</p>
       </div>
+
       <div class="actions">
-        <button class="primary" id="continueJamesReveal">[ ДАЛЬШЕ ]</button>
+        <button class="primary" id="continueJamesReveal">
+          [ ДАЛЬШЕ ]
+        </button>
       </div>
     </section>`;
 

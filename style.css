@@ -2205,3 +2205,58 @@ main.stage-leaving {
   75% { transform: translate(3px, 0); clip-path: inset(15% 0 65% 0); }
   100% { transform: translate(0); clip-path: inset(0 0 80% 0); }
 }
+
+
+/* Финальное сообщение после сбоя */
+.final-intro-screen > .eyebrow,
+.final-intro-screen > h1,
+.final-intro-console,
+.final-intro-screen > .actions {
+  opacity: 0;
+  animation: finalIntroAppear .7s ease forwards;
+}
+
+.final-intro-screen > .eyebrow {
+  animation-delay: .4s;
+}
+
+.final-intro-screen > h1 {
+  animation-delay: 1.2s;
+}
+
+.final-intro-console {
+  animation-delay: 2s;
+}
+
+.final-intro-console > p {
+  opacity: 0;
+  animation: finalIntroAppear .6s ease forwards;
+}
+
+.final-intro-console > p:nth-child(1) {
+  animation-delay: 2.3s;
+}
+
+.final-intro-console > p:nth-child(2) {
+  animation-delay: 3.1s;
+}
+
+.final-intro-console > p:nth-child(3) {
+  animation-delay: 3.9s;
+}
+
+.final-intro-screen > .actions {
+  animation-delay: 4.8s;
+}
+
+@keyframes finalIntroAppear {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+

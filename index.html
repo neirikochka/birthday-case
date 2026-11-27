@@ -1204,20 +1204,31 @@ function renderAaronFragment() {
   setFooter("СЛЕД 02 // ФРАГМЕНТ ПОЛУЧЕН");
 
   main.innerHTML = `
-    <section class="screen">
-      <div class="eyebrow">ДАННЫЕ ВОССТАНОВЛЕНЫ</div>
-      <h1>Фрагмент найден.</h1>
-      <div class="console">
+  <section class="screen">
+    <div class="eyebrow">ДАННЫЕ ВОССТАНОВЛЕНЫ</div>
+
+    <div class="aaron-scene">
+      <img
+        src="images/Аарон%20Уорнер.png"
+        alt="Аарон Уорнер"
+        class="aaron-character"
+      >
+
+      <div class="dialogue aaron-dialogue">
+        <p class="speaker">ФРАГМЕНТ НАЙДЕН</p>
         <p class="fragment">I · L · T · E</p>
         <p class="muted">Порядок букв не определён.</p>
+        <p>Аарон едва заметно улыбается.</p>
+        <p class="line">— Всё для тебя.</p>
       </div>
-      <p>Аарон едва заметно улыбается.</p>
-      <p>— Всё для тебя.</p>
-      <div class="actions">
-        <button class="primary" id="collectAaronFragment">[ СОХРАНИТЬ ФРАГМЕНТ ]</button>
-      </div>
-    </section>`;
+    </div>
 
+    <div class="actions">
+      <button class="primary" id="collectAaronFragment">
+        [ СОХРАНИТЬ ФРАГМЕНТ ]
+      </button>
+    </div>
+  </section>`;
   document.getElementById("collectAaronFragment").onclick = () => {
     state.trace02Done = true;
     setStage("case02_done");

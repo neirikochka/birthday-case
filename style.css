@@ -1893,3 +1893,71 @@ main.stage-leaving {
 .rudy-yan-fragment-screen > .actions {
   animation-delay: 4.3s;
 }
+
+/* След 04 — экран завершения */
+.rudy-yan-done-screen > .eyebrow,
+.rudy-yan-done-screen > h1,
+.rudy-yan-done-screen > .console,
+.rudy-yan-done-screen > .case-list,
+.rudy-yan-done-screen > .actions {
+  opacity: 0;
+  animation: rudyYanFadeIn .6s ease forwards;
+}
+
+.rudy-yan-done-screen > .eyebrow {
+  animation-delay: .2s;
+}
+
+.rudy-yan-done-screen > h1 {
+  animation-delay: .8s;
+}
+
+.rudy-yan-done-screen > .console {
+  animation-delay: 1.4s;
+}
+
+.rudy-yan-done-screen > .console > p {
+  opacity: 0;
+  animation: rudyYanFadeIn .5s ease forwards;
+}
+
+.rudy-yan-done-screen > .console > p:nth-child(1) {
+  animation-delay: 1.6s;
+}
+
+.rudy-yan-done-screen > .console > p:nth-child(2) {
+  animation-delay: 2.2s;
+}
+
+.rudy-yan-done-screen > .console > p:nth-child(3) {
+  animation-delay: 2.8s;
+}
+
+.rudy-yan-done-screen > .case-list {
+  animation-delay: 3.4s;
+}
+
+.rudy-yan-done-screen > .case-list > * {
+  opacity: 0;
+  animation: rudyYanFadeIn .5s ease forwards;
+}
+
+.rudy-yan-done-screen > .case-list > *:nth-child(1) {
+  animation-delay: 3.6s;
+}
+
+.rudy-yan-done-screen > .case-list > *:nth-child(2) {
+  animation-delay: 3.9s;
+}
+
+.rudy-yan-done-screen > .case-list > *:nth-child(3) {
+  animation-delay: 4.2s;
+}
+
+.rudy-yan-done-screen > .case-list > *:nth-child(4) {
+  animation-delay: 4.5s;
+}
+
+.rudy-yan-done-screen > .actions {
+  animation-delay: 5s;
+}

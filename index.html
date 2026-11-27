@@ -1798,21 +1798,32 @@ function renderRudyYanBook() {
   setFooter("СЛЕД 04 // ПОДАРОК");
 
   main.innerHTML = `
-    <section class="screen">
+    <section class="screen rudy-yan-book-screen">
       <div class="eyebrow">ОБНАРУЖЕН ОБЪЕКТ</div>
-      <h1>Книга с сюрпризом.</h1>
-      <p class="muted">На обложке нарисована шоколадка. Что же спрятано внутри?</p>
 
-      <button class="book-object" id="openBookPage"
-        aria-label="Открыть книгу">
-        <span class="book-cover">
-          <span class="book-chocolate">▰</span>
-          <span>Сладкие секреты</span>
-        </span>
+      <h1>Книга с сюрпризом.</h1>
+
+      <p class="muted">
+        На обложке нарисована шоколадка.
+        Что же спрятано внутри?
+      </p>
+
+      <button
+        class="rudy-yan-book-object"
+        id="openBookPage"
+        aria-label="Открыть книгу"
+      >
+        <img
+          src="images/книга%20руди%20и%20ян.png"
+          alt="Книга с шоколадкой на обложке"
+          class="rudy-yan-book-image"
+        >
       </button>
 
       <div class="actions">
-        <button class="primary" id="turnBookPage">[ ОТКРЫТЬ КНИГУ ]</button>
+        <button class="primary" id="turnBookPage">
+          [ ОТКРЫТЬ КНИГУ ]
+        </button>
       </div>
     </section>`;
 

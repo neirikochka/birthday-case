@@ -1321,7 +1321,9 @@ main.stage-leaving {
   }
 }
 
-.fragment {
+.fragment span {
+  display: inline-block;
   opacity: 0;
   animation: fragmentReveal .7s ease forwards;
+  animation-delay: calc(var(--i) * .35s);
 }

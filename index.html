@@ -1977,26 +1977,7 @@ function renderFinalCode() {
   const input = document.getElementById("finalCodeInput");
   const message = document.getElementById("finalCodeMessage");
 
-  function checkCode() {
-  if (state.finalCodeAccepted) {
-    message.hidden = false;
-    if (state.finalCodeAccepted) {
-  message.classList.add("final-code-message-restored");
-  message.hidden = false;
-    message.innerHTML = `
-      <div class="final-success-message">
-        <p class="success-mark">ФИНАЛЬНЫЙ КОД ПРИНЯТ.</p>
-        <p>Все четыре следа восстановлены.</p>
-        <p>Наше путешествие подходит к концу, ${escapeHtml(state.name || "мон амур")}.</p>
-        <p>Но подожди… Неужели ты правда думала, что это всё?</p>
-      </div>
-    `;
-
-    document.getElementById("checkFinalCode").textContent =
-      "[ ПРОДОЛЖИТЬ ]";
-
-    return;
-  }
+   function checkCode() {
     const answer = input.value
       .toLowerCase()
       .replace(/[^a-z]/g, "");
@@ -2009,14 +1990,14 @@ function renderFinalCode() {
       state.finalCodeAccepted = true;
       saveState();
 
-     message.innerHTML = `
-  <div class="final-success-message">
-    <p class="success-mark">ФИНАЛЬНЫЙ КОД ПРИНЯТ.</p>
-    <p>Все четыре следа восстановлены.</p>
-    <p>Наше путешествие подходит к концу, ${escapeHtml(state.name || "мон амур")}.</p>
-    <p>Но подожди… Неужели ты правда думала, что это всё?</p>
-  </div>
-`;
+      message.innerHTML = `
+        <div class="final-success-message">
+          <p class="success-mark">ФИНАЛЬНЫЙ КОД ПРИНЯТ.</p>
+          <p>Все четыре следа восстановлены.</p>
+          <p>Наше путешествие подходит к концу, ${escapeHtml(state.name || "мон амур")}.</p>
+          <p>Но подожди… Неужели ты правда думала, что это всё?</p>
+        </div>
+      `;
 
       document.getElementById("checkFinalCode").textContent =
         "[ ПРОДОЛЖИТЬ ]";
@@ -2039,7 +2020,7 @@ function renderFinalCode() {
     if (event.key === "Enter") checkCode();
   });
 
-    if (state.finalCodeAccepted) {
+  if (state.finalCodeAccepted) {
     message.classList.add("final-code-message-restored");
     message.hidden = false;
 

@@ -1837,17 +1837,36 @@ function renderRudyYanFragment() {
   setFooter("СЛЕД 04 // ФРАГМЕНТ НАЙДЕН");
 
   main.innerHTML = `
-   <section class="screen rudy-yan-fragment-screen">
+    <section class="screen rudy-yan-fragment-screen">
       <div class="eyebrow">СТРАНИЦА ОБНАРУЖЕНА</div>
+
       <h1>Послание внутри.</h1>
+
+      <div class="rudy-yan-scene">
+        <img
+          src="images/Руди%20КР.png"
+          alt="Руди"
+          class="rudy-yan-character rudy-character"
+        >
+
+        <img
+          src="images/Ян%20КР.png"
+          alt="Ян"
+          class="rudy-yan-character yan-character"
+        >
+      </div>
+
       <div class="console">
         <p>На странице аккуратным почерком выведены пять букв:</p>
         <p class="fragment-letters">T · E · O · I · Y</p>
         <p class="success-mark">ФРАГМЕНТ ПОЛУЧЕН</p>
         <p><strong>Руди:</strong> Всё для тебя.</p>
       </div>
+
       <div class="actions">
-        <button class="primary" id="collectTrace04">[ СОХРАНИТЬ ФРАГМЕНТ ]</button>
+        <button class="primary" id="collectTrace04">
+          [ СОХРАНИТЬ ФРАГМЕНТ ]
+        </button>
       </div>
     </section>`;
 

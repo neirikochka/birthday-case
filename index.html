@@ -2153,34 +2153,90 @@ function renderFinalCharacters() {
 function renderFinalLetter() {
   setFooter("ДЕЛО № 001 // ЛИЧНОЕ ПИСЬМО");
 
+  const letterText = `Мон амур, с днём рождения! ❤️
+
+Ну что, добралась до самого конца? Надеюсь, ты хотя бы немного повеселилась, потому что собрать столько личностей в одном месте ради одного поздравления — задача, мягко говоря, не из простых. Но ради тебя, как видишь, я и не на такое способна.
+
+А если серьёзно, я очень рада, что однажды наши дороги пересеклись. Спасибо тебе за разговоры, за совместные истории, за смех, эмоции и за тот маленький мир, который мы создаём вместе. Я правда дорожу этим и очень хочу, чтобы впереди у нас было ещё много всего — смешного, трогательного, безумного и такого, что потом будем вспоминать с улыбкой.
+
+А теперь кое-что, что я действительно хочу тебе пожелать.
+
+Пожалуйста, никогда не бойся быть неудобной. Не соглашайся на то, чего не хочешь, не молчи, когда хочется сказать, и не пытайся подстроиться под чужие ожидания только ради того, чтобы кому-то было комфортнее. Ты не обязана быть хорошей девочкой для всех вокруг. У тебя есть свои желания, чувства, границы и потребности — и они не менее важны, чем чужие. Учись выбирать себя без чувства вины. Ты тоже заслуживаешь заботы, внимания и бережного отношения. И в первую очередь — от самой себя.
+
+Не трать свои слёзы на придурков, которые не стоят даже твоего потраченного времени. Не позволяй чужой глупости портить тебе настроение и заставлять сомневаться в себе. Пусть поводов для улыбки будет гораздо больше, чем причин расстраиваться. А если кто-то снова решит проверить твоё терпение — мысленно выдай ему премию за выдающуюся глупость и иди дальше. У тебя есть дела поважнее.
+
+Я желаю тебе побольше счастливых дней, приятных неожиданностей, исполнения желаний, смелости на перемены и спокойствия там, где оно особенно нужно. Пусть рядом будут люди, с которыми не приходится заслуживать любовь, заслуживать внимание или притворяться кем-то другим. Люди, которые принимают тебя целиком — со всеми твоими странностями, тараканами, внезапными идеями и прекрасным характером.
+
+И пусть в твоей жизни всегда остаётся место для маленького волшебства, больших мечтаний, спонтанных приключений и историй, в которых обязательно счастливый финал. Хотя, зная нас, без драматичных поворотов сюжета всё равно не обойдётся.
+
+Спасибо, что ты есть. Я очень хочу, чтобы ты была счастлива. Не когда-нибудь потом, не когда всё наконец станет идеально, а уже сейчас — в своей обычной жизни, в маленьких моментах, в каждом новом дне.
+
+Крепко-крепко обнимаю тебя, моя хорошая.
+
+С днём рождения, мон амур! ❤️`;
+
   main.innerHTML = `
-    <section class="screen">
-      <div class="eyebrow">ДЛЯ МОЕЙ ЛЮБИМОЙ</div>
-      <div style="
-        max-width:560px;
-        margin:20px auto;
-        padding:24px;
-        border:1px solid var(--gold);
-        border-radius:6px;
-        background:rgba(255,248,230,0.06);
-        box-shadow:0 0 24px rgba(0,0,0,0.15);
-      ">
-        <div style="text-align:center;font-size:28px;color:var(--gold);">
-          ✉
-        </div>
-        <h1 style="text-align:center;">Несколько слов для тебя</h1>
-        <p style="line-height:1.8;">
-          Здесь будет твоё личное поздравление — то самое, которое ты хочешь
-          оставить ей после всех приключений.
-        </p>
-        <p class="muted" style="text-align:center;">
-          Текст письма мы добавим отдельно, когда ты будешь готова.
-        </p>
+    <section class="screen final-letter-screen">
+      <div class="eyebrow final-letter-eyebrow">
+        ДЛЯ МОЕЙ ЛЮБИМОЙ
       </div>
-      <div class="actions">
-        <button class="primary" id="hugButton">[ ОБНЯТЬ ]</button>
+
+      <div class="final-letter-card" id="finalLetterCard">
+        <div class="final-letter-icon">✉</div>
+
+        <h1 class="final-letter-title">
+          Несколько слов для тебя
+        </h1>
+
+        <div
+          class="final-letter-text"
+          id="finalLetterText"
+        ></div>
+      </div>
+
+      <div class="actions final-letter-actions" id="finalLetterActions">
+        <button class="primary" id="hugButton">
+          [ ОБНЯТЬ ]
+        </button>
       </div>
     </section>`;
+
+  const card = document.getElementById("finalLetterCard");
+  const typedText = document.getElementById("finalLetterText");
+  const actions = document.getElementById("finalLetterActions");
+
+  setTimeout(() => {
+    card.classList.add("letter-card-visible");
+  }, 500);
+
+  setTimeout(() => {
+    let index = 0;
+
+    function typeNextCharacter() {
+      if (index >= letterText.length) {
+        actions.classList.add("letter-actions-visible");
+        return;
+      }
+
+      const character = letterText[index];
+      typedText.textContent += character;
+      index++;
+
+      let delay = 18;
+
+      if (".!?".includes(character)) {
+        delay = 170;
+      } else if (",;:".includes(character)) {
+        delay = 90;
+      } else if (character === "\n") {
+        delay = 130;
+      }
+
+      setTimeout(typeNextCharacter, delay);
+    }
+
+    typeNextCharacter();
+  }, 1500);
 
   document.getElementById("hugButton").onclick = () => {
     state.finalHugged = true;

@@ -1654,3 +1654,60 @@ main.stage-leaving {
   z-index: 2;
 }
 
+
+/* Постепенное появление текста в начале следа 04 */
+
+.rudy-yan-intro > .eyebrow,
+.rudy-yan-intro > h1,
+.rudy-yan-intro > .console,
+.rudy-yan-intro > .actions {
+  opacity: 0;
+  animation: rudyYanFadeIn .6s ease forwards;
+}
+
+.rudy-yan-intro > .eyebrow {
+  animation-delay: .2s;
+}
+
+.rudy-yan-intro > h1 {
+  animation-delay: .8s;
+}
+
+.rudy-yan-intro > .console {
+  animation-delay: 1.4s;
+}
+
+.rudy-yan-intro > .actions {
+  animation-delay: 3.2s;
+}
+
+/* Каждая реплика появляется отдельно */
+.rudy-yan-intro > .console > p {
+  opacity: 0;
+  animation: rudyYanFadeIn .5s ease forwards;
+}
+
+.rudy-yan-intro > .console > p:nth-child(1) {
+  animation-delay: 1.6s;
+}
+
+.rudy-yan-intro > .console > p:nth-child(2) {
+  animation-delay: 2.1s;
+}
+
+.rudy-yan-intro > .console > p:nth-child(3) {
+  animation-delay: 2.6s;
+}
+
+@keyframes rudyYanFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+

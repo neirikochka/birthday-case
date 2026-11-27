@@ -611,6 +611,12 @@ main.stage-leaving {
     url("images/фон%20Аарон.jpg") center / cover no-repeat;
 }
 
+.james-scene {
+  background:
+    linear-gradient(rgba(10, 8, 10, .18), rgba(10, 8, 10, .35)),
+    url("images/фон%20Джеймс.jpg") center / cover no-repeat;
+}
+
 .aaron-character {
   position: absolute;
   bottom: 0;

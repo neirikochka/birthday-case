@@ -2463,3 +2463,51 @@ main.stage-leaving {
     line-height: 1.7;
   }
 }
+
+/* Финальная сцена — последнее сообщение */
+
+.final-end-screen {
+  text-align: center;
+  padding-top: 35px;
+}
+
+.final-end-eyebrow,
+.final-end-symbol,
+.final-end-title,
+.final-end-line,
+.final-end-closed,
+.final-end-actions {
+  opacity: 0;
+  animation: finalCharacterAppear .8s ease forwards;
+}
+
+.final-end-eyebrow {
+  animation-delay: .3s;
+}
+
+.final-end-symbol {
+  font-size: 48px;
+  color: var(--gold);
+  margin: 24px 0;
+  animation-delay: 1.2s;
+}
+
+.final-end-title {
+  animation-delay: 2s;
+}
+
+.final-end-line-one {
+  animation-delay: 3s;
+}
+
+.final-end-line-two {
+  animation-delay: 4.2s;
+}
+
+.final-end-closed {
+  animation-delay: 5.3s;
+}
+
+.final-end-actions {
+  animation-delay: 6.5s;
+}

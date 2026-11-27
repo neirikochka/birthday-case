@@ -2057,18 +2057,22 @@ function renderFinalCode() {
 }
 
 
-    function renderFinalIntro() {
+    
+function renderFinalIntro() {
   setFooter("ДЕЛО № 001 // ЗАВЕРШЕНО?");
 
   main.innerHTML = `
-    <section class="screen">
+    <section class="screen final-intro-screen">
       <div class="eyebrow">СИСТЕМА // ПОСЛЕДНЕЕ СООБЩЕНИЕ</div>
+
       <h1>Думала, всё?</h1>
-      <div class="console">
+
+      <div class="console final-intro-console">
         <p>А вот нет.</p>
         <p>От меня не так просто избавиться.</p>
         <p class="muted">Перезапуск финального протокола...</p>
       </div>
+
       <div class="actions">
         <button class="primary" id="showFinalCharacters">
           [ ПОКАЗАТЬ, КТО ЗДЕСЬ ]
@@ -2080,6 +2084,7 @@ function renderFinalCode() {
     setStage("final_characters");
   };
 }
+
 
 
 function renderFinalCharacters() {

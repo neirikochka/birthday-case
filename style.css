@@ -1333,3 +1333,71 @@ main.stage-leaving {
   animation: fragmentReveal .7s ease forwards;
   animation-delay: calc(var(--i) * .35s);
 }
+
+/* Загадка Джеймса Андерсона */
+.aaron-puzzle-scene.james-scene {
+  min-height: 480px;
+  background:
+    linear-gradient(rgba(10, 8, 10, .15), rgba(10, 8, 10, .3)),
+    url("images/фон%20Джеймс.jpg") center / cover no-repeat;
+}
+
+/* Стол в сцене Джеймса */
+.aaron-puzzle-scene.james-scene .aaron-table {
+  width: 90%;
+  bottom: -5%;
+  z-index: 3;
+}
+
+/* Джеймс */
+.aaron-puzzle-scene.james-scene .aaron-character {
+  height: 95%;
+  max-width: 70%;
+  z-index: 2;
+}
+
+/* Коробка конфет */
+.james-treat {
+  top: 57%;
+  left: 50%;
+  width: 190px;
+  min-height: 120px;
+  transform: translateX(-50%);
+  z-index: 4;
+  padding: 14px;
+  gap: 8px;
+  background: rgba(91, 56, 32, .95);
+  border: 1px solid #b89660;
+  box-shadow:
+    0 8px 18px rgba(0,0,0,.4),
+    inset 0 0 15px rgba(215,184,121,.15);
+  color: #2b1b10;
+}
+
+/* Название на обёртке */
+.james-candy-name {
+  font-size: 24px;
+  letter-spacing: 5px;
+  color: #f0d7a4;
+  text-shadow: 0 0 8px rgba(215,184,121,.25);
+}
+
+/* Подписи на коробке */
+.james-treat .item-caption,
+.james-treat .item-title,
+.james-treat small {
+  color: #f0d7a4;
+  text-shadow: none;
+}
+
+/* Подпись предмета */
+.james-treat .item-caption {
+  top: 8px;
+  left: 10px;
+}
+
+/* Наведение */
+.james-treat:hover {
+  transform: translateX(-50%) translateY(-5px);
+  filter: brightness(1.12);
+}

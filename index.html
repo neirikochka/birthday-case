@@ -1918,81 +1918,114 @@ function escapeHtml(value) {
 }
 
   
+
 function renderFinalCode() {
   setFooter("ФИНАЛЬНЫЙ КОД // ПРОВЕРКА");
 
   main.innerHTML = `
-    <section class="screen">
+    <section class="screen final-code-screen">
       <div class="eyebrow">ПОСЛЕДНИЙ ЭТАП</div>
+
       <h1>Собери фрагменты.</h1>
-      <div class="console">
+
+      <div class="console final-code-intro">
         <p>Четыре следа. Четыре истории.</p>
         <p>Буквы перемешаны, но вместе они образуют фразу.</p>
         <p>Введи финальный код на английском языке.</p>
       </div>
+
+      <div class="final-fragments">
+        <div class="final-fragment">
+          <span class="final-fragment-title">СЛЕД 01</span>
+          <span class="final-fragment-letters">G · E · M · I · N</span>
+        </div>
+
+        <div class="final-fragment">
+          <span class="final-fragment-title">СЛЕД 02</span>
+          <span class="final-fragment-letters">I · L · T · E</span>
+        </div>
+
+        <div class="final-fragment">
+          <span class="final-fragment-title">СЛЕД 03</span>
+          <span class="final-fragment-letters">V · G · I · N</span>
+        </div>
+
+        <div class="final-fragment">
+          <span class="final-fragment-title">СЛЕД 04</span>
+          <span class="final-fragment-letters">T · E · O · I · Y</span>
+        </div>
+      </div>
+
       <label for="finalCodeInput">Финальный код:</label>
-      <input id="finalCodeInput" type="text"
+
+      <input
+        id="finalCodeInput"
+        type="text"
         placeholder="Введи найденную фразу"
-        autocomplete="off" />
+        autocomplete="off"
+      />
+
       <div id="finalCodeMessage" class="console" hidden></div>
+
       <div class="actions">
-        <button class="primary" id="checkFinalCode">[ ПРОВЕРИТЬ КОД ]</button>
+        <button class="primary" id="checkFinalCode">
+          [ ПРОВЕРИТЬ КОД ]
+        </button>
       </div>
     </section>`;
 
   const input = document.getElementById("finalCodeInput");
   const message = document.getElementById("finalCodeMessage");
 
-  
-function checkCode() {
-  if (state.finalCodeAccepted) {
+  function checkCode() {
+    if (state.finalCodeAccepted) {
+      message.hidden = false;
+      message.innerHTML = `
+        <p class="success-mark">ФИНАЛЬНЫЙ КОД ПРИНЯТ.</p>
+        <p>Все четыре следа восстановлены.</p>
+        <p>Наше путешествие подходит к концу, ${escapeHtml(state.name || "мон амур")}.</p>
+        <p>Но подожди… Неужели ты правда думала, что это всё?</p>
+      `;
+
+      document.getElementById("checkFinalCode").textContent =
+        "[ ПРОДОЛЖИТЬ ]";
+
+      return;
+    }
+
+    const answer = input.value
+      .toLowerCase()
+      .replace(/[^a-z]/g, "");
+
+    const correctCode = "ignitemyloveignite";
+
     message.hidden = false;
-    message.innerHTML = `
-      <p class="success-mark">ФИНАЛЬНЫЙ КОД ПРИНЯТ.</p>
-      <p>Все четыре следа восстановлены.</p>
-      <p>Наше путешествие подходит к концу, ${escapeHtml(state.name || "мон амур")}.</p>
-      <p>Но подожди… Неужели ты правда думала, что это всё?</p>
-    `;
 
-    document.getElementById("checkFinalCode").textContent =
-      "[ ПРОДОЛЖИТЬ ]";
-
-    return;
-  }
-
-  const answer = input.value
-    .toLowerCase()
-    .replace(/[^a-z]/g, "");
-
-  const correctCode = "ignitemyloveignite";
-
-  message.hidden = false;
-
-  if (answer === correctCode) {
-    state.finalCodeAccepted = true;
-    saveState();
-
-    message.innerHTML = `
-      <p class="success-mark">ФИНАЛЬНЫЙ КОД ПРИНЯТ.</p>
-      <p>Все четыре следа восстановлены.</p>
-      <p>Наше путешествие подходит к концу, ${escapeHtml(state.name || "мон амур")}.</p>
-      <p>Но подожди… Неужели ты правда думала, что это всё?</p>
-    `;
-
-    document.getElementById("checkFinalCode").textContent =
-      "[ ПРОДОЛЖИТЬ ]";
-
-    document.getElementById("checkFinalCode").onclick = () => {
+    if (answer === correctCode) {
+      state.finalCodeAccepted = true;
       saveState();
-      setStage("final_intro");
-    };
-  } else {
-    message.innerHTML = `
-      <p>Код не подошёл.</p>
-      <p>Подсказка: вспомни человека из следа 02.</p>
-    `;
+
+      message.innerHTML = `
+        <p class="success-mark">ФИНАЛЬНЫЙ КОД ПРИНЯТ.</p>
+        <p>Все четыре следа восстановлены.</p>
+        <p>Наше путешествие подходит к концу, ${escapeHtml(state.name || "мон амур")}.</p>
+        <p>Но подожди… Неужели ты правда думала, что это всё?</p>
+      `;
+
+      document.getElementById("checkFinalCode").textContent =
+        "[ ПРОДОЛЖИТЬ ]";
+
+      document.getElementById("checkFinalCode").onclick = () => {
+        saveState();
+        setStage("final_intro");
+      };
+    } else {
+      message.innerHTML = `
+        <p>Код не подошёл.</p>
+        <p>Подсказка: вспомни человека из следа 02.</p>
+      `;
+    }
   }
-}
 
   document.getElementById("checkFinalCode").onclick = checkCode;
 
@@ -2008,13 +2041,16 @@ function checkCode() {
       <p>Наше путешествие подходит к концу, ${escapeHtml(state.name || "мон амур")}.</p>
       <p>Но подожди… Неужели ты правда думала, что это всё?</p>
     `;
+
     document.getElementById("checkFinalCode").textContent =
       "[ ПРОДОЛЖИТЬ ]";
+
     document.getElementById("checkFinalCode").onclick = () => {
       setStage("final_intro");
     };
   }
 }
+
 
     function renderFinalIntro() {
   setFooter("ДЕЛО № 001 // ЗАВЕРШЕНО?");

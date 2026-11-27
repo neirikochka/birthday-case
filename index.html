@@ -1713,20 +1713,44 @@ function renderRudyYanIntro() {
   };
 }
 
+
 function renderRudyYanDialogue() {
   setFooter("СЛЕД 04 // ВСТРЕЧА");
 
+  const scene = `
+    <div class="rudy-yan-scene">
+      <img
+        src="images/Руди%20КР.png"
+        alt="Руди"
+        class="rudy-yan-character rudy-character"
+      >
+
+      <img
+        src="images/Ян%20КР.png"
+        alt="Ян"
+        class="rudy-yan-character yan-character"
+      >
+    </div>
+  `;
+
   main.innerHTML = `
-    <section class="screen">
-      <div class="eyebrow">РУДИ И ЯН</div>
+    <section class="screen rudy-yan-dialogue-screen">
+      <div class="eyebrow">СЛЕД 04 // ВСТРЕЧА</div>
+
+      ${scene}
+
       <div class="console">
         <p><strong>Руди:</strong> Мы тут кое-что для тебя приготовили.</p>
         <p><strong>Ян:</strong> Но сначала один очень важный вопрос.</p>
         <p><strong>Руди и Ян:</strong> Когда свадьба с Эдрианом?</p>
       </div>
-      <label for="weddingAnswer">Твой ответ:</label>
-      <textarea id="weddingAnswer" rows="3"
-        placeholder="Ну что ты им ответишь?"></textarea>
+
+      <div class="rudy-yan-answer">
+        <label for="weddingAnswer">Твой ответ:</label>
+        <textarea id="weddingAnswer" rows="3"
+          placeholder="Ну что ты им ответишь?"></textarea>
+      </div>
+
       <div class="actions">
         <button class="primary" id="answerWedding">[ ОТВЕТИТЬ ]</button>
       </div>
@@ -1744,16 +1768,21 @@ function renderRudyYanDialogue() {
     saveState();
 
     main.innerHTML = `
-      <section class="screen">
+      <section class="screen rudy-yan-dialogue-screen">
         <div class="eyebrow">ОТВЕТ ПРИНЯТ</div>
-        <h1>Так и запишем.</h1>
+
+        ${scene}
+
+        <h1 class="rudy-yan-response-heading">Так и запишем.</h1>
+
         <div class="console">
           <p><strong>Руди:</strong> Ну вот, теперь мы всё знаем.</p>
           <p><strong>Ян:</strong> Не уверен, что мы узнали хоть что-то.</p>
           <p><strong>Руди:</strong> Зато подарок у нас действительно есть.</p>
           <p>Они протягивают тебе книгу с шоколадкой на обложке.</p>
         </div>
-        <div class="actions">
+
+        <div class="actions rudy-yan-response-actions">
           <button class="primary" id="openGiftBook">[ ОТКРЫТЬ КНИГУ ]</button>
         </div>
       </section>`;
@@ -1763,6 +1792,7 @@ function renderRudyYanDialogue() {
     };
   };
 }
+
 
 function renderRudyYanBook() {
   setFooter("СЛЕД 04 // ПОДАРОК");

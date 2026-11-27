@@ -2249,25 +2249,43 @@ function renderFinalEnd() {
   setFooter("ДЕЛО № 001 // ЗАКРЫТО");
 
   main.innerHTML = `
-    <section class="screen" style="text-align:center;padding-top:35px;">
-      <div class="eyebrow">СИСТЕМА // ПОСЛЕДНЕЕ СООБЩЕНИЕ</div>
-      <div style="font-size:48px;color:var(--gold);margin:24px 0;">
+    <section class="screen final-end-screen">
+      <div class="eyebrow final-end-eyebrow">
+        СИСТЕМА // ПОСЛЕДНЕЕ СООБЩЕНИЕ
+      </div>
+
+      <div class="final-end-symbol">
         ✦ ♡ ✦
       </div>
-      <h1>С днём рождения, мон амур!</h1>
-      <div class="console" style="text-align:center;margin-top:24px;">
-        <p>Сегодня тебя обнимает целая вселенная.</p>
-        <p>И я — крепче всех!</p>
+
+      <h1 class="final-end-title">
+        С днём рождения, мон амур!
+      </h1>
+
+      <div class="console final-end-message">
+        <p class="final-end-line final-end-line-one">
+          Сегодня тебя обнимает целая вселенная.
+        </p>
+
+        <p class="final-end-line final-end-line-two">
+          И я — крепче всех!
+        </p>
       </div>
-      <p class="muted">Дело закрыто. Но это приключение всегда можно пережить снова.</p>
-      <div class="actions">
+
+      <p class="muted final-end-closed">
+        Дело закрыто. Но это приключение всегда можно пережить снова.
+      </p>
+
+      <div class="actions final-end-actions">
         <button class="primary" id="replayBirthday">
           [ ПЕРЕЖИТЬ ЗАНОВО ]
         </button>
       </div>
     </section>`;
 
-  document.getElementById("replayBirthday").onclick = () => {
+  const replayButton = document.getElementById("replayBirthday");
+
+  replayButton.onclick = () => {
     const confirmed = confirm(
       "Начать заново? Сохранённый прогресс будет сброшен."
     );
@@ -2278,7 +2296,6 @@ function renderFinalEnd() {
     }
   };
 }
-
     // Возвращаемся к сохранённому этапу, а не начинаем всё сначала.
     render();
   </script>

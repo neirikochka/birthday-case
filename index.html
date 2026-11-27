@@ -1405,41 +1405,42 @@ function renderJamesDialogue() {
 
   const item = lines[index];
 
-  if (item.type === "choice") {
-  main.innerHTML = `
-    <section class="screen">
-      <div class="eyebrow">СЛЕД 03 // ДИАЛОГ</div>
+   if (item.type === "choice") {
+    main.innerHTML = `
+      <section class="screen">
+        <div class="eyebrow">СЛЕД 03 // ДИАЛОГ</div>
 
-      <div class="aaron-scene james-scene">
-        <img
-          src="images/Джеймс%20Андерсон.png"
-          alt="Джеймс Андерсон"
-          class="aaron-character"
-        >
+        <div class="aaron-scene james-scene">
+          <img
+            src="images/Джеймс%20Андерсон.png"
+            alt="Джеймс Андерсон"
+            class="aaron-character"
+          >
 
-        <div class="dialogue aaron-dialogue">
-          <p class="speaker">ДЖЕЙМС АНДЕРСОН</p>
-          <p class="line">${item.question}</p>
-          <div class="actions" id="jamesChoices"></div>
+          <div class="dialogue aaron-dialogue">
+            <p class="speaker">ДЖЕЙМС АНДЕРСОН</p>
+            <p class="line">${item.question}</p>
+          </div>
         </div>
-      </div>
-    </section>`;
 
-  const choices = document.getElementById("jamesChoices");
+        <div class="actions" id="jamesChoices"></div>
+      </section>`;
 
-  item.options.forEach(option => {
-    const button = document.createElement("button");
-    button.textContent = `[ ${option.text} ]`;
-    button.onclick = () => {
-      state.trace03DialogueIndex = option.next;
-      saveState();
-      render();
-    };
-    choices.appendChild(button);
-  });
+    const choices = document.getElementById("jamesChoices");
 
-  return;
-}
+    item.options.forEach(option => {
+      const button = document.createElement("button");
+      button.textContent = `[ ${option.text} ]`;
+      button.onclick = () => {
+        state.trace03DialogueIndex = option.next;
+        saveState();
+        render();
+      };
+      choices.appendChild(button);
+    });
+
+    return;
+  }
 
   main.innerHTML = `
   <section class="screen">

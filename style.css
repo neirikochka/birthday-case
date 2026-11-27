@@ -2112,3 +2112,96 @@ main.stage-leaving {
 .final-code-message-restored .final-success-message > p:nth-child(4) {
   animation-delay: 9.1s;
 }
+
+
+/* Финальный системный сбой */
+.final-glitch-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background: #090909;
+  color: #fff;
+  opacity: 1;
+  transition: background .15s ease;
+}
+
+.final-glitch-noise {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,.08) 0px,
+      rgba(255,255,255,.08) 1px,
+      transparent 2px,
+      transparent 4px
+    );
+  animation: finalGlitchNoise .12s steps(2, end) infinite;
+}
+
+.final-glitch-screen::before,
+.final-glitch-screen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: rgba(255,255,255,.08);
+  mix-blend-mode: screen;
+}
+
+.final-glitch-screen::before {
+  animation: finalGlitchShift .18s steps(2, end) infinite;
+}
+
+.final-glitch-screen::after {
+  animation: finalGlitchShift .25s steps(2, end) infinite reverse;
+}
+
+.final-glitch-message {
+  position: relative;
+  z-index: 2;
+  max-width: 90%;
+  margin: 0;
+  text-align: center;
+  font-size: clamp(20px, 4vw, 32px);
+  line-height: 1.5;
+  color: #f3e8d0;
+  opacity: 0;
+  transform: scale(.96);
+  text-shadow: 0 0 12px rgba(255,255,255,.4);
+}
+
+.final-glitch-screen.blackout {
+  background: #000;
+}
+
+.final-glitch-screen.blackout .final-glitch-noise,
+.final-glitch-screen.blackout::before,
+.final-glitch-screen.blackout::after {
+  display: none;
+}
+
+.final-glitch-screen.show-message .final-glitch-message {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity .5s ease, transform .5s ease;
+}
+
+@keyframes finalGlitchNoise {
+  0% { transform: translateY(0); opacity: .8; }
+  50% { transform: translateY(3px); opacity: .35; }
+  100% { transform: translateY(-2px); opacity: .7; }
+}
+
+@keyframes finalGlitchShift {
+  0% { transform: translate(0); clip-path: inset(0 0 80% 0); }
+  25% { transform: translate(8px, -3px); clip-path: inset(35% 0 40% 0); }
+  50% { transform: translate(-6px, 2px); clip-path: inset(70% 0 10% 0); }
+  75% { transform: translate(3px, 0); clip-path: inset(15% 0 65% 0); }
+  100% { transform: translate(0); clip-path: inset(0 0 80% 0); }
+}

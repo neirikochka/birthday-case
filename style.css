@@ -1817,3 +1817,50 @@ main.stage-leaving {
   transform: translateY(-6px);
   filter: brightness(1.1);
 }
+
+/* Последовательное появление фрагмента Руди и Яна */
+.rudy-yan-fragment-screen > .eyebrow,
+.rudy-yan-fragment-screen > h1,
+.rudy-yan-fragment-screen > .console,
+.rudy-yan-fragment-screen > .actions {
+  opacity: 0;
+  animation: rudyYanFadeIn .6s ease forwards;
+}
+
+.rudy-yan-fragment-screen > .eyebrow {
+  animation-delay: .2s;
+}
+
+.rudy-yan-fragment-screen > h1 {
+  animation-delay: .8s;
+}
+
+.rudy-yan-fragment-screen > .console {
+  animation-delay: 1.4s;
+}
+
+.rudy-yan-fragment-screen > .console > p {
+  opacity: 0;
+  animation: rudyYanFadeIn .5s ease forwards;
+}
+
+.rudy-yan-fragment-screen > .console > p:nth-child(1) {
+  animation-delay: 1.6s;
+}
+
+.rudy-yan-fragment-screen > .console > p:nth-child(2) {
+  animation-delay: 2.2s;
+}
+
+.rudy-yan-fragment-screen > .console > p:nth-child(3) {
+  animation-delay: 2.8s;
+}
+
+.rudy-yan-fragment-screen > .console > p:nth-child(4) {
+  animation-delay: 3.4s;
+}
+
+.rudy-yan-fragment-screen > .actions {
+  animation-delay: 4s;
+}
+

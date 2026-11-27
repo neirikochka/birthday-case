@@ -1406,55 +1406,75 @@ function renderJamesDialogue() {
   const item = lines[index];
 
   if (item.type === "choice") {
-    main.innerHTML = `
-      <section class="screen">
-        <div class="eyebrow">СЛЕД 03 // ДИАЛОГ</div>
-        <h1>Джеймс Андерсон</h1>
-        <p>${item.question}</p>
-        <div class="actions" id="jamesChoices"></div>
-      </section>`;
-
-    const choices = document.getElementById("jamesChoices");
-
-    item.options.forEach(option => {
-      const button = document.createElement("button");
-      button.textContent = `[ ${option.text} ]`;
-      button.onclick = () => {
-        state.trace03DialogueIndex = option.next;
-        saveState();
-        render();
-      };
-      choices.appendChild(button);
-    });
-
-    return;
-  }
-
   main.innerHTML = `
     <section class="screen">
       <div class="eyebrow">СЛЕД 03 // ДИАЛОГ</div>
-      <h1>Джеймс Андерсон</h1>
-      <div class="console">
-        ${item.who ? `<p class="speaker">${item.who.toUpperCase()}</p>` : ""}
-        ${item.note ? `<p class="muted"><em>${item.note}</em></p>` : ""}
-        ${item.text ? `<p class="line">${item.text}</p>` : ""}
-      </div>
-      <div class="actions">
-        <button class="primary" id="nextJames">
-          ${index === lines.length - 1 ? "[ К ЗАГАДКЕ ]" : "[ ДАЛЬШЕ ]"}
-        </button>
+
+      <div class="aaron-scene james-scene">
+        <img
+          src="images/Джеймс%20Андерсон.png"
+          alt="Джеймс Андерсон"
+          class="aaron-character"
+        >
+
+        <div class="dialogue aaron-dialogue">
+          <p class="speaker">ДЖЕЙМС АНДЕРСОН</p>
+          <p class="line">${item.question}</p>
+          <div class="actions" id="jamesChoices"></div>
+        </div>
       </div>
     </section>`;
 
-  document.getElementById("nextJames").onclick = () => {
-    if (index === lines.length - 1) {
-      setStage("case03_puzzle");
-    } else {
-      state.trace03DialogueIndex = index + 1;
+  const choices = document.getElementById("jamesChoices");
+
+  item.options.forEach(option => {
+    const button = document.createElement("button");
+    button.textContent = `[ ${option.text} ]`;
+    button.onclick = () => {
+      state.trace03DialogueIndex = option.next;
       saveState();
       render();
-    }
-  };
+    };
+    choices.appendChild(button);
+  });
+
+  return;
+}
+
+  main.innerHTML = `
+  <section class="screen">
+    <div class="eyebrow">СЛЕД 03 // ДИАЛОГ</div>
+
+    <div class="aaron-scene james-scene">
+      <img
+        src="images/Джеймс%20Андерсон.png"
+        alt="Джеймс Андерсон"
+        class="aaron-character"
+      >
+
+      <div class="dialogue aaron-dialogue james-dialogue">
+        ${item.who ? `<p class="speaker">${item.who.toUpperCase()}</p>` : ""}
+        ${item.note ? `<p class="muted james-note">${item.note}</p>` : ""}
+        ${item.text ? `<p class="line james-line">${item.text}</p>` : ""}
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="primary" id="nextJames">
+        ${index === lines.length - 1 ? "[ К ЗАГАДКЕ ]" : "[ ДАЛЬШЕ ]"}
+      </button>
+    </div>
+  </section>`;
+
+document.getElementById("nextJames").onclick = () => {
+  if (index === lines.length - 1) {
+    setStage("case03_puzzle");
+  } else {
+    state.trace03DialogueIndex = index + 1;
+    saveState();
+    render();
+  }
+};
 }
 
 function renderJamesPuzzle() {

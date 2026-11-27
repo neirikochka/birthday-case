@@ -2068,3 +2068,25 @@ main.stage-leaving {
   animation-delay: 6.2s;
 }
 
+/* Финальное сообщение — постепенное появление */
+
+.final-success-message > p {
+  opacity: 0;
+  animation: rudyYanFadeIn .6s ease forwards;
+}
+
+.final-success-message > p:nth-child(1) {
+  animation-delay: .2s;
+}
+
+.final-success-message > p:nth-child(2) {
+  animation-delay: .9s;
+}
+
+.final-success-message > p:nth-child(3) {
+  animation-delay: 1.6s;
+}
+
+.final-success-message > p:nth-child(4) {
+  animation-delay: 2.3s;
+}

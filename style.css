@@ -1527,3 +1527,87 @@ main.stage-leaving {
   font-size: 15px;
   line-height: 1.7;
 }
+
+
+/* Последовательное появление экрана завершения следа 03 */
+
+.trace03-done-screen > .eyebrow,
+.trace03-done-screen > h1,
+.trace03-done-screen > .console,
+.trace03-done-screen > .case-list,
+.trace03-done-screen > .actions {
+  opacity: 0;
+  animation: trace03StepIn .65s ease forwards;
+}
+
+.trace03-done-screen > .eyebrow {
+  animation-delay: .2s;
+}
+
+.trace03-done-screen > h1 {
+  animation-delay: .8s;
+}
+
+.trace03-done-screen > .console {
+  animation-delay: 1.4s;
+}
+
+.trace03-done-screen > .case-list {
+  animation-delay: 2.8s;
+}
+
+.trace03-done-screen > .actions {
+  animation-delay: 4.8s;
+}
+
+/* Строки внутри консоли */
+.trace03-done-screen > .console > p {
+  opacity: 0;
+  animation: trace03StepIn .5s ease forwards;
+}
+
+.trace03-done-screen > .console > p:nth-child(1) {
+  animation-delay: 1.8s;
+}
+
+.trace03-done-screen > .console > p:nth-child(2) {
+  animation-delay: 2.3s;
+}
+
+.trace03-done-screen > .console > p:nth-child(3) {
+  animation-delay: 2.8s;
+}
+
+/* Карточки следов */
+.trace03-done-screen .case-list > * {
+  opacity: 0;
+  animation: trace03StepIn .5s ease forwards;
+}
+
+.trace03-done-screen .case-list > *:nth-child(1) {
+  animation-delay: 3.2s;
+}
+
+.trace03-done-screen .case-list > *:nth-child(2) {
+  animation-delay: 3.6s;
+}
+
+.trace03-done-screen .case-list > *:nth-child(3) {
+  animation-delay: 4s;
+}
+
+.trace03-done-screen .case-list > *:nth-child(4) {
+  animation-delay: 4.4s;
+}
+
+@keyframes trace03StepIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
